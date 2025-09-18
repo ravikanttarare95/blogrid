@@ -6,6 +6,7 @@ import mongoose from "mongoose";
 
 import dotenv from "dotenv";
 dotenv.config(); // Load Environment variables from .env file to process.env (env property in process object)
+import { postSignup, postLogin } from "./controllers/user.js";
 
 const app = express();
 app.use(express.json());
@@ -28,6 +29,9 @@ app.get("/", (req, res) => {
     message: "Server is healthy and running",
   });
 });
+
+app.post("/signup", postSignup);
+app.post("/login", postLogin);
 
 const PORT = process.env.PORT || 8080;
 
