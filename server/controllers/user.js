@@ -4,19 +4,25 @@ const postSignup = async (req, res) => {
   const { name, email, password } = req.body;
 
   if (!name) {
-    return res.json({ success: false, message: "Name is required" });
+    return res
+      .status(400)
+      .json({ success: false, message: "Name is required" });
   }
   if (!email) {
-    return res.json({ success: false, message: "Email is required" });
+    return res
+      .status(400)
+      .json({ success: false, message: "Email is required" });
   }
   if (!password) {
-    return res.json({ success: false, message: "Password is required" });
+    return res
+      .status(400)
+      .json({ success: false, message: "Password is required" });
   }
 
   const existingUser = await User.findOne({ email });
 
   if (existingUser) {
-    res.json({
+    res.status(409).json({
       success: false,
       message: `User with email ${email} already exists`,
     });
@@ -28,7 +34,7 @@ const postSignup = async (req, res) => {
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
   if (nameRegexTest.test(name) === false) {
-    return res.json({
+    return res.status(400).json({
       success: false,
       message:
         "Name must be 2-30 characters long and contain only letters and spaces",
@@ -36,14 +42,14 @@ const postSignup = async (req, res) => {
   }
 
   if (emailRegexTest.test(email) === false) {
-    return res.json({
+    return res.status(400).json({
       success: false,
       message: "Please enter a valid email address.",
     });
   }
 
   if (passwordRegexTest.test(password) === false) {
-    return res.json({
+    return res.status(400).json({
       success: false,
       message:
         "Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, one number, and one special character",
@@ -63,6 +69,18 @@ const postSignup = async (req, res) => {
 
 const postLogin = async (req, res) => {
   const { email, password } = req.body;
+  const user = await User.findOne({ email, password });
+  if (!user) {
+    return res.status(401).json({
+      success: false,
+      message: "Email or password is incorrect.",
+    });
+  }
+  res.json({
+    success: true,
+    message: "Login successful.",
+    data: user,
+  });
 };
 
 export { postSignup, postLogin };
