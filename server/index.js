@@ -5,9 +5,10 @@ import cors from "cors";
 import mongoose from "mongoose";
 
 import dotenv from "dotenv";
-dotenv.config(); // Load Environment variables from .env to process.env
+dotenv.config(); // Load Environment variables from .env file to process.env (env property in process object)
 
 const app = express();
+app.use(cors());
 
 const connectDB = async () => {
   try {
