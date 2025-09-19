@@ -68,19 +68,36 @@ const postSignup = async (req, res) => {
 };
 
 const postLogin = async (req, res) => {
-  const { email, password } = req.body;
-  const user = await User.findOne({ email, password });
-  if (!user) {
-    return res.status(401).json({
+  try {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      return res.status(400).json({
+        success: false,
+        message: "Email and password are required",
+      });
+    }
+
+    const user = await User.findOne({ email, password });
+
+    if (!user) {
+      return res.status(401).json({
+        success: false,
+        message: "Email or password is incorrect.",
+      });
+    }
+    res.json({
+      success: true,
+      message: "Login successful.",
+      data: user,
+    });
+  } catch (error) {
+    res.json({
       success: false,
-      message: "Email or password is incorrect.",
+      message: "Server error. Please try again later.",
+      error: error.message,
     });
   }
-  res.json({
-    success: true,
-    message: "Login successful.",
-    data: user,
-  });
 };
 
 export { postSignup, postLogin };

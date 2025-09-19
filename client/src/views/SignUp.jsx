@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router";
 import Input from "./../components/Input";
 import axios from "axios";
 import toast from "react-hot-toast";
+import Button from "./../components/Button";
 
 function SignUp() {
   const [user, setUser] = useState({
@@ -65,13 +66,7 @@ function SignUp() {
               setUser({ ...user, password: e.target.value });
             }}
           />
-
-          <button
-            type="submit"
-            className="w-full py-3 bg-teal-500 rounded-lg font-semibold hover:bg-teal-600 transition-all duration-300"
-          >
-            Sign Up
-          </button>
+          <Button type={"submit"} btnTitle={"Sign Up"} />
         </form>
         <div className="text-center mt-5 text-gray-400">
           Already have an account?{" "}
