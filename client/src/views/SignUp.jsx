@@ -32,7 +32,7 @@ function SignUp() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-950 text-white">
       <div className="w-full max-w-md bg-gray-900 border border-gray-700 shadow-lg rounded-xl p-8">
-        <h1 className="text-3xl font-bold text-center mb-6 bg-gradient-to-r from-teal-400 to-green-400 bg-clip-text text-transparent">
+        <h1 className="text-3xl pb-1 font-bold text-center mb-6 bg-gradient-to-r from-teal-400 to-green-400 bg-clip-text text-transparent">
           Sign Up
         </h1>
         <form

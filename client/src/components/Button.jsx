@@ -4,7 +4,7 @@ function Button({ type, btnTitle, onBtnClick }) {
   return (
     <button
       type={type}
-      className="w-full py-3 bg-teal-500 rounded-lg font-semibold hover:bg-teal-600 transition-all duration-300 cursor-pointer"
+      className="w-full py-3 px-5 bg-teal-500 rounded-lg font-semibold hover:bg-teal-600 transition-all duration-300 cursor-pointer"
       onClick={onBtnClick}
     >
       {btnTitle}
