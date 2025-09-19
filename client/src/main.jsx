@@ -7,6 +7,7 @@ import AllBlogs from "./views/AllBlogs";
 import EditBlog from "./views/EditBlog";
 import NewBlog from "./views/NewBlog";
 import ReadBlog from "./views/ReadBlog";
+import { Toaster } from "react-hot-toast";
 
 import { BrowserRouter, Routes, Route } from "react-router";
 const root = createRoot(document.getElementById("root"));
@@ -21,5 +22,6 @@ root.render(
       <Route path="/new-blog" element={<NewBlog />} />
       <Route path="/read-blog" element={<ReadBlog />} />
     </Routes>
+    <Toaster />
   </BrowserRouter>
 );
