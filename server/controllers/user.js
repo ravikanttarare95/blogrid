@@ -1,4 +1,5 @@
 import User from "./../models/User.js"; // import modelSchema
+import md5 from "md5";
 
 const postSignup = async (req, res) => {
   const { name, email, password } = req.body;
@@ -56,14 +57,13 @@ const postSignup = async (req, res) => {
     });
   }
 
-  const userData = new User({ name, email, password });
+  const userData = new User({ name, email, password: md5(password) });
 
-  const savedData = await userData.save();
+  await userData.save(); // saving data to MongoDB
 
   res.json({
     success: true,
     message: "User registered successfully",
-    data: savedData,
   });
 };
 
@@ -78,7 +78,10 @@ const postLogin = async (req, res) => {
       });
     }
 
-    const user = await User.findOne({ email, password });
+    const user = await User.findOne({
+      email,
+      password: md5(password),
+    }).select("-password"); ///////////////////////////////////////isssueee
 
     if (!user) {
       return res.status(401).json({
@@ -92,7 +95,7 @@ const postLogin = async (req, res) => {
       data: user,
     });
   } catch (error) {
-    res.json({
+    res.status(500).json({
       success: false,
       message: "Server error. Please try again later.",
       error: error.message,

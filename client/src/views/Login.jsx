@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import Input from "./../components/Input";
 import Button from "./../components/Button";
 import axios from "axios";
@@ -11,6 +11,8 @@ function Login() {
     password: "",
   });
 
+  const navigate = useNavigate();
+
   const handleLogin = async () => {
     console.log(user);
     try {
@@ -18,10 +20,12 @@ function Login() {
         `${import.meta.env.VITE_API_URL}/login`,
         user
       );
-      console.log("asdad", response);
 
       if (response) {
         toast.success(response.data.message);
+        setTimeout(() => {
+          navigate("/");
+        }, 2000);
       }
     } catch (error) {
       toast.error(error.response.data.message);
