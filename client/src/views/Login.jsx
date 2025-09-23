@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import { Link, useNavigate } from "react-router";
 import Input from "./../components/Input";
 import Button from "./../components/Button";
@@ -14,17 +14,24 @@ function Login() {
   const navigate = useNavigate();
 
   const handleLogin = async () => {
-    console.log(user);
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}/login`,
         user
       );
 
-      if (response) {
+      if (response?.data?.success) {
         toast.success(response.data.message);
+        localStorage.setItem(
+          "loggedInUser",
+          JSON.stringify(response.data.user)
+        );
+        setUser({
+          email: "",
+          password: "",
+        });
         setTimeout(() => {
-          navigate("/");
+          navigate("/all-blogs");
         }, 2000);
       }
     } catch (error) {
@@ -47,6 +54,7 @@ function Login() {
           <Input
             type={"email"}
             placeholder={"Email"}
+            value={user.email}
             onChange={(e) => {
               setUser({ ...user, email: e.target.value });
             }}
@@ -54,6 +62,7 @@ function Login() {
           <Input
             type={"password"}
             placeholder={"Password"}
+            value={user.password}
             onChange={(e) => {
               setUser({ ...user, password: e.target.value });
             }}

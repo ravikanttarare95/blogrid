@@ -78,12 +78,12 @@ const postLogin = async (req, res) => {
       });
     }
 
-    const user = await User.findOne({
+    const existingUser = await User.findOne({
       email,
       password: md5(password),
-    }).select("-password"); ///////////////////////////////////////isssueee
+    }).select("-password"); //---IMPORTANT---//
 
-    if (!user) {
+    if (!existingUser) {
       return res.status(401).json({
         success: false,
         message: "Email or password is incorrect.",
@@ -92,7 +92,7 @@ const postLogin = async (req, res) => {
     res.json({
       success: true,
       message: "Login successful.",
-      data: user,
+      user: existingUser,
     });
   } catch (error) {
     res.status(500).json({
