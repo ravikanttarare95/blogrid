@@ -1,6 +1,5 @@
 import { createRoot } from "react-dom/client";
 import "./index.css";
-import Home from "./views/Home";
 import SignUp from "./views/SignUp";
 import Login from "./views/Login";
 import AllBlogs from "./views/AllBlogs";
@@ -14,13 +13,12 @@ const root = createRoot(document.getElementById("root"));
 root.render(
   <BrowserRouter>
     <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/sign-up" element={<SignUp />} />
+      <Route path="/" element={<AllBlogs />} />
+      <Route path="/new" element={<NewBlog />} />
+      <Route path="/edit/:id" element={<EditBlog />} />
+      <Route path="/blog/:slug" element={<ReadBlog />} />
+      <Route path="/signup" element={<SignUp />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/all-blogs" element={<AllBlogs />} />
-      <Route path="/edit-blog" element={<EditBlog />} />
-      <Route path="/new-blog" element={<NewBlog />} />
-      <Route path="/read-blog" element={<ReadBlog />} />
     </Routes>
     <Toaster />
   </BrowserRouter>

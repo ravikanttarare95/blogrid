@@ -8,8 +8,7 @@ function Navbar() {
 
   const NAV_ITEMS = [
     { to: "/", navItemTitle: "Home" },
-    { to: "/all-blogs", navItemTitle: "Blogs" },
-    { to: "/new-blog", navItemTitle: "Create Blogs" },
+    { to: "/new", navItemTitle: "Create Blogs" },
   ];
 
   return (
@@ -58,7 +57,7 @@ function Navbar() {
             </Link>
 
             <Link
-              to="/sign-up"
+              to="/signup"
               className="flex items-center gap-2 px-4 py-2 border-2 border-teal-500 bg-teal-500 text-md rounded-full font-semibold text-white hover:bg-teal-600 transition-all duration-300"
             >
               <UserPlus className="w-5 h-5" />

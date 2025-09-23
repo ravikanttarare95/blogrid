@@ -1,10 +1,10 @@
 import React from "react";
 
-function Button({ type, btnTitle, onBtnClick }) {
+function Button({ type, btnTitle, onBtnClick, customStyle }) {
   return (
     <button
       type={type}
-      className="w-full py-3 px-5 bg-teal-500 rounded-lg font-semibold hover:bg-teal-600 transition-all duration-300 cursor-pointer"
+      className={`${customStyle} w-full py-2 px-5 bg-teal-300 rounded-lg font-semibold hover:bg-teal-400 transition-all duration-300 cursor-pointer`}
       onClick={onBtnClick}
     >
       {btnTitle}

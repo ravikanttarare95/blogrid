@@ -72,7 +72,7 @@ function Login() {
         </form>
         <div className="text-center mt-5 text-gray-400">
           Don’t have an account?{" "}
-          <Link to="/sign-up" className="text-teal-400 hover:underline">
+          <Link to="/signup" className="text-teal-400 hover:underline">
             Sign Up
           </Link>
         </div>
