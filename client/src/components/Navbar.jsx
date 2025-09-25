@@ -1,10 +1,13 @@
 import React, { useState } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import Logo from "./../../public/logo.png";
-import { LogIn, UserPlus, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
+import { FaSignInAlt, FaUserPlus } from "react-icons/fa";
+import Button from "./Button";
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
 
   const NAV_ITEMS = [
     { to: "/", navItemTitle: "Home" },
@@ -48,21 +51,34 @@ function Navbar() {
           </div>
 
           <div className="flex flex-col md:flex-row gap-4 items-center">
-            <Link
-              to="/login"
-              className="flex items-center gap-2 px-4 py-2 border-2 border-teal-400 bg-gray-800 text-md rounded-full font-semibold text-teal-200 hover:bg-teal-500 hover:text-white transition-all duration-300"
-            >
-              <LogIn className="w-5 h-5" />
-              <span>Login</span>
-            </Link>
-
-            <Link
-              to="/signup"
-              className="flex items-center gap-2 px-4 py-2 border-2 border-teal-500 bg-teal-500 text-md rounded-full font-semibold text-white hover:bg-teal-600 transition-all duration-300"
-            >
-              <UserPlus className="w-5 h-5" />
-              <span>Sign Up</span>
-            </Link>
+            <Button
+              type={"button"}
+              btnTitle={
+                <>
+                  <FaSignInAlt className="w-5 h-5" />
+                  Login
+                </>
+              }
+              btnVariant={"secondary"}
+              btnSize={"sm"}
+              onBtnClick={() => {
+                navigate("/login");
+              }}
+            />
+            <Button
+              type={"button"}
+              btnVariant={"primary"}
+              btnTitle={
+                <>
+                  <FaUserPlus className="w-5 h-5" />
+                  Sign Up
+                </>
+              }
+              btnSize={"sm"}
+              onBtnClick={() => {
+                navigate("/signup");
+              }}
+            />
           </div>
         </div>
       </nav>

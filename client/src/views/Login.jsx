@@ -68,7 +68,7 @@ function Login() {
             }}
           />
 
-          <Button type="submit" btnTitle={"Login"} />
+          <Button type={"submit"} btnVariant={"primary"} btnTitle={"Login"} />
         </form>
         <div className="text-center mt-5 text-gray-400">
           Don’t have an account?{" "}

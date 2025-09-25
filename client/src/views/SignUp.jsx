@@ -4,6 +4,7 @@ import Input from "./../components/Input";
 import axios from "axios";
 import toast from "react-hot-toast";
 import Button from "./../components/Button";
+import { FaSignInAlt, FaUserPlus } from "react-icons/fa";
 
 function SignUp() {
   const [user, setUser] = useState({
@@ -66,7 +67,11 @@ function SignUp() {
               setUser({ ...user, password: e.target.value });
             }}
           />
-          <Button type={"submit"} btnTitle={"Sign Up"} />
+          <Button
+            type={"submit"}
+            btnVariant={"primary"}
+            btnTitle={"Create Account"}
+          />
         </form>
         <div className="text-center mt-5 text-gray-400">
           Already have an account?{" "}
