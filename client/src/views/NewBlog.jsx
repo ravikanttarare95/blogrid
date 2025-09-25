@@ -57,6 +57,8 @@ function NewBlog() {
 
           <Button
             btnTitle={"Save"}
+            btnVariant={"primary"}
+            btnSize={"sm"}
             type={"submit"}
             customStyle={"w-fit! h-fit!"}
             onBtnClick={() => {

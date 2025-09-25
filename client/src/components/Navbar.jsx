@@ -15,12 +15,12 @@ function Navbar() {
   ];
 
   return (
-    <div className="lg:pt-5 transition-all duration-300">
+    <div className="sticky top-0 lg:pt-2 transition-all duration-300">
       <nav className="lg:w-[80%] mx-auto lg:rounded-full bg-gray-900 text-white shadow-md px-6 py-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div className="flex items-center justify-between w-full md:w-auto">
           <div className="flex items-center gap-3">
             <img src={Logo} alt="Logo" className="w-15 rounded-lg" />
-            <span className="text-2xl font-extrabold bg-gradient-to-r from-teal-300 to-green-300 bg-clip-text text-transparent">
+            <span className="text-2xl font-extrabold bg-gradient-to-r from-teal-200 to-green-200 bg-clip-text text-transparent">
               BloGrid
             </span>
           </div>
