@@ -33,4 +33,14 @@ const postBlogs = async (req, res) => {
   });
 };
 
-export { postBlogs };
+const fetchBlogs = async (req, res) => {
+  const blogs = await Blog.find().populate("author", "_id name email");
+
+  res.json({
+    success: true,
+    data: blogs,
+    message: "Blogs fetched successfully.",
+  });
+};
+
+export { postBlogs, fetchBlogs };
