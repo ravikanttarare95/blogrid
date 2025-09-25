@@ -3,6 +3,7 @@ import { getCurrentUser } from "./../utils.js";
 import Navbar from "./../components/Navbar.jsx";
 import axios from "axios";
 import toast from "react-hot-toast";
+import BlogCard from "./../components/BlogCard.jsx";
 
 function AllBlogs() {
   const [user, setUser] = useState(null);
@@ -27,17 +28,32 @@ function AllBlogs() {
   return (
     <div>
       <Navbar />
-      <h1>AllBlogs</h1>{" "}
-      <p>{user ? `Hello! ${user.name} 👋🏻` : "Welcome Guest!"}</p>
-      {blogs.map((blog) => (
-        <div key={blog._id} className="border p-4 my-4 rounded">
-          <h2 className="text-2xl font-bold">{blog.title}</h2>
-          <p className="text-sm text-gray-600">
-            By {blog.author.name} | Category: {blog.category}
+      <div className="text-center py-10 px-4 rounded-lg max-w-6xl mx-auto">
+        <div className="mb-4 text-left">
+          <p className="text-lg text-gray-700">
+            {user ? (
+              <>
+                <span className="text-3xl font-medium text-gray-800">Hello! </span>
+                <span className="text-3xl font-semibold text-teal-600">
+                  {user.name}
+                </span>
+              </>
+            ) : (
+              <span className="text-lg font-medium text-gray-600">
+                Welcome Guest!
+              </span>
+            )}
           </p>
-          <p className="mt-2">{blog.content.substring(0, 100)}...</p>
         </div>
-      ))}
+
+        <p className="mt-2 text-gray-500 text-sm sm:text-base max-w-xl mx-auto">
+          Discover the latest posts, stories, and insights from our community.
+        </p>
+      </div>
+
+      {blogs.map((blog) => {
+        return <BlogCard key={blog._id} blog={blog} />;
+      })}
     </div>
   );
 }
