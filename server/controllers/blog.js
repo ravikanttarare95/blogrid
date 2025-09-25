@@ -34,13 +34,21 @@ const postBlogs = async (req, res) => {
 };
 
 const fetchBlogs = async (req, res) => {
-  const blogs = await Blog.find().populate("author", "_id name email");
+  try {
+    const blogs = await Blog.find().populate("author", "_id name email");
 
-  res.json({
-    success: true,
-    data: blogs,
-    message: "Blogs fetched successfully.",
-  });
+    res.json({
+      success: true,
+      data: blogs,
+      message: "Blogs fetched successfully.",
+    });
+  } catch (error) {
+    console.log("Error fetching blogs:", error);
+    res.status(500).json({
+      success: false,
+      message: "Error fetching blogs",
+    });
+  }
 };
 
 export { postBlogs, fetchBlogs };
