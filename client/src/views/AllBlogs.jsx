@@ -33,7 +33,9 @@ function AllBlogs() {
           <p className="text-lg text-gray-700">
             {user ? (
               <>
-                <span className="text-3xl font-medium text-gray-800">Hello! </span>
+                <span className="text-3xl font-medium text-gray-800">
+                  Hello!{" "}
+                </span>
                 <span className="text-3xl font-semibold text-teal-600">
                   {user.name}
                 </span>
@@ -52,7 +54,31 @@ function AllBlogs() {
       </div>
 
       {blogs.map((blog) => {
-        return <BlogCard key={blog._id} blog={blog} />;
+        const {
+          _id,
+          title,
+          content,
+          status,
+          category,
+          publishedAt,
+          createdAt,
+          author,
+          slug,
+        } = blog;
+        return (
+          <BlogCard
+            key={_id}
+            id={_id}
+            title={title}
+            content={content}
+            status={status}
+            category={category}
+            publishedAt={publishedAt}
+            createdAt={createdAt}
+            author={author}
+            slug={slug}
+          />
+        );
       })}
     </div>
   );

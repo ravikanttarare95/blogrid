@@ -10,10 +10,10 @@ function Button({
 }) {
   const sizeClasses =
     btnSize === "lg"
-      ? "text-lg sm:text-xl px-8 py-3"
+      ? "text-lg sm:text-xl px-6 py-2 rounded-lg"
       : btnSize === "sm"
-      ? "text-sm sm:text-base px-4 py-1.5"
-      : "text-base sm:text-lg px-5 py-2.5";
+      ? "text-sm sm:text-base px-3 py-1 rounded-full"
+      : "text-base sm:text-lg px-4 py-1.5 rounded-md";
 
   const variantClasses =
     btnVariant === "primary"
