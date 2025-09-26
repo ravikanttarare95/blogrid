@@ -15,8 +15,7 @@ root.render(
     <Routes>
       <Route path="/" element={<AllBlogs />} />
       <Route path="/new" element={<NewBlog />} />
-      {/*:id or :slug*/}
-      <Route path="/edit/:id" element={<EditBlog />} />
+      <Route path="/edit/:slug" element={<EditBlog />} />
       <Route path="/blog/:slug" element={<ReadBlog />} />
       <Route path="/signup" element={<SignUp />} />
       <Route path="/login" element={<Login />} />

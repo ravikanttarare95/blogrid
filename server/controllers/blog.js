@@ -78,4 +78,35 @@ const fetchBlogsBySlug = async (req, res) => {
     console.log(error);
   }
 };
-export { postBlogs, fetchBlogs, fetchBlogsBySlug };
+
+const putEditBlogBySlug = async (req, res) => {
+  try {
+    const { title, category, content } = req.body;
+    const { slug } = req.params;
+
+    if (!title || !content || !category) {
+      return res.status(400).json({
+        success: false,
+        message: "All fields are required",
+      });
+    }
+
+    await Blog.updateOne(
+      { slug: slug },
+      {
+        title,
+        category,
+        content,
+      }
+    );
+    const EditedMovie = await Blog.findOne({ slug: slug });
+    res.json({
+      success: true,
+      message: "Blog updated successfully.",
+      blog: EditedMovie,
+    });
+  } catch (error) {
+    console.log("Error updating blog", error);
+  }
+};
+export { postBlogs, fetchBlogs, fetchBlogsBySlug, putEditBlogBySlug };

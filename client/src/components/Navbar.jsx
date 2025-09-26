@@ -53,6 +53,7 @@ function Navbar() {
           <div className="flex flex-col md:flex-row gap-4 items-center">
             <Button
               type={"button"}
+              customStyle={"text-white border-white "}
               btnTitle={
                 <>
                   <FaSignInAlt className="w-5 h-5" />

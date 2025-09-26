@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "./Button";
 import { useNavigate } from "react-router";
-import { FilePen } from "lucide-react";
+import { SquarePen } from "lucide-react";
 import Category from "./Category";
 import poster1 from "./../../public/poster.jpg";
 
@@ -73,8 +73,7 @@ function BlogCard({
             <Button
               btnTitle={
                 <>
-                  <FilePen />
-                  Edit
+                  Edit <SquarePen size={20} />
                 </>
               }
               btnVariant="secondary"

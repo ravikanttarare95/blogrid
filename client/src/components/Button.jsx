@@ -19,7 +19,7 @@ function Button({
     btnVariant === "primary"
       ? "bg-gradient-to-br from-teal-400 via-teal-500 to-teal-600 hover:to-teal-700 text-white [text-shadow:_0_1px_4px_rgba(0,0,0,0.4)] "
       : btnVariant === "secondary"
-      ? "border border-teal-40 text-teal-40 bg-transparent hover:bg-teal-500/20"
+      ? "border border-teal-600 text-teal-600 bg-teal-500/10 hover:bg-teal-500/20 shadow-sm hover:shadow-md"
       : "bg-slate-200 text-slate-900 hover:bg-slate-300";
 
   return (

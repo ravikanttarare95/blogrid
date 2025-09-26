@@ -7,7 +7,12 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 dotenv.config(); // Load Environment variables from .env file to process.env (env property in process object)
 import { postSignup, postLogin } from "./controllers/user.js";
-import { postBlogs, fetchBlogs, fetchBlogsBySlug } from "./controllers/blog.js";
+import {
+  postBlogs,
+  fetchBlogs,
+  fetchBlogsBySlug,
+  putEditBlogBySlug,
+} from "./controllers/blog.js";
 
 const app = express();
 app.use(express.json());
@@ -36,6 +41,7 @@ app.post("/login", postLogin);
 app.post("/blogs", postBlogs);
 app.get("/blogs", fetchBlogs);
 app.get("/blogs/:slug", fetchBlogsBySlug);
+app.put("/blogs/:slug", putEditBlogBySlug);
 
 const PORT = process.env.PORT || 8080;
 
