@@ -16,7 +16,7 @@ function AllBlogs() {
       );
       if (response.data.data.length > 0) {
         setBlogs(response.data.data);
-        toast.success(response?.data?.message, { id: "fetchBlogs" });
+        // toast.success(response?.data?.message, { id: "fetchBlogs" });
       } else {
         toast.error("Data not found.", { id: "fetchBlogs" });
       }
@@ -35,7 +35,7 @@ function AllBlogs() {
     fetchAllBlogs();
   }, [user]);
   return (
-    <div>
+    <>
       <Navbar />
       <div className="text-center py-10 px-4 rounded-lg max-w-6xl mx-auto">
         <div className="mb-4 text-left">
@@ -62,34 +62,36 @@ function AllBlogs() {
         </p>
       </div>
 
-      {blogs.map((blog) => {
-        const {
-          _id,
-          title,
-          content,
-          status,
-          category,
-          publishedAt,
-          createdAt,
-          author,
-          slug,
-        } = blog;
-        return (
-          <BlogCard
-            key={_id}
-            id={_id}
-            title={title}
-            content={content}
-            status={status}
-            category={category}
-            publishedAt={publishedAt}
-            createdAt={createdAt}
-            author={author}
-            slug={slug}
-          />
-        );
-      })}
-    </div>
+      <div className="p-5">
+        {blogs.map((blog) => {
+          const {
+            _id,
+            title,
+            content,
+            status,
+            category,
+            publishedAt,
+            createdAt,
+            author,
+            slug,
+          } = blog;
+          return (
+            <BlogCard
+              key={_id}
+              id={_id}
+              title={title}
+              content={content}
+              status={status}
+              category={category}
+              publishedAt={publishedAt}
+              createdAt={createdAt}
+              author={author}
+              slug={slug}
+            />
+          );
+        })}
+      </div>
+    </>
   );
 }
 

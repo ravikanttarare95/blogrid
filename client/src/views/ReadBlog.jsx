@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import poster from "./../../public/poster.jpg";
 import { useParams } from "react-router";
 import axios from "axios";
+import Category from "./../components/Category.jsx";
 
 function ReadBlog() {
   const { slug } = useParams();
@@ -24,7 +25,10 @@ function ReadBlog() {
   }, []);
   return (
     <div className="p-4 max-w-5xl mx-auto">
-      <div className="relative h-72 sm:h-96 overflow-hidden rounded-2xl shadow-lg">
+      <div className="relative h-72 sm:h-96 overflow-hidden rounded shadow-lg">
+        <span className="absolute right-3 top-2">
+          <Category category={blog.category} />
+        </span>
         <img
           src={poster}
           alt="Blog Cover"
