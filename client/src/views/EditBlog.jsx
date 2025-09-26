@@ -56,6 +56,20 @@ function EditBlog() {
     }
   };
 
+  const publishBlog = async () => {
+    const response = await axios.patch(
+      `${import.meta.env.VITE_API_URL}/blogs/${slug}`
+    );
+    if (response) {
+      toast.success(response.data.message);
+      setTimeout(() => {
+        navigate("/");
+      }, 2000);
+    } else {
+      toast.error("Internal Server Error");
+    }
+  };
+
   useEffect(() => {
     document.documentElement.setAttribute("data-color-mode", "light");
     loadBlogBySlug();
@@ -121,7 +135,9 @@ function EditBlog() {
             btnSize={"md"}
             type={"submit"}
             customStyle={"!w-fit !h-fit"}
-            onBtnClick={() => {}}
+            onBtnClick={() => {
+              publishBlog();
+            }}
           />
         </div>
       </div>

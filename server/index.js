@@ -12,6 +12,7 @@ import {
   fetchBlogs,
   fetchBlogsBySlug,
   putEditBlogBySlug,
+  patchPublishBlogBySlug,
 } from "./controllers/blog.js";
 
 const app = express();
@@ -42,6 +43,7 @@ app.post("/blogs", postBlogs);
 app.get("/blogs", fetchBlogs);
 app.get("/blogs/:slug", fetchBlogsBySlug);
 app.put("/blogs/:slug", putEditBlogBySlug);
+app.patch("/blogs/:slug", patchPublishBlogBySlug);
 
 const PORT = process.env.PORT || 8080;
 

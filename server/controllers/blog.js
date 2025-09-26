@@ -109,4 +109,25 @@ const putEditBlogBySlug = async (req, res) => {
     console.log("Error updating blog", error);
   }
 };
-export { postBlogs, fetchBlogs, fetchBlogsBySlug, putEditBlogBySlug };
+
+const patchPublishBlogBySlug = async (req, res) => {
+  const { slug } = req.params;
+  const published = await Blog.updateOne(
+    { slug: slug },
+    { status: "published" }
+  );
+
+  if (published) {
+    res.json({
+      success: true,
+      message: "Blog published successfully",
+    });
+  }
+};
+export {
+  postBlogs,
+  fetchBlogs,
+  fetchBlogsBySlug,
+  putEditBlogBySlug,
+  patchPublishBlogBySlug,
+};

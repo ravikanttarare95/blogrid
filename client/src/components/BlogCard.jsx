@@ -26,7 +26,7 @@ function BlogCard({
           className="w-full h-48 sm:h-full object-cover rounded-l-xl"
         />
         {status !== "published" && (
-          <span className="absolute top-2 left-2 inline-block bg-yellow-100 px-2 rounded-full border text-xs text-yellow-600">
+          <span className="absolute top-2 left-2 inline-block bg-gray-200 px-3 rounded-full border text-sm text-gray-600 shadow-md ">
             Draft
           </span>
         )}
