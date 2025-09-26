@@ -62,4 +62,17 @@ const fetchBlogs = async (req, res) => {
   }
 };
 
-export { postBlogs, fetchBlogs };
+const fetchBlogsBySlug = async (req, res) => {
+  try {
+    const { slug } = req.params;
+    const blog = await Blog.findOne({ slug: slug });
+    res.json({
+      success: true,
+      message: "Blog fetched Successfully.",
+      blog: blog,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+export { postBlogs, fetchBlogs, fetchBlogsBySlug };

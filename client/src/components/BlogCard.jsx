@@ -13,7 +13,6 @@ function BlogCard({
   createdAt,
   author,
   slug,
-  blog,
 }) {
   const navigate = useNavigate();
   return (
