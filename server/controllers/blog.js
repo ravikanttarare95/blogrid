@@ -65,7 +65,10 @@ const fetchBlogs = async (req, res) => {
 const fetchBlogsBySlug = async (req, res) => {
   try {
     const { slug } = req.params;
-    const blog = await Blog.findOne({ slug: slug });
+    const blog = await Blog.findOne({ slug: slug }).populate(
+      "author",
+      "_id name email"
+    );
     res.json({
       success: true,
       message: "Blog fetched Successfully.",
