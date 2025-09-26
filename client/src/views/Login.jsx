@@ -31,7 +31,7 @@ function Login() {
           password: "",
         });
         setTimeout(() => {
-          navigate("/all-blogs");
+          navigate("/");
         }, 2000);
       }
     } catch (error) {

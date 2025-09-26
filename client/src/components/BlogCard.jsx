@@ -1,6 +1,7 @@
 import React from "react";
 import Button from "./Button";
 import { useNavigate } from "react-router";
+import { FilePen } from "lucide-react";
 
 function BlogCard({
   _id,
@@ -36,7 +37,7 @@ function BlogCard({
         <>
           <div className="flex items-center gap-2 mb-2">
             <div className="text-sm text-gray-500 mt-1 flex items-center gap-2">
-              <span className="flex items-center justify-center w-10 h-10 rounded-full bg-teal-600 text-white font-semibold mr-2">
+              <span className="flex items-center justify-center w-10 h-10 text-2xl rounded-full bg-teal-600 text-white font-semibold mr-2">
                 {author.name.substring(0, 1)}
               </span>{" "}
               <div>
@@ -74,7 +75,12 @@ function BlogCard({
             />
           ) : (
             <Button
-              btnTitle="Edit"
+              btnTitle={
+                <>
+                  <FilePen />
+                  Edit
+                </>
+              }
               btnVariant="secondary"
               btnSize="md"
               onBtnClick={() => {

@@ -11,20 +11,29 @@ function AllBlogs() {
 
   const fetchAllBlogs = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}/blogs`);
-      if (response) {
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/blogs?authorId=${user?._id || ""}`
+      );
+      if (response.data.data.length > 0) {
         setBlogs(response.data.data);
-        toast.success(response?.data?.message);
+        toast.success(response?.data?.message, { id: "fetchBlogs" });
+      } else {
+        toast.error("Data not found.", { id: "fetchBlogs" });
       }
     } catch (error) {
       console.log(error);
-      toast.error(error?.response?.data?.message || "Error fetching blogs");
+      toast.error(error?.response?.data?.message || "Error fetching blogs", {
+        id: "fetchBlogs",
+      });
     }
   };
   useEffect(() => {
     setUser(getCurrentUser());
-    fetchAllBlogs();
   }, []);
+
+  useEffect(() => {
+    fetchAllBlogs();
+  }, [user]);
   return (
     <div>
       <Navbar />

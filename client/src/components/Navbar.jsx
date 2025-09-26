@@ -15,7 +15,7 @@ function Navbar() {
   ];
 
   return (
-    <div className="sticky top-0 lg:pt-2 transition-all duration-300">
+    <div className="sticky top-0 z-50 lg:pt-2 transition-all duration-300">
       <nav className="lg:w-[80%] mx-auto lg:rounded-full bg-gray-900 text-white shadow-md px-6 py-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div className="flex items-center justify-between w-full md:w-auto">
           <div className="flex items-center gap-3">
