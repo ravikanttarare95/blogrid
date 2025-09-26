@@ -3,6 +3,7 @@ import poster from "./../../public/poster.jpg";
 import { useParams } from "react-router";
 import axios from "axios";
 import Category from "./../components/Category.jsx";
+import MarkdownEditor from "@uiw/react-markdown-editor";
 
 function ReadBlog() {
   const { slug } = useParams();
@@ -22,6 +23,7 @@ function ReadBlog() {
 
   useEffect(() => {
     getBlogBySlug();
+    document.documentElement.setAttribute("data-color-mode", "light");
   }, []);
   return (
     <div className="p-4 max-w-5xl mx-auto">
@@ -54,9 +56,10 @@ function ReadBlog() {
         </div>
       </div>
 
-      <div className="mt-8">
-        <p>{blog?.content || "Blog content will appear here..."}</p>
-      </div>
+      <MarkdownEditor.Markdown
+        source={blog.content || "Blog content will appear here..."}
+        className="mt-8"
+      />
     </div>
   );
 }
