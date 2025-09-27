@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router";
-import Logo from "./../../public/logo.png";
+import Logo from "./../../public/logo.svg";
 import { Menu, X } from "lucide-react";
 import { FaSignInAlt, FaUserPlus } from "react-icons/fa";
 import Button from "./Button";

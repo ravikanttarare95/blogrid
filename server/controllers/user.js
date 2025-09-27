@@ -1,5 +1,6 @@
 import User from "./../models/User.js"; // import modelSchema
 import md5 from "md5";
+import jwt from "jsonwebtoken";
 
 const postSignup = async (req, res) => {
   const { name, email, password } = req.body;
@@ -81,7 +82,7 @@ const postLogin = async (req, res) => {
     const existingUser = await User.findOne({
       email,
       password: md5(password),
-    }).select("-password"); //---IMPORTANT---//
+    }).select("_id name email"); //---IMPORTANT---//
 
     if (!existingUser) {
       return res.status(401).json({
@@ -89,10 +90,22 @@ const postLogin = async (req, res) => {
         message: "Email or password is incorrect.",
       });
     }
+
+    const token = jwt.sign(
+      {
+        id: existingUser._id,
+        email: existingUser.email,
+        name: existingUser.name,
+      },
+      process.env.JWT_SECRET,
+      { expiresIn: "1d" }
+    );
+
     res.json({
       success: true,
       message: "Login successful.",
       user: existingUser,
+      token,
     });
   } catch (error) {
     res.status(500).json({

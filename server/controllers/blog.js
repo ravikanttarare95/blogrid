@@ -1,9 +1,21 @@
 import Blog from "./../models/Blog.js";
+import jwt from "jsonwebtoken";
 
 const postBlogs = async (req, res) => {
   const { title, content, category, author } = req.body;
+  const { authorization } = req.headers;
 
-  if (!title || !content || !category || !author) {
+  let decodedToken;
+  try {
+    decodedToken = jwt.verify(
+      authorization.split(" ")[1],
+      process.env.JWT_SECRET
+    );
+  } catch (error) {
+    return res.status(401).json({ message: "Invalid Token" });
+  }
+
+  if (!title || !content || !category) {
     return res.status(400).json({
       success: false,
       message: "All fields are required",
@@ -14,7 +26,7 @@ const postBlogs = async (req, res) => {
     title,
     content,
     category,
-    author,
+    author: decodedToken.id,
     slug: `temp-slug-${Date.now()}-${Math.random().toString()}`,
   });
 
@@ -91,7 +103,7 @@ const putEditBlogBySlug = async (req, res) => {
       });
     }
 
-    await Blog.updateOne(
+    const EditedMovie = await Blog.findOneAndUpdate(
       { slug: slug },
       {
         title,
@@ -99,7 +111,7 @@ const putEditBlogBySlug = async (req, res) => {
         content,
       }
     );
-    const EditedMovie = await Blog.findOne({ slug: slug });
+    //  ({ slug: slug });
     res.json({
       success: true,
       message: "Blog updated successfully.",
