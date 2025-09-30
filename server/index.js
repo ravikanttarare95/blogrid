@@ -6,6 +6,8 @@ import mongoose from "mongoose";
 
 import dotenv from "dotenv";
 dotenv.config(); // Load Environment variables from .env file to process.env (env property in process object)
+
+import jwt from "jsonwebtoken";
 import { postSignup, postLogin } from "./controllers/user.js";
 import {
   postBlogs,
@@ -36,6 +38,29 @@ app.get("/", (req, res) => {
     message: "Server is healthy and running",
   });
 });
+
+const jwtCheck = (req, res, next) => {
+  req.user = null;
+  const { authentication } = req.headers;
+
+  if (!authentication) {
+    res.json({
+      success: false,
+      message: "Authentication token missing",
+    });
+  }
+
+  try {
+    const token = authentication.split(" ")[1];
+    const decode = jwt.verify(token, process.env.JWT_SECRET);
+
+    req.user = decode;
+
+    next();
+  } catch (error) {
+    return res.status(401).json({ message: "Invalid JWT Token" });
+  }
+};
 
 app.post("/signup", postSignup);
 app.post("/login", postLogin);

@@ -26,6 +26,7 @@ function Login() {
           "loggedInUser",
           JSON.stringify(response.data.user)
         );
+        localStorage.setItem("token", response.data.token);
         setUser({
           email: "",
           password: "",
