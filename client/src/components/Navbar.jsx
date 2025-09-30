@@ -1,11 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router";
 import Logo from "./../../public/logo.svg";
 import { Menu, X } from "lucide-react";
 import { FaSignInAlt, FaUserPlus } from "react-icons/fa";
+import { IoMdLogOut } from "react-icons/io";
 import Button from "./Button";
+import { getCurrentUser } from "./../utils.js";
+import toast from "react-hot-toast";
 
 function Navbar() {
+  const [user, setUser] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -14,6 +18,9 @@ function Navbar() {
     { to: "/new", navItemTitle: "Create Blogs" },
   ];
 
+  useEffect(() => {
+    setUser(getCurrentUser());
+  }, []);
   return (
     <div className="sticky top-0 z-50 lg:pt-2 transition-all duration-300">
       <nav className="lg:w-[80%] mx-auto lg:rounded-full bg-gray-900 text-white shadow-md px-6 py-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
@@ -49,38 +56,61 @@ function Navbar() {
               </Link>
             ))}
           </div>
-
-          <div className="flex flex-col md:flex-row gap-4 items-center">
-            <Button
-              type={"button"}
-              customStyle={"text-white border-white "}
-              btnTitle={
-                <>
-                  <FaSignInAlt className="w-5 h-5" />
-                  Login
-                </>
-              }
-              btnVariant={"secondary"}
-              btnSize={"sm"}
-              onBtnClick={() => {
-                navigate("/login");
-              }}
-            />
+          {user ? (
             <Button
               type={"button"}
               btnVariant={"primary"}
+              customStyle={
+                "!bg-gradient-br !from-red-500 !via-red-600 !to-red-700"
+              }
               btnTitle={
                 <>
-                  <FaUserPlus className="w-5 h-5" />
-                  Sign Up
+                  <IoMdLogOut className="w-5 h-5" />
+                  Logout
                 </>
               }
               btnSize={"sm"}
               onBtnClick={() => {
-                navigate("/signup");
+                localStorage.clear();
+                toast.success("Logout successfull");
+                setTimeout(() => {
+                  navigate("/login");
+                }, 2000);
               }}
             />
-          </div>
+          ) : (
+            <div className="flex flex-col md:flex-row gap-4 items-center">
+              <Button
+                type={"button"}
+                customStyle={"text-white border-white "}
+                btnTitle={
+                  <>
+                    <FaSignInAlt className="w-5 h-5" />
+                    Login
+                  </>
+                }
+                btnVariant={"secondary"}
+                btnSize={"sm"}
+                onBtnClick={() => {
+                  navigate("/login");
+                }}
+              />
+              <Button
+                type={"button"}
+                btnVariant={"primary"}
+                btnTitle={
+                  <>
+                    <FaUserPlus className="w-5 h-5" />
+                    Sign Up
+                  </>
+                }
+                btnSize={"sm"}
+                onBtnClick={() => {
+                  navigate("/signup");
+                }}
+              />
+            </div>
+          )}
         </div>
       </nav>
     </div>

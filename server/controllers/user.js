@@ -1,6 +1,6 @@
 import User from "./../models/User.js"; // import modelSchema
 import md5 from "md5";
-import jwt from "jsonwebtoken";
+import jwt from "jsonwebtoken"; // Used in Login
 
 const postSignup = async (req, res) => {
   const { name, email, password } = req.body;
@@ -58,7 +58,7 @@ const postSignup = async (req, res) => {
     });
   }
 
-  const userData = new User({ name, email, password: md5(password) });
+  const userData = new User({ name, email, password: md5(password) }); // md5 Encryption important
 
   await userData.save(); // saving data to MongoDB
 

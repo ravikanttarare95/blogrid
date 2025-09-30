@@ -42,7 +42,11 @@ function NewBlog() {
 
   useEffect(() => {
     document.documentElement.setAttribute("data-color-mode", "light");
-    setUser(getCurrentUser());
+    const userLogin = getCurrentUser();
+    setUser(userLogin);
+    if (!userLogin) {
+      return navigate("/login");
+    }
   }, []);
 
   return (
