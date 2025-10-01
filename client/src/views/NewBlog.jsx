@@ -24,8 +24,9 @@ function NewBlog() {
           title,
           category,
           content,
-          author: user?._id,
-        }
+          // author: user?._id,
+        },
+        { headers: { Authorization: `Bearer ${localStorage.get("token")}` } } // for jwt check
       );
 
       if (response?.data?.success) {

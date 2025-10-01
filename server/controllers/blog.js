@@ -2,18 +2,8 @@ import Blog from "./../models/Blog.js";
 import jwt from "jsonwebtoken";
 
 const postBlogs = async (req, res) => {
-  const { title, content, category, author } = req.body;
-  const { authorization } = req.headers;
-
-  let decodedToken;
-  try {
-    decodedToken = jwt.verify(
-      authorization.split(" ")[1],
-      process.env.JWT_SECRET
-    );
-  } catch (error) {
-    return res.status(401).json({ message: "Invalid Token" });
-  }
+  const { title, content, category } = req.body;
+  const { user } = req;
 
   if (!title || !content || !category) {
     return res.status(400).json({
@@ -26,7 +16,7 @@ const postBlogs = async (req, res) => {
     title,
     content,
     category,
-    author: decodedToken.id,
+    author: user?.id,
     slug: `temp-slug-${Date.now()}-${Math.random().toString()}`,
   });
 
@@ -96,6 +86,23 @@ const putEditBlogBySlug = async (req, res) => {
     const { title, category, content } = req.body;
     const { slug } = req.params;
 
+    const { user } = req;
+    const existingBlog = await Blog.findOne({ slug: slug });
+
+    if (!existingBlog) {
+      return res.status(404).json({
+        success: false,
+        message: "Blog not found",
+      });
+    }
+
+    if (existingBlog.author.toString() !== user.id) {
+      return res.status(403).json({
+        success: false,
+        message: "You are not authorized to update this blog",
+      });
+    }
+
     if (!title || !content || !category) {
       return res.status(400).json({
         success: false,
@@ -124,7 +131,25 @@ const putEditBlogBySlug = async (req, res) => {
 
 const patchPublishBlogBySlug = async (req, res) => {
   const { slug } = req.params;
-  const published = await Blog.updateOne(
+  const { user } = req;
+
+  const existingBlog = await Blog.findOne({ slug: slug });
+
+  if (!existingBlog) {
+    return res.status(404).json({
+      success: false,
+      message: "Blog not found",
+    });
+  }
+
+  if (existingBlog.author.toString() !== user?.id) {
+    return res.status(403).json({
+      success: false,
+      message: "You are not authorized to publish this blog",
+    });
+  }
+
+  const published = await Blog.findOneAndUpdate(
     { slug: slug },
     { status: "published" }
   );

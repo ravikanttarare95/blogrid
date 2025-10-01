@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import Navbar from "./../components/Navbar";
-import MarkdownEditor from "@uiw/react-markdown-editor";
+import MarkdownEditor, { header } from "@uiw/react-markdown-editor";
 import Button from "./../components/Button.jsx";
 import Input from "./../components/Input.jsx";
 import { BLOG_CATEGORIES } from "./../constants.js";
@@ -41,6 +41,9 @@ function EditBlog() {
           title,
           category,
           content,
+        },
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }, // for jwt check
         }
       );
 
@@ -51,22 +54,29 @@ function EditBlog() {
         }, 2000);
       }
     } catch (error) {
-      console.log(error);
-      toast.error(error?.response?.data?.message || "Something went wrong");
+      toast.error(error?.response?.data?.message || "Error updating blog");
     }
   };
 
   const publishBlog = async () => {
-    const response = await axios.patch(
-      `${import.meta.env.VITE_API_URL}/blogs/${slug}`
-    );
-    if (response) {
-      toast.success(response.data.message);
-      setTimeout(() => {
-        navigate("/");
-      }, 2000);
-    } else {
-      toast.error("Internal Server Error");
+    try {
+      const response = await axios.patch(
+        `${import.meta.env.VITE_API_URL}/blogs/${slug}/publish`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      if (response) {
+        toast.success(response.data.message);
+        setTimeout(() => {
+          navigate("/");
+        }, 2000);
+      }
+    } catch (error) {
+      toast.error(error?.response.data.message || "Error publishing blog");
     }
   };
 

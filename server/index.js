@@ -41,17 +41,17 @@ app.get("/", (req, res) => {
 
 const jwtCheck = (req, res, next) => {
   req.user = null;
-  const { authentication } = req.headers;
+  const { authorization } = req.headers;
 
-  if (!authentication) {
+  if (!authorization) {
     res.json({
       success: false,
-      message: "Authentication token missing",
+      message: "Authorization token missing",
     });
   }
 
   try {
-    const token = authentication.split(" ")[1];
+    const token = authorization.split(" ")[1];
     const decode = jwt.verify(token, process.env.JWT_SECRET);
 
     req.user = decode;
@@ -64,11 +64,11 @@ const jwtCheck = (req, res, next) => {
 
 app.post("/signup", postSignup);
 app.post("/login", postLogin);
-app.post("/blogs", postBlogs);
+app.post("/blogs", jwtCheck, postBlogs);
 app.get("/blogs", fetchBlogs);
 app.get("/blogs/:slug", fetchBlogsBySlug);
-app.put("/blogs/:slug", putEditBlogBySlug);
-app.patch("/blogs/:slug", patchPublishBlogBySlug);
+app.put("/blogs/:slug", jwtCheck, putEditBlogBySlug);
+app.patch("/blogs/:slug/publish", jwtCheck, patchPublishBlogBySlug);
 
 const PORT = process.env.PORT || 8080;
 

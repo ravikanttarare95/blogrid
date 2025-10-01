@@ -74,7 +74,7 @@ function Navbar() {
                 localStorage.clear();
                 toast.success("Logout successfull");
                 setTimeout(() => {
-                  navigate("/login");
+                  navigate("/");
                 }, 2000);
               }}
             />
