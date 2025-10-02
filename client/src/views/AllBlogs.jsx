@@ -74,6 +74,7 @@ function AllBlogs() {
             createdAt,
             author,
             slug,
+            viewCount,
           } = blog;
           return (
             <BlogCard
@@ -87,6 +88,7 @@ function AllBlogs() {
               createdAt={createdAt}
               author={author}
               slug={slug}
+              viewCount={viewCount}
             />
           );
         })}

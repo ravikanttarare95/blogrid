@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import poster from "./../../public/poster.jpg";
+import poster from "./../assets/poster.jpg";
 import { useParams } from "react-router";
 import axios from "axios";
 import Category from "./../components/Category.jsx";

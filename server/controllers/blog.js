@@ -151,7 +151,10 @@ const patchPublishBlogBySlug = async (req, res) => {
 
   const published = await Blog.findOneAndUpdate(
     { slug: slug },
-    { status: "published" }
+    {
+      status: "published",
+      publishedAt: new Date().toLocaleString().substring(0, 9),
+    }
   );
 
   if (published) {

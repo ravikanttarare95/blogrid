@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router";
-import Logo from "./../../public/logo.svg";
+import Logo from "./../assets/logo.svg";
 import { Menu, X } from "lucide-react";
 import { FaSignInAlt, FaUserPlus } from "react-icons/fa";
 import { IoMdLogOut } from "react-icons/io";
@@ -26,7 +26,7 @@ function Navbar() {
       <nav className="lg:w-[80%] mx-auto lg:rounded-full bg-gray-900 text-white shadow-md px-6 py-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div className="flex items-center justify-between w-full md:w-auto">
           <div className="flex items-center gap-3">
-            <img src={Logo} alt="Logo" className="w-15 rounded-lg" />
+            <img src={Logo} alt="Logo" className="w-16 rounded-lg" />
             <span className="text-2xl font-extrabold bg-gradient-to-r from-teal-200 to-green-200 bg-clip-text text-transparent">
               BloGrid
             </span>
@@ -61,7 +61,7 @@ function Navbar() {
               type={"button"}
               btnVariant={"primary"}
               customStyle={
-                "!bg-gradient-br !from-red-500 !via-red-600 !to-red-700"
+                "!bg-gradient-to-br !from-red-500 !via-red-600 !to-red-700"
               }
               btnTitle={
                 <>
@@ -72,10 +72,9 @@ function Navbar() {
               btnSize={"sm"}
               onBtnClick={() => {
                 localStorage.clear();
+                setUser(null); ////////////////////////
                 toast.success("Logout successfull");
-                setTimeout(() => {
-                  navigate("/");
-                }, 2000);
+                navigate("/");
               }}
             />
           ) : (

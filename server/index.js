@@ -17,6 +17,8 @@ import {
   patchPublishBlogBySlug,
 } from "./controllers/blog.js";
 
+import Blog from "./models/Blog.js";
+
 const app = express();
 app.use(express.json());
 app.use(cors());
@@ -40,7 +42,7 @@ app.get("/", (req, res) => {
 });
 
 const jwtCheck = (req, res, next) => {
-  req.user = null;
+  req.user = null; /////why null
   const { authorization } = req.headers;
 
   if (!authorization) {
@@ -62,11 +64,27 @@ const jwtCheck = (req, res, next) => {
   }
 };
 
+const increaseViewCount = async (req, res, next) => {
+  const { slug } = req.params;
+
+  try {
+    const blog = await Blog.findOne({ slug: slug });
+
+    if (blog) {
+      blog.viewCount += 1;
+      await blog.save();
+    }
+  } catch (error) {
+    console.log("Error Increasing View Count", error);
+  }
+  next();
+};
+
 app.post("/signup", postSignup);
 app.post("/login", postLogin);
 app.post("/blogs", jwtCheck, postBlogs);
 app.get("/blogs", fetchBlogs);
-app.get("/blogs/:slug", fetchBlogsBySlug);
+app.get("/blogs/:slug", increaseViewCount, fetchBlogsBySlug);
 app.put("/blogs/:slug", jwtCheck, putEditBlogBySlug);
 app.patch("/blogs/:slug/publish", jwtCheck, patchPublishBlogBySlug);
 
