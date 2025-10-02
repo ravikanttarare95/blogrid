@@ -17,6 +17,8 @@ import {
   patchPublishBlogBySlug,
 } from "./controllers/blog.js";
 
+import { postCommentBySlug } from "./controllers/comment.js";
+
 import Blog from "./models/Blog.js";
 
 const app = express();
@@ -87,6 +89,7 @@ app.get("/blogs", fetchBlogs);
 app.get("/blogs/:slug", increaseViewCount, fetchBlogsBySlug);
 app.put("/blogs/:slug", jwtCheck, putEditBlogBySlug);
 app.patch("/blogs/:slug/publish", jwtCheck, patchPublishBlogBySlug);
+app.post("/blogs/:slug/comments", jwtCheck, postCommentBySlug);
 
 const PORT = process.env.PORT || 8080;
 

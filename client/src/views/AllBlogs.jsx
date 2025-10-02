@@ -14,10 +14,7 @@ function AllBlogs() {
   }, []);
 
   useEffect(() => {
-    if (user) {
-      //writing if blog bacause it takes time to set current user so on first render it is null, so fetchAllBlogs will show else toast.
-      fetchAllBlogs();
-    }
+    fetchAllBlogs();
   }, [user]);
 
   const fetchAllBlogs = async () => {

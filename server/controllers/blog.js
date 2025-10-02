@@ -1,5 +1,4 @@
 import Blog from "./../models/Blog.js";
-import jwt from "jsonwebtoken";
 
 const postBlogs = async (req, res) => {
   const { title, content, category } = req.body;
@@ -153,6 +152,7 @@ const patchPublishBlogBySlug = async (req, res) => {
     { slug: slug },
     {
       status: "published",
+      viewCount: 0,
       publishedAt: new Date(),
     }
   );
