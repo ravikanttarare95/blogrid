@@ -9,14 +9,25 @@ function AllBlogs() {
   const [user, setUser] = useState(null);
   const [blogs, setBlogs] = useState([]);
 
+  useEffect(() => {
+    setUser(getCurrentUser());
+  }, []);
+
+  useEffect(() => {
+    if (user) {
+      //writing if blog bacause it takes time to set current user so on first render it is null, so fetchAllBlogs will show else toast.
+      fetchAllBlogs();
+    }
+  }, [user]);
+
   const fetchAllBlogs = async () => {
     try {
       const response = await axios.get(
         `${import.meta.env.VITE_API_URL}/blogs?authorId=${user?._id || ""}`
       );
-      if (response.data.data.length > 0) {
+      if (response?.data?.data?.length > 0) {
         setBlogs(response.data.data);
-        // toast.success(response?.data?.message, { id: "fetchBlogs" });
+        toast.success(response?.data?.message, { id: "fetchBlogs" });
       } else {
         toast.error("Data not found.", { id: "fetchBlogs" });
       }
@@ -27,13 +38,7 @@ function AllBlogs() {
       });
     }
   };
-  useEffect(() => {
-    setUser(getCurrentUser());
-  }, []);
 
-  useEffect(() => {
-    fetchAllBlogs();
-  }, [user]);
   return (
     <>
       <Navbar />

@@ -70,8 +70,11 @@ function BlogCard({
 
         <div className="mt-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <span className="text-sm text-gray-400">
-            {/* {publishedAt} issue with month in publishedAt */}
-            {(publishedAt && publishedAt) || createdAt.substring(0, 10)}
+            {new Date(publishedAt || createdAt).toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "short",
+              day: "numeric",
+            })}
           </span>
 
           <span className="flex items-center gap-1.5 text-gray-500 text-sm font-medium">

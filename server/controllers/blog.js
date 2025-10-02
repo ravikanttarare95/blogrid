@@ -153,7 +153,7 @@ const patchPublishBlogBySlug = async (req, res) => {
     { slug: slug },
     {
       status: "published",
-      publishedAt: new Date().toLocaleString().substring(0, 9),
+      publishedAt: new Date(),
     }
   );
 
