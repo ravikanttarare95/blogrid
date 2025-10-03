@@ -39,24 +39,18 @@ function AllBlogs() {
   return (
     <>
       <Navbar />
-      <div className="text-center py-10 px-4 rounded-lg max-w-6xl mx-auto">
+      <div className="py-5 px-6 sm:px-15 max-w-6xl mx-auto mt-8">
         <div className="mb-4 text-left">
-          <p className="text-lg text-gray-700">
-            {user ? (
-              <>
-                <span className="text-3xl font-medium text-gray-800">
-                  Hello!{" "}
-                </span>
-                <span className="text-3xl font-semibold text-teal-600">
-                  {user.name}
-                </span>
-              </>
-            ) : (
-              <span className="text-lg font-medium text-gray-600">
-                Welcome Guest!
-              </span>
-            )}
-          </p>
+          {user ? (
+            <p className="text-3xl sm:text-4xl font-semibold text-gray-800">
+              Hello!{" "}
+              <span className="text-teal-600 font-bold">{user.name}</span>
+            </p>
+          ) : (
+            <p className="text-xl sm:text-2xl font-medium text-gray-600">
+              Welcome Guest!
+            </p>
+          )}
         </div>
 
         <p className="mt-2 text-gray-500 text-sm sm:text-base max-w-xl mx-auto">
@@ -64,38 +58,44 @@ function AllBlogs() {
         </p>
       </div>
 
-      <div className="p-5">
-        {blogs.map((blog) => {
-          const {
-            _id,
-            title,
-            content,
-            status,
-            category,
-            publishedAt,
-            createdAt,
-            author,
-            slug,
-            viewCount,
-            likes,
-          } = blog;
-          return (
-            <BlogCard
-              key={_id}
-              id={_id}
-              title={title}
-              content={content}
-              status={status}
-              category={category}
-              publishedAt={publishedAt}
-              createdAt={createdAt}
-              author={author}
-              slug={slug}
-              viewCount={viewCount}
-              likes={likes}
-            />
-          );
-        })}
+      <div className="p-5 sm:p-8">
+        {blogs.length > 0 ? (
+          blogs?.map((blog) => {
+            const {
+              _id,
+              title,
+              content,
+              status,
+              category,
+              publishedAt,
+              createdAt,
+              author,
+              slug,
+              viewCount,
+              likes,
+            } = blog;
+            return (
+              <BlogCard
+                key={_id}
+                id={_id}
+                title={title}
+                content={content}
+                status={status}
+                category={category}
+                publishedAt={publishedAt}
+                createdAt={createdAt}
+                author={author}
+                slug={slug}
+                viewCount={viewCount}
+                likes={likes}
+              />
+            );
+          })
+        ) : (
+          <p className="text-center text-gray-500 mt-10 text-lg">
+            No blogs found. Check back later!
+          </p>
+        )}
       </div>
     </>
   );

@@ -40,11 +40,17 @@ function Login() {
     }
   };
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-950 text-white">
-      <div className="w-full max-w-md bg-gray-900 border border-gray-700 shadow-lg rounded-xl p-8">
-        <h1 className="text-3xl font-bold text-center mb-6 bg-gradient-to-r from-teal-400 to-green-400 bg-clip-text text-transparent pb-1">
-          Login
+    <div className="min-h-screen flex flex-col md:flex-row items-center justify-center gap-10 px-6 py-10">
+      <div className="max-w-2xl text-center md:text-left">
+        <h1 className="text-5xl pb-2 font-extrabold mb-4 bg-gradient-to-r from-teal-600 to-green-500 bg-clip-text text-transparent">
+          <Link to="/">BloGrid</Link>
         </h1>
+        <p className="text-gray-600 text-xl">
+          The habit of writing creates the writer
+        </p>
+      </div>
+
+      <div className="w-full max-w-md bg-white shadow-lg rounded-xl p-8 border border-gray-100">
         <form
           className="flex flex-col gap-5"
           onSubmit={(e) => {
@@ -53,27 +59,27 @@ function Login() {
           }}
         >
           <Input
-            type={"email"}
-            placeholder={"Email"}
+            type="email"
+            placeholder="Email"
             value={user.email}
-            onChange={(e) => {
-              setUser({ ...user, email: e.target.value });
-            }}
+            onChange={(e) => setUser({ ...user, email: e.target.value })}
           />
           <Input
-            type={"password"}
-            placeholder={"Password"}
+            type="password"
+            placeholder="Password"
             value={user.password}
-            onChange={(e) => {
-              setUser({ ...user, password: e.target.value });
-            }}
+            onChange={(e) => setUser({ ...user, password: e.target.value })}
           />
 
-          <Button type={"submit"} btnVariant={"primary"} btnTitle={"Login"} />
+          <Button type="submit" btnVariant="primary" btnTitle="Login" />
         </form>
-        <div className="text-center mt-5 text-gray-400">
+
+        <div className="text-center mt-5 text-gray-500 text-sm">
           Don’t have an account?{" "}
-          <Link to="/signup" className="text-teal-400 hover:underline">
+          <Link
+            to="/signup"
+            className="text-teal-600 hover:underline font-medium"
+          >
             Sign Up
           </Link>
         </div>

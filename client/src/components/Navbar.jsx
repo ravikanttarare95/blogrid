@@ -21,20 +21,22 @@ function Navbar() {
   useEffect(() => {
     setUser(getCurrentUser());
   }, []);
+
   return (
-    <div className="sticky top-0 z-50 lg:pt-2 transition-all duration-300">
-      <nav className="lg:w-[80%] mx-auto lg:rounded-full bg-gray-900 text-white shadow-md px-6 py-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+    <div className="sticky top-0 z-50 lg:pt-0 transition-all duration-300">
+      <nav className="lg:w-[95%] mx-auto lg:rounded-full bg-white text-gray-800 shadow-md px-6 py-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4 transition-all duration-300">
         <div className="flex items-center justify-between w-full md:w-auto">
           <div className="flex items-center gap-3">
             <img src={Logo} alt="Logo" className="w-16 rounded-lg" />
-            <span className="text-2xl font-extrabold bg-gradient-to-r from-teal-200 to-green-200 bg-clip-text text-transparent">
+            <span className="text-2xl font-extrabold bg-gradient-to-r from-teal-500 to-green-400 bg-clip-text text-transparent">
               BloGrid
             </span>
           </div>
 
+          {/* Mobile menu button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden text-white focus:outline-none"
+            className="md:hidden text-gray-800 focus:outline-none"
           >
             {isOpen ? <X size={28} /> : <Menu size={28} />}
           </button>
@@ -50,63 +52,58 @@ function Navbar() {
               <Link
                 key={to}
                 to={to}
-                className="text-md font-medium hover:text-teal-400 transition-colors duration-200"
+                className="text-md font-medium hover:text-teal-500 transition-colors duration-200"
               >
                 {navItemTitle}
               </Link>
             ))}
           </div>
+
           {user ? (
             <Button
-              type={"button"}
-              btnVariant={"primary"}
-              customStyle={
-                "!bg-gradient-to-br !from-red-500 !via-red-600 !to-red-700"
-              }
+              type="button"
+              btnVariant="primary"
+              customStyle="!bg-gradient-to-br !from-red-400 !via-red-500 !to-red-600"
               btnTitle={
                 <>
                   <IoMdLogOut className="w-5 h-5" />
                   Logout
                 </>
               }
-              btnSize={"sm"}
+              btnSize="sm"
               onBtnClick={() => {
                 localStorage.clear();
-                setUser(null); ////////////////////////
-                toast.success("Logout successfull");
-                navigate("/");
+                setUser(null);
+                toast.success("Logout successful");
+                window.location.href = "/";
               }}
             />
           ) : (
             <div className="flex flex-col md:flex-row gap-4 items-center">
               <Button
-                type={"button"}
-                customStyle={"text-white border-white "}
+                type="button"
+                customStyle="text-gray-800 border-gray-400"
                 btnTitle={
                   <>
                     <FaSignInAlt className="w-5 h-5" />
                     Login
                   </>
                 }
-                btnVariant={"secondary"}
-                btnSize={"sm"}
-                onBtnClick={() => {
-                  navigate("/login");
-                }}
+                btnVariant="secondary"
+                btnSize="sm"
+                onBtnClick={() => navigate("/login")}
               />
               <Button
-                type={"button"}
-                btnVariant={"primary"}
+                type="button"
+                btnVariant="primary"
                 btnTitle={
                   <>
                     <FaUserPlus className="w-5 h-5" />
                     Sign Up
                   </>
                 }
-                btnSize={"sm"}
-                onBtnClick={() => {
-                  navigate("/signup");
-                }}
+                btnSize="sm"
+                onBtnClick={() => navigate("/signup")}
               />
             </div>
           )}

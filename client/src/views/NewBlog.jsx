@@ -26,7 +26,9 @@ function NewBlog() {
           content,
           // author: user?._id,
         },
-        { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } } // for jwt check // why is JSON.parse not used
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        } // for jwt check // why is JSON.parse not used
       );
 
       if (response?.data?.success) {
@@ -51,60 +53,58 @@ function NewBlog() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen">
       <Navbar />
 
-      <div className="max-w-5xl mx-auto p-5 mt-8 bg-white rounded-xl shadow-md">
-        <div className="flex justify-between">
-          <h1 className="text-3xl font-bold mb-6 text-slate-800">
+      <div className="max-w-5xl mx-auto p-6 mt-8 bg-white rounded-xl shadow-md">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+          <h1 className="text-3xl sm:text-4xl font-bold text-gray-800">
             Create New Blog
           </h1>
 
           <Button
-            btnTitle={"Save"}
-            btnVariant={"primary"}
-            btnSize={"sm"}
-            type={"submit"}
-            customStyle={"w-fit! h-fit!"}
-            onBtnClick={() => {
-              saveBlog();
-            }}
+            btnTitle="Save"
+            btnVariant="primary"
+            btnSize="md"
+            type="button"
+            onBtnClick={saveBlog}
+            customStyle="w-auto"
           />
         </div>
-        <div className="space-y-3 mb-5">
-          {" "}
+
+        <div className="flex flex-col sm:flex-row gap-4 mb-6">
           <Input
             type="text"
-            id={"title"}
+            id="title"
             value={title}
-            customStyle="bg-slate-50! text-slate-900! border-gray-200!"
             placeholder="Title"
-            onChange={(e) => {
-              setTitle(e.target.value);
-            }}
+            customStyle="bg-gray-50 text-gray-900 border border-gray-200"
+            onChange={(e) => setTitle(e.target.value)}
           />
+
           <select
             name="select-category"
             id="select-category"
             value={category}
-            className="shadow-md border border-gray-200 bg-gray-100 text-gray-900 py-3 px-4 rounded-lg focus:outline-2 focus:outline-teal-400 "
-            onChange={(e) => {
-              setCategory(e.target.value);
-            }}
+            className="shadow-md border border-gray-200 bg-gray-100 text-gray-900 py-3 px-4 rounded-lg focus:outline-2 focus:outline-teal-400 transition"
+            onChange={(e) => setCategory(e.target.value)}
           >
-            {BLOG_CATEGORIES.map((category, index) => (
-              <option key={index} value={category}>
-                {category}
+            {BLOG_CATEGORIES.map((cat, idx) => (
+              <option key={idx} value={cat}>
+                {cat}
               </option>
             ))}
           </select>
         </div>
-        <MarkdownEditor
-          value={content}
-          height="400px"
-          onChange={(value) => setContent(value)}
-          className="border rounded-md"
-        />
+
+        <div className="border border-gray-200 rounded-lg overflow-hidden">
+          <MarkdownEditor
+            value={content}
+            height="400px"
+            onChange={(value) => setContent(value)}
+            className="prose prose-teal p-4 bg-gray-50"
+          />
+        </div>
       </div>
     </div>
   );
