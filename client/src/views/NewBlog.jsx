@@ -26,7 +26,7 @@ function NewBlog() {
           content,
           // author: user?._id,
         },
-        { headers: { Authorization: `Bearer ${localStorage.get("token")}` } } // for jwt check
+        { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } } // for jwt check // why is JSON.parse not used
       );
 
       if (response?.data?.success) {

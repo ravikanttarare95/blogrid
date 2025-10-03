@@ -6,10 +6,14 @@ import Category from "./../components/Category.jsx";
 import MarkdownEditor from "@uiw/react-markdown-editor";
 import toast from "react-hot-toast";
 import UserInfo from "./../components/UserInfo.jsx";
+import Button from "./../components/Button.jsx";
+import { getCurrentUser } from "./../utils.js";
 
 function ReadBlog() {
+  const [inUser, setInUser] = useState(null);
   const { slug } = useParams();
   const [blog, setBlog] = useState({});
+  const [newComment, setNewComment] = useState("");
   const [comments, setComments] = useState([]);
   const getBlogBySlug = async () => {
     try {
@@ -23,12 +27,6 @@ function ReadBlog() {
       console.error("Error fetching blog:", error);
     }
   };
-
-  useEffect(() => {
-    getBlogBySlug();
-    loadComments();
-    document.documentElement.setAttribute("data-color-mode", "light");
-  }, []);
 
   const loadComments = async () => {
     try {
@@ -45,9 +43,29 @@ function ReadBlog() {
     }
   };
 
+  const addComment = async () => {
+    console.log(newComment);
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/blogs/${slug}/comments`,
+        { content: newComment },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+
+      response && toast.success(response.data.message);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     getBlogBySlug();
     loadComments();
+    setInUser(getCurrentUser());
     document.documentElement.setAttribute("data-color-mode", "light");
   }, []);
 
@@ -89,6 +107,30 @@ function ReadBlog() {
 
       <div className="mt-10">
         <h3 className="text-2xl font-semibold mb-6 border-b pb-2">Comments:</h3>
+        <div className={`${inUser ? "block" : "hidden"}`}>
+          <textarea
+            name="input-comment"
+            placeholder="What’s your take on this?"
+            id="input-comment"
+            value={newComment}
+            className={`  w-full border border-gray-700 bg-gray-800 text-white py-3 px-4 rounded-lg focus:outline-2 focus:outline-teal-400 h-25`}
+            onChange={(e) => {
+              setNewComment(e.target.value);
+            }}
+          ></textarea>
+
+          <div className={`flex justify-end mt-5`}>
+            <Button
+              type="submit"
+              btnTitle={"Send"}
+              btnSize={"sm"}
+              btnVariant={"secondary"}
+              onBtnClick={() => {
+                addComment();
+              }}
+            />
+          </div>
+        </div>
 
         {comments && comments.length > 0 ? (
           <div className="space-y-4">
