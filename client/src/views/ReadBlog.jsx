@@ -122,10 +122,10 @@ function ReadBlog() {
           />
           {blog.likes}
         </span>
-        {/* <span className="flex gap-2">
+        <span className="flex gap-2">
           <MessageCircle />
-          {comments}
-        </span> */}
+          {comments.length}
+        </span>
       </div>
 
       <MarkdownEditor.Markdown
