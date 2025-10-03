@@ -4,10 +4,12 @@ import { useParams } from "react-router";
 import axios from "axios";
 import Category from "./../components/Category.jsx";
 import MarkdownEditor from "@uiw/react-markdown-editor";
+import toast from "react-hot-toast";
 
 function ReadBlog() {
   const { slug } = useParams();
   const [blog, setBlog] = useState({});
+  const [comments, setComments] = useState([]);
   const getBlogBySlug = async () => {
     try {
       const response = await axios.get(
@@ -23,8 +25,31 @@ function ReadBlog() {
 
   useEffect(() => {
     getBlogBySlug();
+    loadComments();
     document.documentElement.setAttribute("data-color-mode", "light");
   }, []);
+
+  const loadComments = async () => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/blogs/${slug}/comments`
+      );
+
+      if (response) {
+        setComments(response.data.comments);
+      }
+    } catch (error) {
+      toast.error("Error loading comments");
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getBlogBySlug();
+    loadComments();
+    document.documentElement.setAttribute("data-color-mode", "light");
+  }, []);
+
   return (
     <div className="p-4 max-w-5xl mx-auto">
       <div className="relative h-72 sm:h-96 overflow-hidden rounded shadow-lg">
@@ -60,6 +85,26 @@ function ReadBlog() {
         source={blog.content || "Blog content will appear here..."}
         className="mt-8"
       />
+
+      <div>
+        <h3 className="text-2xl font-semibold mt-10">Comments:</h3>
+        {comments ? (
+          <>
+            {comments.map((comment, index) => {
+              return (
+                <div key={index}>
+                  <br />
+                  <p>{comment.user.name}</p>
+                  <p className="ml-5">{comment.content}</p>
+                  <hr />
+                </div>
+              );
+            })}
+          </>
+        ) : (
+          ""
+        )}
+      </div>
     </div>
   );
 }

@@ -30,4 +30,30 @@ const postCommentBySlug = async (req, res) => {
   }
 };
 
-export { postCommentBySlug };
+const getCommentBySlug = async (req, res) => {
+  try {
+    const { slug } = req.params;
+
+    const blog = await Blog.findOne({ slug });
+    if (!blog) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Blog not found" });
+    }
+
+    const comments = await Comment.find({ blog: blog._id }).populate(
+      "user",
+      "name email"
+    );
+    if (comments) {
+      res.json({
+        success: true,
+        comments,
+      });
+    }
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+export { postCommentBySlug, getCommentBySlug };
