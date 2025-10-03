@@ -164,10 +164,25 @@ const patchPublishBlogBySlug = async (req, res) => {
     });
   }
 };
+
+const postlikeBySlug = async (req, res) => {
+  const { slug } = req.params;
+  const blog = await Blog.findOne({ slug });
+  if (blog) {
+    blog.likes += 1;
+    await blog.save();
+    res.json({
+      success: true,
+      message: "like increased",
+    });
+  }
+};
+
 export {
   postBlogs,
   fetchBlogs,
   fetchBlogsBySlug,
   putEditBlogBySlug,
   patchPublishBlogBySlug,
+  postlikeBySlug,
 };

@@ -1,4 +1,4 @@
-import User from "./../models/User.js"; // import modelSchema
+import User from "./../models/User.js";
 import md5 from "md5";
 import jwt from "jsonwebtoken"; // Used in Login
 

@@ -15,6 +15,7 @@ import {
   fetchBlogsBySlug,
   putEditBlogBySlug,
   patchPublishBlogBySlug,
+  postlikeBySlug,
 } from "./controllers/blog.js";
 
 import { postCommentBySlug, getCommentBySlug } from "./controllers/comment.js";
@@ -91,6 +92,7 @@ app.put("/blogs/:slug", jwtCheck, putEditBlogBySlug);
 app.patch("/blogs/:slug/publish", jwtCheck, patchPublishBlogBySlug);
 app.post("/blogs/:slug/comments", jwtCheck, postCommentBySlug);
 app.get("/blogs/:slug/comments", getCommentBySlug);
+app.post("/blogs/:slug/likes", jwtCheck, postlikeBySlug);
 
 const PORT = process.env.PORT || 8080;
 

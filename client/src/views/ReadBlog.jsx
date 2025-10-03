@@ -8,6 +8,7 @@ import toast from "react-hot-toast";
 import UserInfo from "./../components/UserInfo.jsx";
 import Button from "./../components/Button.jsx";
 import { getCurrentUser } from "./../utils.js";
+import { ThumbsUp, MessageCircle } from "lucide-react";
 
 function ReadBlog() {
   const [inUser, setInUser] = useState(null);
@@ -44,7 +45,6 @@ function ReadBlog() {
   };
 
   const addComment = async () => {
-    console.log(newComment);
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}/blogs/${slug}/comments`,
@@ -55,10 +55,24 @@ function ReadBlog() {
           },
         }
       );
-
-      response && toast.success(response.data.message);
+      if (response) {
+        toast.success(response.data.message);
+        setNewComment("");
+      }
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const increaseLikes = async () => {
+    const response = await axios.post(
+      `${import.meta.env.VITE_API_URL}/blogs/${slug}/likes`,
+      {},
+      { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
+    );
+
+    if (response) {
+      getBlogBySlug();
     }
   };
 
@@ -93,11 +107,25 @@ function ReadBlog() {
               {blog?.author?.name}
             </span>
           </p>
-
           <h1 className="text-2xl sm:text-4xl font-bold drop-shadow-lg">
             {blog?.title}
           </h1>
         </div>
+      </div>
+      <div className="flex  gap-5 ml-0 m-3">
+        {" "}
+        <span className="flex gap-2">
+          <ThumbsUp
+            onClick={() => {
+              increaseLikes();
+            }}
+          />
+          {blog.likes}
+        </span>
+        {/* <span className="flex gap-2">
+          <MessageCircle />
+          {comments}
+        </span> */}
       </div>
 
       <MarkdownEditor.Markdown

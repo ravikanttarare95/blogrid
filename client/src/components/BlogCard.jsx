@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "./Button";
 import { useNavigate } from "react-router";
-import { SquarePen, Eye } from "lucide-react";
+import { SquarePen, Eye, ThumbsUp } from "lucide-react";
 import Category from "./Category";
 import poster1 from "./../assets/poster.jpg";
 import UserInfo from "./UserInfo";
@@ -17,6 +17,7 @@ function BlogCard({
   author,
   slug,
   viewCount,
+  likes,
 }) {
   const navigate = useNavigate();
   return (
@@ -76,8 +77,13 @@ function BlogCard({
           </span>
 
           <span className="flex items-center gap-1.5 text-gray-500 text-sm font-medium">
+            <ThumbsUp className="w-4 h-4 text-teal-600" />
+            {likes}
+          </span>
+
+          <span className="flex items-center gap-1.5 text-gray-500 text-sm font-medium">
             <Eye className="w-4 h-4 text-teal-600" />
-            {viewCount} reads
+            {viewCount}
           </span>
 
           {status === "published" ? (
