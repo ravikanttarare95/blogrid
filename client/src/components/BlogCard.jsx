@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Button from "./Button";
 import { useNavigate } from "react-router";
-import { SquarePen, Eye, ThumbsUp } from "lucide-react";
+import { SquarePen, Eye, ThumbsUp, MessageCircle } from "lucide-react";
 import Category from "./Category";
 import poster1 from "./../assets/poster.jpg";
 import UserInfo from "./UserInfo";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 function BlogCard({
   _id,
@@ -20,6 +22,25 @@ function BlogCard({
   likes,
 }) {
   const navigate = useNavigate();
+  const [comments, setComments] = useState([]);
+  const loadComments = async () => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/blogs/${slug}/comments`
+      );
+
+      if (response) {
+        setComments(response.data.comments);
+      }
+    } catch (error) {
+      toast.error("Error loading comments");
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    loadComments();
+  }, []);
   return (
     <div className="bg-white border border-gray-200 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 flex flex-col sm:flex-row overflow-hidden my-6 max-w-5xl mx-auto">
       <div className="relative w-full sm:w-72 md:w-80 flex-shrink-0 overflow-hidden">
@@ -79,6 +100,8 @@ function BlogCard({
           <span className="flex items-center gap-1.5 text-gray-500 text-sm font-medium">
             <ThumbsUp className="w-4 h-4 text-teal-600" />
             {likes}
+            <MessageCircle className="w-4 h-4 text-teal-600" />
+            {comments?.length}
           </span>
 
           <span className="flex items-center gap-1.5 text-gray-500 text-sm font-medium">
