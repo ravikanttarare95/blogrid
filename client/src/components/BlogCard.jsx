@@ -4,6 +4,7 @@ import { useNavigate } from "react-router";
 import { SquarePen, Eye } from "lucide-react";
 import Category from "./Category";
 import poster1 from "./../assets/poster.jpg";
+import UserInfo from "./UserInfo";
 
 function BlogCard({
   _id,
@@ -46,14 +47,11 @@ function BlogCard({
         <>
           <div className="flex items-center gap-2 mb-2">
             <div className="text-sm text-gray-500 mt-1 flex items-center gap-2">
-              <span className="flex items-center justify-center w-10 h-10 text-2xl rounded-full bg-teal-600 text-white font-semibold mr-2 shadow-sm">
-                {author.name.substring(0, 1)}
-              </span>{" "}
-              <div>
-                {" "}
-                <p className="font-medium text-gray-700">{author.name}</p>
-                <p className="italic text-gray-500">{author.email}</p>
-              </div>
+              <UserInfo
+                InitialAvatar={author?.name}
+                userName={author?.name}
+                UserInfoContent={author?.email}
+              />
             </div>
             <p className="ml-auto hidden sm:inline-block">
               <Category category={category} />

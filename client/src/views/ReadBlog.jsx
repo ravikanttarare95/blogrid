@@ -5,6 +5,7 @@ import axios from "axios";
 import Category from "./../components/Category.jsx";
 import MarkdownEditor from "@uiw/react-markdown-editor";
 import toast from "react-hot-toast";
+import UserInfo from "./../components/UserInfo.jsx";
 
 function ReadBlog() {
   const { slug } = useParams();
@@ -86,23 +87,28 @@ function ReadBlog() {
         className="mt-8"
       />
 
-      <div>
-        <h3 className="text-2xl font-semibold mt-10">Comments:</h3>
-        {comments ? (
-          <>
-            {comments.map((comment, index) => {
-              return (
-                <div key={index}>
-                  <br />
-                  <p>{comment.user.name}</p>
-                  <p className="ml-5">{comment.content}</p>
-                  <hr />
-                </div>
-              );
-            })}
-          </>
+      <div className="mt-10">
+        <h3 className="text-2xl font-semibold mb-6 border-b pb-2">Comments:</h3>
+
+        {comments && comments.length > 0 ? (
+          <div className="space-y-4">
+            {comments.map((comment, index) => (
+              <div
+                key={index}
+                className="flex items-start gap-3 p-4 border-b border-gray-200 bg-white"
+              >
+                <UserInfo
+                  InitialAvatar={comment?.user?.name}
+                  userName={comment.user.name}
+                  UserInfoContent={comment.content}
+                />
+              </div>
+            ))}
+          </div>
         ) : (
-          ""
+          <p className="text-gray-500 mt-4">
+            No comments yet. Be the first to comment!
+          </p>
         )}
       </div>
     </div>
