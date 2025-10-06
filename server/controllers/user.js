@@ -25,17 +25,18 @@ const postSignup = async (req, res) => {
 
   if (existingUser) {
     res.status(409).json({
+      // HTTP status code 409: Conflict
       success: false,
       message: `User with email ${email} already exists`,
     });
   }
 
-  const nameRegexTest = /^[A-Za-z\s]{2,30}$/;
-  const emailRegexTest = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-  const passwordRegexTest =
+  const nameRegexPattern = /^[A-Za-z\s]{2,30}$/;
+  const emailRegexPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  const passwordRegexPattern =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
-  if (nameRegexTest.test(name) === false) {
+  if (nameRegexPattern.test(name) === false) {
     return res.status(400).json({
       success: false,
       message:
@@ -43,14 +44,14 @@ const postSignup = async (req, res) => {
     });
   }
 
-  if (emailRegexTest.test(email) === false) {
+  if (emailRegexPattern.test(email) === false) {
     return res.status(400).json({
       success: false,
       message: "Please enter a valid email address.",
     });
   }
 
-  if (passwordRegexTest.test(password) === false) {
+  if (passwordRegexPattern.test(password) === false) {
     return res.status(400).json({
       success: false,
       message:
@@ -82,7 +83,7 @@ const postLogin = async (req, res) => {
     const existingUser = await User.findOne({
       email,
       password: md5(password),
-    }).select("_id name email"); //---IMPORTANT---//
+    }).select("_id name email"); //---IMPORTANT: Use Carefully: May Leak user's secrete detail like (passwword)---//
 
     if (!existingUser) {
       return res.status(401).json({

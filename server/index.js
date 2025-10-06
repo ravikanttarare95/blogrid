@@ -46,7 +46,7 @@ app.get("/", (req, res) => {
 
 const jwtCheck = (req, res, next) => {
   req.user = null; /////why null
-  const { authorization } = req.headers;
+  const { authorization } = req.headers; // Authorization: Bearer token
 
   if (!authorization) {
     res.json({
