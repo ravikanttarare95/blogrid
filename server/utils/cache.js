@@ -24,8 +24,12 @@ const getCache = async (key) => {
   return JSON.parse(value);
 };
 
-const clearCache = async () => {
-  await client.sendCommand(["FLUSHALL"]);
+const clearCache = async (key = null) => {
+  if (key) {
+    await client.del(key);
+  } else {
+    await client.sendCommand(["FLUSHALL"]);
+  }
 };
 
 export { setCache, getCache, clearCache };

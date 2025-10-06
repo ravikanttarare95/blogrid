@@ -8,7 +8,7 @@ import UserInfo from "./UserInfo";
 import axios from "axios";
 import toast from "react-hot-toast";
 
-function BlogCard({
+function  BlogCard({
   _id,
   title,
   content,

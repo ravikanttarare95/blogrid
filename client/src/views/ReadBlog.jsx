@@ -68,14 +68,21 @@ function ReadBlog() {
   };
 
   const increaseLikes = async () => {
-    const response = await axios.post(
-      `${import.meta.env.VITE_API_URL}/blogs/${slug}/likes`,
-      {},
-      { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
-    );
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/blogs/${slug}/likes`,
+        {},
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        }
+      );
 
-    if (response) {
-      getBlogBySlug();
+      if (response) {
+        getBlogBySlug();
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Login required");
     }
   };
 

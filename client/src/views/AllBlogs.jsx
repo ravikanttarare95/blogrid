@@ -15,7 +15,7 @@ function AllBlogs() {
 
   useEffect(() => {
     fetchAllBlogs();
-  }, [user]);
+  }, [user]); ///////// why [user]
 
   const fetchAllBlogs = async () => {
     try {

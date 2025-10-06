@@ -1,4 +1,6 @@
+import { populate } from "dotenv";
 import Blog from "./../models/Blog.js";
+// import { setCache, getCache, clearCache } from "./../utils/cache.js";
 
 const postBlogs = async (req, res) => {
   const { title, content, category } = req.body;
@@ -23,9 +25,12 @@ const postBlogs = async (req, res) => {
 
   savedBlog.slug = `${savedBlog?.title.replace(/ /g, "-").toLowerCase()}-${
     savedBlog._id
-  }`.replace(/[^\w-]+/g, "");
+  }`.replace(/[^\w-]+/g, ""); //// remove everything except (A-Z, a-z, 0-9, _, -)
 
   await savedBlog.save();
+
+  // await clearCache(`blogs_author_${user.id}`);
+  // await clearCache("blogs_public");
 
   res.json({
     success: true,
@@ -43,17 +48,30 @@ const fetchBlogs = async (req, res) => {
       condition.push({ author: authorId });
     }
 
+    // const cacheKey = authorId ? `blogs_author_${authorId}` : "blogs_public"; /////
+
+    // const cached = await getCache(cacheKey);
+    // if (cached) {
+    //   res.json({
+    //     success: true,
+    //     data: cached,
+    //     message: "Blogs fetched successfully (from cache).",
+    //   });
+    // } else {
     const blogs = await Blog.find({
       $or: condition,
     })
       .populate("author", "_id name email")
-      .sort({ status: 1, updatedAt: -1 }); // important
+      .sort({ status: 1, updatedAt: -1 }); // important- status (1) is string it will sort with respect to A-Z  and updatedAt (-1) is number, it will sort with large-small number
+
+    // await setCache(cacheKey, blogs);
 
     res.json({
       success: true,
       data: blogs,
       message: "Blogs fetched successfully.",
     });
+    // }
   } catch (error) {
     console.log("Error fetching blogs:", error);
     res.status(500).json({
@@ -94,7 +112,7 @@ const putEditBlogBySlug = async (req, res) => {
         message: "Blog not found",
       });
     }
-
+    // If anyone unauthorized opens edit page directly from URl Path and tries to update the blog then
     if (existingBlog.author.toString() !== user.id) {
       return res.status(403).json({
         success: false,
@@ -118,6 +136,10 @@ const putEditBlogBySlug = async (req, res) => {
       }
     );
     //  ({ slug: slug });
+
+    // await clearCache(`blogs_author_${user.id}`);
+    // await clearCache("blogs_public");
+
     res.json({
       success: true,
       message: "Blog updated successfully.",
@@ -156,6 +178,9 @@ const patchPublishBlogBySlug = async (req, res) => {
       publishedAt: new Date(),
     }
   );
+
+  // await clearCache(`blogs_author_${user.id}`);
+  // await clearCache("blogs_public");
 
   if (published) {
     res.json({

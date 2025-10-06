@@ -63,7 +63,7 @@ function NewBlog() {
           </h1>
 
           <Button
-            btnTitle="Save"
+            btnTitle="Create"
             btnVariant="primary"
             btnSize="md"
             type="button"
