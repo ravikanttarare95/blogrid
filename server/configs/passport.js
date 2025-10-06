@@ -2,6 +2,7 @@ import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import passport from "passport";
 import dotenv from "dotenv";
 dotenv.config();
+import User from "./../models/User.js";
 
 passport.use(
   new GoogleStrategy(
@@ -11,9 +12,31 @@ passport.use(
       callbackURL: "https://blogrid-api.onrender.com/auth/google/callback",
     },
     async (accessToken, refreshToken, profile, cb) => {
-      User.findOrCreate({ googleId: profile.id }, function (err, user) {
-        return cb(err, user);
-      });
+      try {
+        let user = await User.findOne({ googleId: profile.id });
+        if (!user) {
+          user = await User.findOne({
+            email: profile.emails[0]?.value.toLowerCase(),
+          });
+
+          if (user) {
+            user.googleId = profile.id;
+            await user.save();
+          } else {
+            user = await User.create({
+              googleId: profile.id,
+              name: profile.displayName,
+              email: profile.emails?.[0]?.value.toLowerCase(),
+              avatar: profile.photos?.[0]?.value,
+              isVerified: true,
+              provider: "google",
+            });
+          }
+          return cb(null, err);
+        }
+      } catch (error) {
+        return cb(err, null);
+      }
     }
   )
 );
