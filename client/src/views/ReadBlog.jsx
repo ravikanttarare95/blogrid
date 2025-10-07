@@ -9,6 +9,7 @@ import UserInfo from "./../components/UserInfo.jsx";
 import Button from "./../components/Button.jsx";
 import { getCurrentUser } from "./../utils.js";
 import { ThumbsUp, MessageCircle, Forward } from "lucide-react";
+import { Link as ScrollLink, Element as ScrollElement } from "react-scroll";
 
 function ReadBlog() {
   const [inUser, setInUser] = useState(null);
@@ -127,9 +128,13 @@ function ReadBlog() {
         >
           <ThumbsUp className="text-teal-500" /> {blog.likes}
         </span>
-        <span className="flex items-center gap-2">
+        <ScrollLink
+          to="comments-section"
+          smooth={true}
+          className="flex items-center gap-2 cursor-pointer"
+        >
           <MessageCircle className="text-teal-500" /> {comments.length}
-        </span>
+        </ScrollLink>
       </div>
 
       <div className="mt-8 max-w-none">
@@ -142,6 +147,7 @@ function ReadBlog() {
       <div className="mt-10">
         <h3 className="text-2xl font-semibold mb-6 border-b pb-2">Comments:</h3>
 
+        <ScrollElement name="comments-section"></ScrollElement>
         {inUser ? (
           <div className="mb-6">
             <textarea
