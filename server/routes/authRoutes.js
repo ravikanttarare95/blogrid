@@ -4,6 +4,7 @@ dotenv.config();
 import jwt from "jsonwebtoken";
 import passport from "passport";
 import jwtCheck from "./../middlewares/jwtCheck.js";
+import User from "./../models/User.js";
 const authRouter = express.Router();
 // After clicking Login with Google. Redirect to Google login
 authRouter.get(
@@ -31,8 +32,20 @@ authRouter.get(
   }
 );
 
-authRouter.get("/me", jwtCheck, (req, res) => {
-  res.json({ success: true, user: req.user });
+authRouter.get("/me", jwtCheck, async (req, res) => {
+  try {
+    // Fetch the full user object from DB using id from JWT
+    const user = await User.findById(req.user.id).select("_id name email");
+    if (!user) {
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
+    }
+    res.json({ success: true, user });
+  } catch (err) {
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+  // res.json({ success: true, user: req.user });
 });
 
 export default authRouter;

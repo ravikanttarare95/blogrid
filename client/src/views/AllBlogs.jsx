@@ -45,6 +45,7 @@ function AllBlogs() {
             <p className="text-3xl sm:text-4xl font-semibold text-gray-800">
               Hello!{" "}
               <span className="text-teal-600 font-bold">{user.name}</span>
+              {console.log(user)}
             </p>
           ) : (
             <p className="text-xl sm:text-2xl font-medium text-gray-600">

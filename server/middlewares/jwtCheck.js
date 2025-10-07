@@ -1,9 +1,11 @@
+import jwt from "jsonwebtoken";
+
 const jwtCheck = (req, res, next) => {
   req.user = null; /////why null
   const { authorization } = req.headers; // Authorization: Bearer token
 
   if (!authorization) {
-    res.json({
+      return res.status(401).json({
       success: false,
       message: "Authorization token missing",
     });
