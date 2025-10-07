@@ -5,6 +5,8 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import Button from "./../components/Button";
 import { FaSignInAlt, FaUserPlus } from "react-icons/fa";
+import GoogleLogo from "./../assets/google-logo.png";
+import OrDevider from "./../components/OrDevider.jsx";
 
 function SignUp() {
   const [user, setUser] = useState({
@@ -49,6 +51,27 @@ function SignUp() {
             handleSignUp();
           }}
         >
+          <Button
+            type={"button"}
+            btnTitle={
+              <div className="flex items-center justify-center gap-3">
+                <img src={GoogleLogo} alt="Google Logo" className="w-5 h-5" />
+                <span className="text-gray-600 font-medium">
+                  Continue with Google
+                </span>
+              </div>
+            }
+            btnVariant="secondary"
+            btnSize="md"
+            onBtnClick={() => {
+              window.open(
+                `${import.meta.env.VITE_API_URL}/auth/google`,
+                "_self"
+              );
+            }}
+            customStyle="!border-teal-100"
+          />
+          <OrDevider />
           <Input
             type="text"
             id={"input-name"}
@@ -70,7 +93,6 @@ function SignUp() {
             value={user.password}
             onChange={(e) => setUser({ ...user, password: e.target.value })}
           />
-
           <Button
             type="submit"
             btnVariant="primary"

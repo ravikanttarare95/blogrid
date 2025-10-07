@@ -1,9 +1,11 @@
-import React, { use, useState } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router";
 import Input from "./../components/Input";
 import Button from "./../components/Button";
 import axios from "axios";
 import toast from "react-hot-toast";
+import GoogleLogo from "./../assets/google-logo.png";
+import OrDevider from "./../components/OrDevider";
 
 function Login() {
   const [user, setUser] = useState({
@@ -36,7 +38,7 @@ function Login() {
         }, 2000);
       }
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(error.response?.data?.message || "Login failed");
     }
   };
   return (
@@ -48,14 +50,6 @@ function Login() {
         <p className="text-gray-600 text-xl mb-5">
           The habit of writing creates the writer
         </p>
-        <Button
-          btnTitle={" Login with Google"}
-          btnVariant={"secondary"}
-          btnSize={"md"}
-          onBtnClick={() => {
-            window.open("http://localhost:8080/auth/google", "_self");
-          }}
-        />
       </div>
 
       <div className="w-full max-w-md bg-white shadow-lg rounded-xl p-8 border border-gray-100">
@@ -66,6 +60,27 @@ function Login() {
             handleLogin();
           }}
         >
+          <Button
+            type={"button"}
+            btnTitle={
+              <div className="flex items-center justify-center gap-3">
+                <img src={GoogleLogo} alt="Google Logo" className="w-5 h-5" />
+                <span className="text-gray-600 font-medium">
+                  Login with Google
+                </span>
+              </div>
+            }
+            btnVariant="secondary"
+            btnSize="md"
+            onBtnClick={() => {
+              window.open(
+                `${import.meta.env.VITE_API_URL}/auth/google`,
+                "_self"
+              );
+            }}
+            customStyle="!border-teal-100"
+          />
+          <OrDevider />
           <Input
             type="email"
             placeholder="Email"
@@ -78,19 +93,24 @@ function Login() {
             value={user.password}
             onChange={(e) => setUser({ ...user, password: e.target.value })}
           />
-
-          <Button type="submit" btnVariant="primary" btnTitle="Login" />
+          <div className="w-full">
+            <Button
+              type="submit"
+              btnVariant="primary"
+              btnTitle="Login"
+              customStyle="!w-full"
+            />
+            <div className="text-center mt-5 text-gray-500 text-sm">
+              Don’t have an account?{" "}
+              <Link
+                to="/signup"
+                className="text-teal-600 hover:underline font-medium"
+              >
+                Sign Up
+              </Link>
+            </div>
+          </div>
         </form>
-
-        <div className="text-center mt-5 text-gray-500 text-sm">
-          Don’t have an account?{" "}
-          <Link
-            to="/signup"
-            className="text-teal-600 hover:underline font-medium"
-          >
-            Sign Up
-          </Link>
-        </div>
       </div>
     </div>
   );
