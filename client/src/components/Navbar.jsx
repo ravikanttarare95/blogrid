@@ -28,7 +28,7 @@ function Navbar() {
         <div className="flex items-center justify-between w-full md:w-auto">
           <div className="flex items-center gap-3">
             <img src={Logo} alt="Logo" className="w-16 rounded-lg" />
-            <span className="text-2xl font-extrabold bg-gradient-to-r from-teal-500 to-green-400 bg-clip-text text-transparent">
+            <span className="text-2xl font-extrabold bg-gradient-to-r from-teal-600 to-green-600 bg-clip-text text-transparent">
               BloGrid
             </span>
           </div>

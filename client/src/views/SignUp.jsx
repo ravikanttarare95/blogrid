@@ -7,6 +7,7 @@ import Button from "./../components/Button";
 import { FaSignInAlt, FaUserPlus } from "react-icons/fa";
 import GoogleLogo from "./../assets/google-logo.png";
 import OrDevider from "./../components/OrDevider.jsx";
+import { CircleUserRound } from "lucide-react";
 
 function SignUp() {
   const [user, setUser] = useState({
@@ -35,7 +36,7 @@ function SignUp() {
   return (
     <div className="min-h-screen flex flex-col md:flex-row items-center justify-center gap-10 px-6 py-10 bg-gradient-to-br from-teal-50 via-white to-green-50">
       <div className="max-w-2xl text-center md:text-left">
-        <h1 className="text-5xl pb-2 font-extrabold mb-4 bg-gradient-to-r from-teal-600 to-green-500 bg-clip-text text-transparent">
+        <h1 className="text-5xl pb-2 font-extrabold mb-4 bg-gradient-to-r from-teal-600 to-green-600 bg-clip-text text-transparent">
           <Link to="/">BloGrid</Link>
         </h1>
         <p className="text-gray-600 text-xl">
@@ -51,6 +52,10 @@ function SignUp() {
             handleSignUp();
           }}
         >
+          {" "}
+          <div className="mx-auto flex items-center justify-center rounded-full shadow-lg mb-3">
+            <CircleUserRound size={40} className="text-teal-600 " />
+          </div>
           <Button
             type={"button"}
             btnTitle={
@@ -69,7 +74,7 @@ function SignUp() {
                 "_self"
               );
             }}
-            customStyle="!border-teal-100"
+            customStyle="!border-slate-300 !bg-transparent"
           />
           <OrDevider />
           <Input

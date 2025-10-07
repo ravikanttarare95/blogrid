@@ -44,7 +44,9 @@ function AllBlogs() {
           {user ? (
             <p className="text-3xl sm:text-4xl font-semibold text-gray-800">
               Hello!{" "}
-              <span className="text-teal-600 font-bold">{user.name}</span>
+              <span className="bg-gradient-to-r from-teal-600 to-green-600 bg-clip-text text-transparent font-bold">
+                {user.name}
+              </span>
               {console.log(user)}
             </p>
           ) : (
