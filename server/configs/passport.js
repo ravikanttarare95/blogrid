@@ -9,7 +9,7 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "https://blogrid-api.onrender.com/auth/google/callback",
+      callbackURL: `${process.env.API_URL}/auth/google/callback`,
     },
     async (accessToken, refreshToken, profile, cb) => {
       try {
@@ -32,11 +32,12 @@ passport.use(
               provider: "google",
             });
           }
-          return cb(null, err);
-        }
+        } 
+        return cb(null, user);
       } catch (error) {
-        return cb(err, null);
+        return cb(error, null);
       }
     }
   )
 );
+export default passport;

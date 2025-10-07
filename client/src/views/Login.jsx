@@ -45,9 +45,17 @@ function Login() {
         <h1 className="text-5xl pb-2 font-extrabold mb-4 bg-gradient-to-r from-teal-600 to-green-500 bg-clip-text text-transparent">
           <Link to="/">BloGrid</Link>
         </h1>
-        <p className="text-gray-600 text-xl">
+        <p className="text-gray-600 text-xl mb-5">
           The habit of writing creates the writer
         </p>
+        <Button
+          btnTitle={" Login with Google"}
+          btnVariant={"secondary"}
+          btnSize={"md"}
+          onBtnClick={() => {
+            window.open("http://localhost:8080/auth/google", "_self");
+          }}
+        />
       </div>
 
       <div className="w-full max-w-md bg-white shadow-lg rounded-xl p-8 border border-gray-100">

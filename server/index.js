@@ -21,11 +21,15 @@ import {
 import { postCommentBySlug, getCommentBySlug } from "./controllers/comment.js";
 
 import Blog from "./models/Blog.js";
+import authRouter from "./routes/authRoutes.js";
+import jwtCheck from "./middlewares/jwtCheck.js";
+
+import passport from "./configs/passport.js";
 
 const app = express();
 app.use(express.json());
 app.use(cors());
-
+app.use(passport.initialize());
 const connectDB = async () => {
   try {
     const conn = await mongoose.connect(process.env.MONGODB_URL);
@@ -43,29 +47,6 @@ app.get("/", (req, res) => {
     message: "Server is healthy and running",
   });
 });
-
-const jwtCheck = (req, res, next) => {
-  req.user = null; /////why null
-  const { authorization } = req.headers; // Authorization: Bearer token
-
-  if (!authorization) {
-    res.json({
-      success: false,
-      message: "Authorization token missing",
-    });
-  }
-
-  try {
-    const token = authorization.split(" ")[1];
-    const decode = jwt.verify(token, process.env.JWT_SECRET);
-
-    req.user = decode;
-
-    next();
-  } catch (error) {
-    return res.status(401).json({ message: "Invalid JWT Token" });
-  }
-};
 
 const increaseViewCount = async (req, res, next) => {
   const { slug } = req.params;
@@ -93,6 +74,8 @@ app.patch("/blogs/:slug/publish", jwtCheck, patchPublishBlogBySlug);
 app.post("/blogs/:slug/comments", jwtCheck, postCommentBySlug);
 app.get("/blogs/:slug/comments", getCommentBySlug);
 app.post("/blogs/:slug/likes", jwtCheck, postlikeBySlug);
+
+app.use("/auth", authRouter);
 
 const PORT = process.env.PORT || 8080;
 

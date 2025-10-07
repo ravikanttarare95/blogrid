@@ -9,6 +9,8 @@ import ReadBlog from "./views/ReadBlog";
 import { Toaster } from "react-hot-toast";
 
 import { BrowserRouter, Routes, Route } from "react-router";
+import AuthSuccess from "./views/AuthSuccess";
+
 const root = createRoot(document.getElementById("root"));
 root.render(
   <BrowserRouter>
@@ -19,6 +21,7 @@ root.render(
       <Route path="/blog/:slug" element={<ReadBlog />} />
       <Route path="/signup" element={<SignUp />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/auth-success" element={<AuthSuccess />} />
     </Routes>
     <Toaster />
   </BrowserRouter>
