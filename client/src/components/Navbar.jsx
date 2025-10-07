@@ -43,11 +43,11 @@ function Navbar() {
         </div>
 
         <div
-          className={`flex-col md:flex-row md:flex md:items-center md:justify-end w-full gap-6 md:gap-8 transition-all duration-300 overflow-hidden ${
+          className={`border md:border-none border-slate-300 p-4 rounded-lg flex-col md:flex-row md:flex md:items-center md:justify-end w-full gap-6 md:gap-8 transition-all duration-300 overflow-hidden ${
             isOpen ? "flex" : "hidden"
           }`}
         >
-          <div className="flex flex-col md:flex-row gap-6 md:gap-8 justify-center items-center">
+          <div className="flex flex-col md:flex-row gap-6 md:gap-8 ">
             {NAV_ITEMS.map(({ to, navItemTitle }) => (
               <Link
                 key={to}
@@ -60,24 +60,34 @@ function Navbar() {
           </div>
 
           {user ? (
-            <Button
-              type="button"
-              btnVariant="primary"
-              customStyle="!bg-gradient-to-br !from-red-400 !via-red-500 !to-red-600"
-              btnTitle={
-                <>
-                  <IoMdLogOut className="w-5 h-5" />
-                  Logout
-                </>
-              }
-              btnSize="sm"
-              onBtnClick={() => {
-                localStorage.clear();
-                setUser(null);
-                toast.success("Logout successful");
-                window.location.href = "/";
-              }}
-            />
+            <>
+              <div className="flex items-center gap-3">
+                <img
+                  src={user?.avatar}
+                  alt="User Avatar"
+                  className="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover border-2 border-teal-500"
+                />
+                <span className="font-medium text-gray-800">{user?.name}</span>
+              </div>
+              <Button
+                type="button"
+                btnVariant="primary"
+                customStyle="!bg-gradient-to-br !from-red-400 !via-red-500 !to-red-600 !w-fit"
+                btnTitle={
+                  <>
+                    <IoMdLogOut className="w-5 h-5" />
+                    Logout
+                  </>
+                }
+                btnSize="sm"
+                onBtnClick={() => {
+                  localStorage.clear();
+                  setUser(null);
+                  toast.success("Logout successful");
+                  window.location.href = "/";
+                }}
+              />
+            </>
           ) : (
             <div className="flex flex-col md:flex-row gap-4 items-center">
               <Button

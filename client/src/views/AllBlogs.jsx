@@ -47,7 +47,6 @@ function AllBlogs() {
               <span className="bg-gradient-to-r from-teal-600 to-green-600 bg-clip-text text-transparent font-bold">
                 {user.name}
               </span>
-              {console.log(user)}
             </p>
           ) : (
             <p className="text-xl sm:text-2xl font-medium text-gray-600">

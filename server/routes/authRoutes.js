@@ -35,7 +35,9 @@ authRouter.get(
 authRouter.get("/me", jwtCheck, async (req, res) => {
   try {
     // Fetch the full user object from DB using id from JWT
-    const user = await User.findById(req.user.id).select("_id name email");
+    const user = await User.findById(req.user.id).select(
+      "_id name email avatar"
+    );
     if (!user) {
       return res
         .status(404)

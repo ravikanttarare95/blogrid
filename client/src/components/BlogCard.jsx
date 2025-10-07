@@ -73,6 +73,7 @@ function  BlogCard({
               InitialAvatar={author?.name}
               userName={author?.name}
               UserInfoContent={author?.email}
+            
             />
           </div>
           <p className="ml-auto hidden sm:inline-block">
