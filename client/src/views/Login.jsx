@@ -49,7 +49,7 @@ function Login() {
           <Link to="/">BloGrid</Link>
         </h1>
         <p className="text-gray-600 text-xl mb-5">
-          The habit of writing creates the writer
+          The habit of writing creates the great writer
         </p>
       </div>
 

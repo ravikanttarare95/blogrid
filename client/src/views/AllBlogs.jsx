@@ -4,6 +4,7 @@ import Navbar from "./../components/Navbar.jsx";
 import axios from "axios";
 import toast from "react-hot-toast";
 import BlogCard from "./../components/BlogCard.jsx";
+import Footer from "./../components/Footer.jsx";
 
 function AllBlogs() {
   const [user, setUser] = useState(null);
@@ -99,6 +100,7 @@ function AllBlogs() {
           </p>
         )}
       </div>
+      <Footer/>
     </>
   );
 }

@@ -7,6 +7,7 @@ import { IoMdLogOut } from "react-icons/io";
 import Button from "./Button";
 import { getCurrentUser } from "./../utils.js";
 import toast from "react-hot-toast";
+import { SquarePen } from "lucide-react";
 
 function Navbar() {
   const [user, setUser] = useState(null);
@@ -15,7 +16,15 @@ function Navbar() {
 
   const NAV_ITEMS = [
     { to: "/", navItemTitle: "Home" },
-    { to: "/new", navItemTitle: "Create Blogs" },
+    {
+      to: "/new",
+      navItemTitle: (
+        <span className="flex gap-2 items-center">
+          <SquarePen size={20} />
+          Create
+        </span>
+      ),
+    },
   ];
   const [isNavbarVisible, setIsNavbarVisible] = useState(true);
   const [lastScroll, setLastScroll] = useState(0);

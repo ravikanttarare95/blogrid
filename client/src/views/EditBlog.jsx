@@ -7,6 +7,7 @@ import Input from "./../components/Input.jsx";
 import { BLOG_CATEGORIES } from "./../constants.js";
 import { useNavigate, useParams } from "react-router";
 import axios from "axios";
+import Footer from "./../components/Footer.jsx";
 
 function EditBlog() {
   const navigate = useNavigate();
@@ -136,6 +137,7 @@ function EditBlog() {
           />
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

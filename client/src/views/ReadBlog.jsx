@@ -11,6 +11,7 @@ import { getCurrentUser } from "./../utils.js";
 import { ThumbsUp, MessageCircle, Forward } from "lucide-react";
 import { Link as ScrollLink, Element as ScrollElement } from "react-scroll";
 import Navbar from "../components/Navbar.jsx";
+import Footer from "./../components/Footer.jsx";
 
 function ReadBlog() {
   const [inUser, setInUser] = useState(null);
@@ -209,6 +210,7 @@ function ReadBlog() {
           )}
         </div>
       </div>
+      <Footer />
     </>
   );
 }

@@ -8,6 +8,7 @@ import { BLOG_CATEGORIES } from "./../constants.js";
 import { getCurrentUser } from "../utils.js";
 import axios from "axios";
 import { useNavigate } from "react-router";
+import Footer from "./../components/Footer.jsx";
 
 function NewBlog() {
   const navigate = useNavigate();
@@ -106,6 +107,7 @@ function NewBlog() {
           />
         </div>
       </div>
+      <Footer />
     </div>
   );
 }
