@@ -17,14 +17,37 @@ function Navbar() {
     { to: "/", navItemTitle: "Home" },
     { to: "/new", navItemTitle: "Create Blogs" },
   ];
+  const [isNavbarVisible, setIsNavbarVisible] = useState(true);
+  const [lastScroll, setLastScroll] = useState(0);
+
+  const handleScroll = () => {
+    setLastScroll((prevScroll) => {
+      const currentScrollY = window.scrollY;
+
+      if (currentScrollY > prevScroll) {
+        setIsNavbarVisible(false);
+      } else {
+        setIsNavbarVisible(true);
+      }
+
+      return currentScrollY;
+    });
+  };
 
   useEffect(() => {
     setUser(getCurrentUser());
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
-    <div className="sticky top-0 z-50 lg:pt-0 transition-all duration-300">
-      <nav className="lg:w-[95%] mx-auto lg:rounded-full bg-white text-gray-800 shadow-md px-6 py-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4 transition-all duration-300">
+    <div
+      className={`${
+        isNavbarVisible ? "translate-y-0" : "-translate-y-full"
+      } sticky top-0 z-50 lg:pt-0 transition-all duration-300`}
+    >
+      <nav className="lg:w-[95%] mx-auto lg:rounded-full bg-white text-gray-800 shadow-md px-6 py-1 flex flex-col md:flex-row md:items-center md:justify-between gap-4 transition-all duration-300">
         <div className="flex items-center justify-between w-full md:w-auto">
           <div className="flex items-center gap-3">
             <img src={Logo} alt="Logo" className="w-16 rounded-lg" />
