@@ -5,6 +5,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import BlogCard from "./../components/BlogCard.jsx";
 import Footer from "./../components/Footer.jsx";
+import BlogCardSkeleton from "./../components/BlogCardSkeleton.jsx";
 
 function AllBlogs() {
   const [user, setUser] = useState(null);
@@ -95,12 +96,15 @@ function AllBlogs() {
             );
           })
         ) : (
-          <p className="text-center text-gray-500 mt-10 text-lg">
-            No blogs found. Check back later!
-          </p>
+          <>
+            {" "}
+            <BlogCardSkeleton /> <BlogCardSkeleton /> <BlogCardSkeleton />{" "}
+            <BlogCardSkeleton /> <BlogCardSkeleton /> <BlogCardSkeleton />{" "}
+            <BlogCardSkeleton /> <BlogCardSkeleton />
+          </>
         )}
       </div>
-      <Footer/>
+      <Footer />
     </>
   );
 }
