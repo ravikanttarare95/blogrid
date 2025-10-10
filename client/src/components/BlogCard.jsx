@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 import Button from "./Button";
 import { useNavigate } from "react-router";
 import { SquarePen, Eye, ThumbsUp, MessageCircle } from "lucide-react";
-import Category from "./Category";
 import poster1 from "./../assets/poster.jpg";
 import UserInfo from "./UserInfo";
 import axios from "axios";
 import toast from "react-hot-toast";
+import CategoryBadges from "./../badges/CategoryBadges";
 
-function  BlogCard({
+function BlogCard({
   _id,
   title,
   content,
@@ -61,9 +61,9 @@ function  BlogCard({
           </span>
         )}
 
-        <p className="absolute bottom-3 right-3 sm:hidden z-20">
-          <Category category={category} />
-        </p>
+        <div className="absolute bottom-3 right-3 sm:hidden z-20">
+          <CategoryBadges category={category} />
+        </div>
       </div>
 
       <div className="p-6 flex flex-col justify-between flex-1">
@@ -73,12 +73,11 @@ function  BlogCard({
               InitialAvatar={author?.name}
               userName={author?.name}
               UserInfoContent={author?.email}
-            
             />
           </div>
-          <p className="ml-auto hidden sm:inline-block">
-            <Category category={category} />
-          </p>
+          <div className="ml-auto hidden sm:inline-block">
+            <CategoryBadges category={category} />
+          </div>
         </div>
         <h2 className="text-xl sm:text-3xl py-1 font-semibold text-gray-900 hover:text-teal-600 transition-colors duration-200 line-clamp-2">
           {title}

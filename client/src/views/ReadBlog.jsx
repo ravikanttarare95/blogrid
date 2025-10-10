@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import poster from "./../assets/poster.jpg";
 import { useParams, useNavigate } from "react-router";
 import axios from "axios";
-import Category from "./../components/Category.jsx";
+import CategoryBadges from "./../badges/CategoryBadges.jsx";
 import MarkdownEditor from "@uiw/react-markdown-editor";
 import toast from "react-hot-toast";
 import UserInfo from "./../components/UserInfo.jsx";
@@ -10,7 +10,7 @@ import Button from "./../components/Button.jsx";
 import { getCurrentUser } from "./../utils.js";
 import { ThumbsUp, MessageCircle, Forward } from "lucide-react";
 import { Link as ScrollLink, Element as ScrollElement } from "react-scroll";
-import Navbar from "../components/Navbar.jsx";
+import Navbar from "./../components/Navbar.jsx";
 import Footer from "./../components/Footer.jsx";
 
 function ReadBlog() {
@@ -98,7 +98,6 @@ function ReadBlog() {
 
   return (
     <>
-      {" "}
       <Navbar />
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <div className="relative h-72 sm:h-96 rounded-lg overflow-hidden shadow-lg">
@@ -110,7 +109,7 @@ function ReadBlog() {
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent"></div>
 
           <span className="absolute top-4 right-4 z-20">
-            <Category category={blog.category} />
+            <CategoryBadges category={blog?.category} />
           </span>
 
           <div className="absolute bottom-6 left-6 z-20 text-white">
