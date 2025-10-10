@@ -97,10 +97,9 @@ function AllBlogs() {
           })
         ) : (
           <>
-            {" "}
-            <BlogCardSkeleton /> <BlogCardSkeleton /> <BlogCardSkeleton />{" "}
-            <BlogCardSkeleton /> <BlogCardSkeleton /> <BlogCardSkeleton />{" "}
-            <BlogCardSkeleton /> <BlogCardSkeleton />
+            {Array.from({ length: 5 }).map((_, index) => (
+              <BlogCardSkeleton key={index} />
+            ))}
           </>
         )}
       </div>

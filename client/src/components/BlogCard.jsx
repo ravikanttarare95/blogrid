@@ -44,15 +44,15 @@ function BlogCard({
   }, []);
 
   return (
-    <div className="bg-white border border-gray-200 rounded-md shadow-md hover:shadow-xl transition-shadow duration-300 flex flex-col sm:flex-row overflow-hidden mb-10 max-w-5xl mx-auto">
-      <div className="relative w-full sm:w-72 md:w-80 flex-shrink-0 overflow-hidden">
+    <div className="bg-white border border-gray-200 rounded-md shadow-md hover:shadow-xl transition-shadow duration-300 flex flex-col md:flex-row overflow-hidden mb-10 max-w-5xl mx-auto">
+      <div className="relative w-full  md:w-80 flex-shrink-0 overflow-hidden">
         <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-black/10 to-transparent z-10"></div>
         <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-black/20 to-transparent z-10"></div>
 
         <img
           src={poster1}
           alt={title}
-          className="w-full h-48 sm:h-full object-cover transition-transform duration-500 hover:scale-105"
+          className="w-full h-48 md:h-full object-cover transition-transform duration-500 hover:scale-105"
         />
 
         {status !== "published" && (
