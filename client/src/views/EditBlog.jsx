@@ -8,6 +8,7 @@ import { BLOG_CATEGORIES } from "./../constants.js";
 import { useNavigate, useParams } from "react-router";
 import axios from "axios";
 import Footer from "./../components/Footer.jsx";
+import UploadSection from "./../components/ImgUploadSec.jsx";
 
 function EditBlog() {
   const navigate = useNavigate();
@@ -15,6 +16,7 @@ function EditBlog() {
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState(BLOG_CATEGORIES[0]);
   const [content, setContent] = useState("");
+  const [imgURL, setImgURL] = useState("");
 
   const loadBlogBySlug = async () => {
     try {
@@ -26,6 +28,7 @@ function EditBlog() {
         setTitle(blog.title);
         setCategory(blog.category);
         setContent(blog.content);
+        setImgURL(blog.imgURL);
       }
     } catch (error) {
       console.error("Error fetching blog:", error);
@@ -36,7 +39,7 @@ function EditBlog() {
     try {
       const response = await axios.put(
         `${import.meta.env.VITE_API_URL}/blogs/${slug}`,
-        { title, category, content },
+        { title, category, content, imgURL },
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         }
@@ -126,6 +129,15 @@ function EditBlog() {
               </option>
             ))}
           </select>
+        </div>
+
+        <div className="mb-6 flex flex-col sm:flex-row justify-be gap-6">
+          <UploadSection setImgURL={setImgURL} customStyle={"!w-full"} />
+          <img
+            src={imgURL}
+            alt="Blog Poster"
+            className="w-full h-55 object-cover rounded-lg"
+          />
         </div>
 
         <div className="border border-gray-200 rounded-lg overflow-hidden">

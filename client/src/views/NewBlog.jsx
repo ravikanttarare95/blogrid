@@ -101,15 +101,13 @@ function NewBlog() {
           </select>
         </div>
 
-        <div className="mb-6">
-          <div className="flex flex-col sm:flex-row justify-be gap-6">
-            <UploadSection setImgURL={setImgURL} customStyle={"!w-full"} />
-            <img
-              src={imgURL}
-              alt="Blog Poster"
-              className="w-full h-55 object-cover rounded-lg"
-            />
-          </div>
+        <div className="mb-6 flex flex-col sm:flex-row justify-be gap-6">
+          <UploadSection setImgURL={setImgURL} customStyle={"!w-full"} />
+          <img
+            src={imgURL}
+            alt="Blog Poster"
+            className="w-full h-55 object-cover rounded-lg"
+          />
         </div>
 
         <div className="border border-gray-200 rounded-lg overflow-hidden">

@@ -101,7 +101,7 @@ const fetchBlogsBySlug = async (req, res) => {
 
 const putEditBlogBySlug = async (req, res) => {
   try {
-    const { title, category, content } = req.body;
+    const { title, category, content, imgURL } = req.body;
     const { slug } = req.params;
 
     const { user } = req;
@@ -121,7 +121,7 @@ const putEditBlogBySlug = async (req, res) => {
       });
     }
 
-    if (!title || !content || !category) {
+    if (!title || !content || !category || !imgURL) {
       return res.status(400).json({
         success: false,
         message: "All fields are required",
@@ -134,6 +134,7 @@ const putEditBlogBySlug = async (req, res) => {
         title,
         category,
         content,
+        imgURL,
       }
     );
     //  ({ slug: slug });
