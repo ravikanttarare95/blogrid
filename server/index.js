@@ -26,6 +26,8 @@ import jwtCheck from "./middlewares/jwtCheck.js";
 
 import passport from "./configs/passport.js";
 
+import photokit from "./configs/photokit.js";
+
 const app = express();
 app.use(express.json());
 app.use(cors());
@@ -76,6 +78,13 @@ app.get("/blogs/:slug/comments", getCommentBySlug);
 app.post("/blogs/:slug/likes", jwtCheck, postlikeBySlug);
 
 app.use("/auth", authRouter);
+
+app.get("/imagekit-auth", (req, res) => {
+  const TempCred = photokit.getAuthenticationParameters();
+  if (TempCred) {
+    res.json(TempCred);
+  }
+});
 
 const PORT = process.env.PORT || 8080;
 
