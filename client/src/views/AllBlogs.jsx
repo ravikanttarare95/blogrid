@@ -62,7 +62,7 @@ function AllBlogs() {
         </p>
       </div>
 
-      <div className="p-5 sm:p-8">
+      <div className="p-5 pb-0 sm:pb-0 sm:p-8 flex flex-col gap-10">
         {blogs.length > 0 ? (
           blogs?.map((blog) => {
             const {

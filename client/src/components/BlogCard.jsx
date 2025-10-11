@@ -44,8 +44,8 @@ function BlogCard({
   }, []);
 
   return (
-    <div className="bg-white border border-gray-200 rounded-md shadow-md hover:shadow-xl transition-shadow duration-300 flex flex-col md:flex-row overflow-hidden mb-10 max-w-5xl mx-auto">
-      <div className="relative w-full  md:w-80 flex-shrink-0 overflow-hidden">
+    <div className="bg-white w-full border md:h-80 border-gray-200 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 flex flex-col md:flex-row overflow-hidden max-w-5xl mx-auto">
+      <div className="relative w-full  md:w-[40%] lg:w-[35%] flex-shrink-0 overflow-hidden">
         <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-black/10 to-transparent z-10"></div>
         <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-black/20 to-transparent z-10"></div>
 
@@ -66,7 +66,7 @@ function BlogCard({
         </div>
       </div>
 
-      <div className="p-6 flex flex-col justify-between flex-1">
+      <div className="p-6 w-full flex flex-col justify-between ">
         <div className="flex items-center gap-2 mb-3">
           <div className="text-sm text-gray-500 mt-1 flex items-center gap-2">
             <UserInfo
@@ -82,11 +82,11 @@ function BlogCard({
         <h2 className="text-xl sm:text-3xl py-1 font-semibold text-gray-900 hover:text-teal-600 transition-colors duration-200 line-clamp-2">
           {title}
         </h2>
-        <p className="mt-3 text-gray-700 leading-relaxed line-clamp-3">
-          {content.substring(0, 150)}...
+        <p className="mt-3 text-gray-700 leading-relaxed line-clamp-2">
+          {content}
         </p>
 
-        <div className="mt-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+        <div className="mt-4 w-full flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <span className="text-sm text-gray-400">
             {new Date(publishedAt || createdAt).toLocaleDateString("en-US", {
               year: "numeric",

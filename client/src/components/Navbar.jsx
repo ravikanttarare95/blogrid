@@ -30,10 +30,10 @@ function Navbar() {
   const [lastScroll, setLastScroll] = useState(0);
 
   const handleScroll = () => {
-    setLastScroll((prevScroll) => {
+    setLastScroll((lastScroll) => {
       const currentScrollY = window.scrollY;
 
-      if (currentScrollY > prevScroll) {
+      if (currentScrollY > lastScroll) {
         setIsNavbarVisible(false);
       } else {
         setIsNavbarVisible(true);
