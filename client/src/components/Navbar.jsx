@@ -51,12 +51,12 @@ function Navbar() {
   }, []);
 
   return (
-    <div
+    <nav
       className={`${
         isNavbarVisible ? "translate-y-0" : "-translate-y-full"
       } sticky top-0 z-50 lg:pt-0 transition-all duration-300`}
     >
-      <nav className="lg:w-[95%] mx-auto lg:rounded-full bg-white text-gray-800 shadow-md px-6 py-1 flex flex-col md:flex-row md:items-center md:justify-between gap-4 transition-all duration-300">
+      <div className="lg:w-[95%] mx-auto lg:rounded-full bg-white text-gray-800 shadow-md px-6 py-1 flex flex-col md:flex-row md:items-center md:justify-between gap-4 transition-all duration-300">
         <div className="flex items-center justify-between w-full md:w-auto">
           <div className="flex items-center gap-3">
             <img src={Logo} alt="Logo" className="w-16 rounded-lg" />
@@ -75,7 +75,7 @@ function Navbar() {
         </div>
 
         <div
-          className={`border md:border-none border-slate-300 p-4 rounded-lg flex-col md:flex-row md:flex md:items-center md:justify-end w-full gap-6 md:gap-8 transition-all duration-300 overflow-hidden ${
+          className={`border md:border-none border-slate-300 p-4 max-md:mb-5 rounded-lg flex-col md:flex-row md:flex md:items-center md:justify-end w-full gap-6 md:gap-8 transition-all duration-300 overflow-hidden ${
             isOpen ? "flex" : "hidden"
           }`}
         >
@@ -150,8 +150,8 @@ function Navbar() {
             </div>
           )}
         </div>
-      </nav>
-    </div>
+      </div>
+    </nav>
   );
 }
 

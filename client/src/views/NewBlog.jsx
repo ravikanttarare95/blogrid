@@ -9,6 +9,7 @@ import { getCurrentUser } from "../utils.js";
 import axios from "axios";
 import { useNavigate } from "react-router";
 import Footer from "./../components/Footer.jsx";
+import UploadSection from "./../components/ImgUploadSec.jsx";
 
 function NewBlog() {
   const navigate = useNavigate();
@@ -79,10 +80,9 @@ function NewBlog() {
             id="title"
             value={title}
             placeholder="Title"
-            customStyle="bg-gray-50 text-gray-900 border border-gray-200"
+            customStyle="!w-full bg-gray-50 text-gray-900 border border-gray-200"
             onChange={(e) => setTitle(e.target.value)}
           />
-
           <select
             name="select-category"
             id="select-category"
@@ -96,6 +96,10 @@ function NewBlog() {
               </option>
             ))}
           </select>
+        </div>
+
+        <div className="mb-6">
+          <UploadSection onSelectImage={"onSelectImage"} />
         </div>
 
         <div className="border border-gray-200 rounded-lg overflow-hidden">

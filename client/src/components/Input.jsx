@@ -12,13 +12,13 @@ function Input({
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const inputType = type === "password" && isPasswordVisible ? "text" : type;
   return (
-    <div className="relative">
+    <div className="relative w-full">
       <input
         type={inputType}
         id={id}
         placeholder={placeholder}
         value={value}
-        className={` ${customStyle} w-full border border-gray-300 text-gray-700 py-3 px-4 rounded-lg focus:outline-2 focus:outline-teal-400`}
+        className={` ${customStyle} border border-gray-300 text-gray-700 py-3 px-4 rounded-lg focus:outline-2 focus:outline-teal-400`}
         onChange={onChange}
       />
       {type === "password" && (

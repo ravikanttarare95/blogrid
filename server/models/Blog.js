@@ -15,6 +15,7 @@ const blogSchema = new Schema(
     slug: { type: String, require: true, unique: true },
     viewCount: { type: Number, default: 0 },
     likes: { type: Number, default: 0 },
+    imgURL: { type: String },
   },
   { timestamps: true }
 );
