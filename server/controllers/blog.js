@@ -3,10 +3,10 @@ import Blog from "./../models/Blog.js";
 // import { setCache, getCache, clearCache } from "./../utils/cache.js";
 
 const postBlogs = async (req, res) => {
-  const { title, content, category } = req.body;
+  const { title, content, category, imgURL } = req.body;
   const { user } = req;
 
-  if (!title || !content || !category) {
+  if (!title || !content || !category || !imgURL) {
     return res.status(400).json({
       success: false,
       message: "All fields are required",
@@ -17,6 +17,7 @@ const postBlogs = async (req, res) => {
     title,
     content,
     category,
+    imgURL,
     author: user?.id,
     slug: `temp-slug-${Date.now()}-${Math.random().toString()}`,
   });

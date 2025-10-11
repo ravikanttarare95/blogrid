@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import Button from "./Button";
 import { useNavigate } from "react-router";
 import { SquarePen, Eye, ThumbsUp, MessageCircle } from "lucide-react";
-import poster1 from "./../assets/poster.jpg";
 import UserInfo from "./UserInfo";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -20,6 +19,7 @@ function BlogCard({
   slug,
   viewCount,
   likes,
+  imgURL,
 }) {
   const navigate = useNavigate();
   const [comments, setComments] = useState([]);
@@ -50,7 +50,7 @@ function BlogCard({
         <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-black/20 to-transparent z-10"></div>
 
         <img
-          src={poster1}
+          src={imgURL}
           alt={title}
           className="w-full h-48 md:h-full object-cover transition-transform duration-500 hover:scale-105"
         />

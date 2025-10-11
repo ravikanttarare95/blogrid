@@ -18,12 +18,12 @@ function Input({
         id={id}
         placeholder={placeholder}
         value={value}
-        className={` ${customStyle} border border-gray-300 text-gray-700 py-3 px-4 rounded-lg focus:outline-2 focus:outline-teal-400`}
+        className={` ${customStyle} w-full border border-gray-300 text-gray-700 py-3 px-4 rounded-lg focus:outline-2 focus:outline-teal-400`}
         onChange={onChange}
       />
       {type === "password" && (
         <div
-          className="absolute right-0 top-1/2 -translate-1/2 cursor-pointer opacity-60 hover:opacity-80 transition-opacity duration-200"
+          className="absolute right-0 top-1/2 -translate-1/2 cursor-pointer opacity-30 hover:opacity-50 transition-opacity duration-200"
           onClick={() => {
             setIsPasswordVisible(!isPasswordVisible);
           }}

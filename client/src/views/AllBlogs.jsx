@@ -77,6 +77,7 @@ function AllBlogs() {
               slug,
               viewCount,
               likes,
+              imgURL,
             } = blog;
             return (
               <BlogCard
@@ -92,6 +93,7 @@ function AllBlogs() {
                 slug={slug}
                 viewCount={viewCount}
                 likes={likes}
+                imgURL={imgURL}
               />
             );
           })

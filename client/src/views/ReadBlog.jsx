@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import poster from "./../assets/poster.jpg";
+import dummyPoster from "./../assets/dummy-image.png";
 import { useParams, useNavigate } from "react-router";
 import axios from "axios";
 import CategoryBadges from "./../badges/CategoryBadges.jsx";
@@ -102,7 +102,7 @@ function ReadBlog() {
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <div className="relative h-72 sm:h-96 rounded-lg overflow-hidden shadow-lg">
           <img
-            src={poster}
+            src={blog?.imgURL ||dummyPoster}
             alt="Blog Cover"
             className="w-full h-full object-cover"
           />

@@ -10,12 +10,14 @@ import axios from "axios";
 import { useNavigate } from "react-router";
 import Footer from "./../components/Footer.jsx";
 import UploadSection from "./../components/ImgUploadSec.jsx";
+import dummyPoster from "./../assets/dummy-image.png";
 
 function NewBlog() {
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState(BLOG_CATEGORIES[0]);
   const [content, setContent] = useState("");
+  const [imgURL, setImgURL] = useState(dummyPoster);
   const [user, setUser] = useState(null); // on 1st render the default value is null. So, whenever we use user we have to add quwstion mark (?) user?.name- If user has some value then only it will show data. If we don;t use ? then it will give an error.
 
   const saveBlog = async () => {
@@ -26,6 +28,7 @@ function NewBlog() {
           title,
           category,
           content,
+          imgURL,
           // author: user?._id,
         },
         {
@@ -99,15 +102,22 @@ function NewBlog() {
         </div>
 
         <div className="mb-6">
-          <UploadSection onSelectImage={"onSelectImage"} />
+          <div className="flex flex-col sm:flex-row justify-be gap-6">
+            <UploadSection setImgURL={setImgURL} customStyle={"!w-full"} />
+            <img
+              src={imgURL}
+              alt="Blog Poster"
+              className="w-full h-55 object-cover rounded-lg"
+            />
+          </div>
         </div>
 
         <div className="border border-gray-200 rounded-lg overflow-hidden">
           <MarkdownEditor
             value={content}
-            height="400px"
+            height="500px"
             onChange={(value) => setContent(value)}
-            className="prose prose-teal p-4 bg-gray-50"
+            className="bg-gray-50"
           />
         </div>
       </div>
