@@ -2,7 +2,7 @@ import React from "react";
 import DummyImage from "./../assets/dummy-image.png";
 function BlogCardSkeleton() {
   return (
-    <div className="flex flex-col  h-auto md:h-79 md:flex-row mb-10 bg-white rounded-md shadow-md overflow-hidden animate-pulse  max-w-5xl mx-auto">
+    <div className="flex flex-col w-full h-auto md:h-79 md:flex-row mb-10 bg-white rounded-md shadow-md overflow-hidden animate-pulse  max-w-5xl mx-auto">
       <div className="relative w-full md:w-80 flex-shrink-0 overflow-hidden">
         <img
           src={DummyImage}
@@ -14,7 +14,7 @@ function BlogCardSkeleton() {
       <div className="flex flex-col justify-between p-6 flex-1">
         <div className="flex justify-between items-center mb-3">
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 rounded-full bg-gray-300"></div>
+            <div className="w-12 h-12 rounded-full bg-gray-300"></div>
             <div>
               <div className="w-24 h-3 bg-gray-300 rounded mb-2"></div>
               <div className="w-32 h-3 bg-gray-200 rounded"></div>
