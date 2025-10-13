@@ -106,7 +106,7 @@ function NewBlog() {
           <img
             src={imgURL}
             alt="Blog Poster"
-            className="w-full h-55 object-cover rounded-lg"
+            className="w-full min-w-50 h-55 object-cover rounded-lg"
           />
         </div>
 

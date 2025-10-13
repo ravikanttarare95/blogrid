@@ -32,9 +32,29 @@ function UploadSection({ setImgURL, customStyle }) {
     toast.dismiss("img-uploading");
   };
 
-  const onDrop = useCallback((acceptedFiles) => {
-    if (acceptedFiles.length === 0) toast.error("Select only one file");
-  }, []);
+  // 🧠 Handle dropped files
+  const onDrop = useCallback(
+    (acceptedFiles) => {
+      if (acceptedFiles.length === 0)
+        return toast.error("Select only one file");
+
+      const file = acceptedFiles[0];
+
+      if (uploadImageRef.current) {
+        const inputEl = uploadImageRef.current;
+
+        const dataTransfer = new DataTransfer();
+
+        dataTransfer.items.add(file);
+
+        // .files FileList object
+        inputEl.files = dataTransfer.files;
+
+        inputEl.dispatchEvent(new Event("change", { bubbles: true }));
+      }
+    },
+    [uploadImageRef]
+  );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
@@ -81,7 +101,7 @@ function UploadSection({ setImgURL, customStyle }) {
               btnTitle={
                 <>
                   <ImagePlus size={20} />
-                  <span>Upload Image</span>
+                  <span>Select Image</span>
                 </>
               }
               btnSize="sm"
