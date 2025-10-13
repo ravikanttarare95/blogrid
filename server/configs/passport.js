@@ -21,6 +21,9 @@ passport.use(
 
           if (user) {
             user.googleId = profile.id;
+            if (!user.avatar) {
+              user.avatar = profile.photos?.[0]?.value || null;
+            }
             await user.save();
           } else {
             user = await User.create({

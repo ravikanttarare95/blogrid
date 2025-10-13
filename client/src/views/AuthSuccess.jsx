@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import Logo from "./../assets/logo.svg";
 
 import { useNavigate, useSearchParams } from "react-router";
 
@@ -27,6 +28,7 @@ const AuthSuccess = () => {
             "loggedInUser",
             JSON.stringify(response.data.user)
           );
+
           navigate("/");
         }
       } catch (error) {
@@ -38,7 +40,17 @@ const AuthSuccess = () => {
   useEffect(() => {
     handleAuth();
   }, [token, navigate]);
-  return <h2>Logging in...</h2>;
+  return (
+    <div className="flex flex-col justify-center items-center min-h-screen bg-gray-50 text-gray-700">
+      <div className="flex flex-col items-center gap-4">
+        <div className="w-12 h-12 border-4 border-teal-500 border-t-transparent rounded-full animate-spin"></div>
+
+        <p className="text-lg md:text-xl font-medium animate-pulse">
+          Logging you in securely...
+        </p>
+      </div>
+    </div>
+  );
 };
 
 export default AuthSuccess;

@@ -39,7 +39,7 @@ function Navbar() {
         setIsNavbarVisible(true);
       }
 
-      return currentScrollY;
+      return currentScrollY; // adding curreent scroll to last scroll
     });
   };
 
@@ -58,12 +58,12 @@ function Navbar() {
     >
       <div className="lg:w-[95%] mx-auto lg:rounded-full bg-white text-gray-800 shadow-md px-6 py-1 flex flex-col md:flex-row md:items-center md:justify-between gap-4 transition-all duration-300">
         <div className="flex items-center justify-between w-full md:w-auto">
-          <div className="flex items-center gap-3">
+          <Link to={"/"} className="flex items-center gap-3">
             <img src={Logo} alt="Logo" className="w-16 rounded-lg" />
             <span className="text-2xl font-extrabold bg-gradient-to-r from-teal-600 to-green-600 bg-clip-text text-transparent">
               BloGrid
             </span>
-          </div>
+          </Link>
 
           {/* Mobile menu button */}
           <button

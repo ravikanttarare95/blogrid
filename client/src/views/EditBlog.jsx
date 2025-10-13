@@ -145,7 +145,7 @@ function EditBlog() {
             value={content}
             height="400px"
             onChange={(value) => setContent(value)}
-            className="prose prose-teal p-4 bg-gray-50"
+            className="bg-gray-50"
           />
         </div>
       </div>

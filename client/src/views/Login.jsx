@@ -37,6 +37,13 @@ function Login() {
         setTimeout(() => {
           navigate("/");
         }, 2000);
+
+        const oneDay = 24 * 60 * 60 * 1000;
+
+        setTimeout(() => {
+          localStorage.removeItem("token");
+          localStorage.removeItem("loggedInUser");
+        }, oneDay);
       }
     } catch (error) {
       toast.error(error.response?.data?.message || "Login failed");

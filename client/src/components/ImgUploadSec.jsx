@@ -107,8 +107,7 @@ function UploadSection({ setImgURL, customStyle }) {
               btnSize="sm"
               btnVariant="secondary"
               onBtnClick={(e) => {
-                e.stopPropagation(); // Prevent triggering dropzone click
-                uploadImageRef.current.click(); // open native file picker
+                uploadImageRef.current.click();
               }}
               customStyle="flex items-center gap-2"
             />
