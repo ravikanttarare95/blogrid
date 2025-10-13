@@ -2,8 +2,8 @@ import React from "react";
 import DummyImage from "./../assets/dummy-image.png";
 function BlogCardSkeleton() {
   return (
-    <div className="flex flex-col w-full h-auto md:h-79 md:flex-row mb-10 bg-white rounded-md shadow-md overflow-hidden animate-pulse  max-w-5xl mx-auto">
-      <div className="relative w-full md:w-80 flex-shrink-0 overflow-hidden">
+    <div className="flex flex-col w-full h-auto md:h-79 md:flex-row bg-white rounded-md shadow-md overflow-hidden animate-pulse  max-w-5xl mx-auto">
+      <div className="relative w-full md:w-[40%] lg:w-[35%] flex-shrink-0 overflow-hidden">
         <img
           src={DummyImage}
           alt={"DummyImage"}

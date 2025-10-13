@@ -1,13 +1,13 @@
-import { useRef } from "react";
-import { ImagePlus } from "lucide-react";
-import CloudC from "./../assets/cloud-computing.png";
+import { useCallback, useRef, useState } from "react";
+import { ImagePlus, CloudUpload } from "lucide-react";
 import Button from "./Button";
 import axios from "axios";
 import { IKContext, IKUpload } from "imagekitio-react";
 import toast from "react-hot-toast";
+import { useDropzone } from "react-dropzone";
 
 function UploadSection({ setImgURL, customStyle }) {
-  const selectImage = useRef();
+  const uploadImageRef = useRef(null);
 
   const authenticator = async () => {
     const response = await axios.get(
@@ -32,9 +32,25 @@ function UploadSection({ setImgURL, customStyle }) {
     toast.dismiss("img-uploading");
   };
 
+  const onDrop = useCallback((acceptedFiles) => {
+    if (acceptedFiles.length === 0) toast.error("Select only one file");
+  }, []);
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    multiple: false,
+    accept: { "image/*": [] },
+  });
+
   return (
     <div
-      className={`${customStyle} flex flex-col items-center justify-center border-2 border-dashed border-gray-300 p-6 rounded-lg bg-gray-50 hover:bg-gray-100 transition`}
+      {...getRootProps()}
+      className={`${customStyle} flex flex-col items-center justify-center border-2 border-dashed rounded-lg p-6 cursor-pointer transition
+      ${
+        isDragActive
+          ? "border-teal-400 bg-teal-50"
+          : "border-gray-300 bg-gray-50 hover:bg-gray-100"
+      }`}
     >
       <IKContext
         publicKey={import.meta.env.VITE_IMAGEKIT_PUBLIC_KEY}
@@ -42,29 +58,42 @@ function UploadSection({ setImgURL, customStyle }) {
         authenticator={authenticator}
       >
         <IKUpload
-          ref={selectImage}
+          ref={uploadImageRef}
           onError={onError}
           onSuccess={onSuccess}
           onUploadProgress={onUploadProgress}
           className="hidden"
         />
-        <img src={CloudC} alt="Upload" className="w-12 h-12 mb-3 opacity-80" />
-        <p className="text-gray-700 font-medium">Drag & drop to upload</p>
-        <p className="text-gray-500 text-sm mb-3">or</p>
-        <Button
-          btnTitle={
-            <>
-              <ImagePlus size={20} />
-              <span>Update Image</span>
-            </>
-          }
-          btnSize="sm"
-          btnVariant="secondary"
-          onBtnClick={() => {
-            selectImage.current.click();
-          }}
-          customStyle="flex items-center gap-2"
+
+        <CloudUpload
+          size={50}
+          className={`${
+            isDragActive ? "animate-bounce" : "animate-none"
+          }  text-teal-500`}
         />
+        {isDragActive ? (
+          <p className="text-teal-600 font-medium">Drop your image here...</p>
+        ) : (
+          <>
+            <p className="text-gray-700 font-medium">Drag & drop to upload</p>
+            <p className="text-gray-500 text-sm mb-3">or</p>
+            <Button
+              btnTitle={
+                <>
+                  <ImagePlus size={20} />
+                  <span>Upload Image</span>
+                </>
+              }
+              btnSize="sm"
+              btnVariant="secondary"
+              onBtnClick={(e) => {
+                e.stopPropagation(); // Prevent triggering dropzone click
+                uploadImageRef.current.click(); // open native file picker
+              }}
+              customStyle="flex items-center gap-2"
+            />
+          </>
+        )}
       </IKContext>
     </div>
   );
