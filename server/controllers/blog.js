@@ -62,7 +62,7 @@ const fetchBlogs = async (req, res) => {
     const blogs = await Blog.find({
       $or: condition,
     })
-      .populate("author", "_id name email")
+      .populate("author", "_id name email avatar")
       .sort({ status: 1, updatedAt: -1 }); // important- status (1) is string it will sort with respect to A-Z  and updatedAt (-1) is number, it will sort with large-small number
 
     // await setCache(cacheKey, blogs);

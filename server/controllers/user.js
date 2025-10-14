@@ -140,10 +140,14 @@ const postFavouritesById = async (req, res) => {
 
 const getFavourites = async (req, res) => {
   const { user } = req;
-  const author = await User.findById(user.id).populate("favourites");
+  // Deep populate
+  const Curentuser = await User.findById(user.id).populate({
+    path: "favourites",
+    populate: { path: "author", select: "name email avatar" },
+  });
 
-  if (author) {
-    res.json({ success: true, favouriteBlogs: author.favourites });
+  if (Curentuser) {
+    res.json({ success: true, favouriteBlogs: Curentuser.favourites });
   }
 };
 export { postSignup, postLogin, postFavouritesById, getFavourites };

@@ -1,12 +1,20 @@
 import React from "react";
 
-function UserInfo({ InitialAvatar, userName, UserInfoContent }) {
+function UserInfo({ mainAvatar, InitialAvatar, userName, UserInfoContent }) {
   return (
     <div className="flex items-start gap-3">
       {/* Avatar */}
-      <div className="w-12 h-12 flex-shrink-0 flex items-center justify-center rounded-full bg-teal-500 text-white font-bold text-lg sm:text-xl shadow">
-        {InitialAvatar?.substring(0, 1)}
-      </div>
+      {mainAvatar ? (
+        <img
+          src={mainAvatar}
+          alt={userName}
+          className="w-12 h-12 rounded-full object-cover"
+        />
+      ) : (
+        <div className="w-12 h-12 flex-shrink-0 flex items-center justify-center rounded-full bg-teal-500 text-white font-bold text-lg sm:text-xl shadow">
+          {InitialAvatar?.substring(0, 1)}
+        </div>
+      )}
 
       {/* User Info */}
       <div className="flex-1">

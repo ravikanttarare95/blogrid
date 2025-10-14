@@ -20,11 +20,12 @@ function BlogCard({
   viewCount,
   likes,
   imgURL,
+  isFavourite,
 }) {
   const navigate = useNavigate();
   const [comments, setComments] = useState([]);
   let loggedInUser;
-  const [favourite, setFavourite] = useState(false);
+  const [favourite, setFavourite] = useState(isFavourite);
 
   const loadComments = async () => {
     try {
@@ -99,6 +100,7 @@ function BlogCard({
         <div className="flex items-center gap-2 mb-3">
           <div className="text-sm text-gray-500 mt-1 flex items-center gap-2">
             <UserInfo
+              mainAvatar={author?.avatar}
               InitialAvatar={author?.name}
               userName={author?.name}
               UserInfoContent={author?.email}

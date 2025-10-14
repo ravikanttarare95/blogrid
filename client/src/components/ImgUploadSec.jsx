@@ -65,7 +65,7 @@ function UploadSection({ setImgURL, customStyle }) {
   return (
     <div
       {...getRootProps()}
-      className={`${customStyle} flex flex-col items-center justify-center border-2 border-dashed rounded-lg p-6 cursor-pointer transition
+      className={`${customStyle} flex flex-col items-center justify-center border-2 border-dashed rounded-lg p-6 transition
       ${
         isDragActive
           ? "border-teal-400 bg-teal-50"

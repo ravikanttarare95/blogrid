@@ -93,7 +93,12 @@ function Navbar() {
 
           {user ? (
             <>
-              <Heart className="cursor-pointer"/>
+              <Heart
+                className="cursor-pointer"
+                onClick={() => {
+                  navigate("/favourites");
+                }}
+              />
               <div className="flex items-center gap-3">
                 <img
                   src={user?.avatar}

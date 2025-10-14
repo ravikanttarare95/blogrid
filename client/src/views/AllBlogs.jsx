@@ -79,6 +79,7 @@ function AllBlogs() {
               likes,
               imgURL,
             } = blog;
+
             return (
               <BlogCard
                 key={_id}
