@@ -12,7 +12,6 @@ const AuthSuccess = () => {
 
   const handleAuth = async () => {
     if (token) {
-      localStorage.setItem("token", token);
       try {
         const response = await axios.get(
           `${import.meta.env.VITE_API_URL}/auth/me`,
@@ -24,12 +23,20 @@ const AuthSuccess = () => {
         );
         if (response.data.success) {
           setUser(response.data.user);
+          localStorage.setItem("token", token);
           localStorage.setItem(
             "loggedInUser",
             JSON.stringify(response.data.user)
           );
 
           navigate("/");
+
+          const oneDay = 24 * 60 * 60 * 1000;
+
+          setTimeout(() => {
+            localStorage.removeItem("token");
+            localStorage.removeItem("loggedInUser");
+          }, oneDay);
         }
       } catch (error) {
         console.error("Error fetching user:", error);
