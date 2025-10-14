@@ -7,7 +7,7 @@ import { IoMdLogOut } from "react-icons/io";
 import Button from "./Button";
 import { getCurrentUser } from "./../utils.js";
 import toast from "react-hot-toast";
-import { SquarePen } from "lucide-react";
+import { SquarePen, Heart } from "lucide-react";
 
 function Navbar() {
   const [user, setUser] = useState(null);
@@ -93,6 +93,7 @@ function Navbar() {
 
           {user ? (
             <>
+              <Heart className="cursor-pointer"/>
               <div className="flex items-center gap-3">
                 <img
                   src={user?.avatar}

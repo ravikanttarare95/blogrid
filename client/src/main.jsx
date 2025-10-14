@@ -7,10 +7,10 @@ import EditBlog from "./views/EditBlog";
 import NewBlog from "./views/NewBlog";
 import ReadBlog from "./views/ReadBlog";
 import { Toaster } from "react-hot-toast";
+import NotFoundPage from "./views/NotFoundPage.jsx";
 
 import { BrowserRouter, Routes, Route } from "react-router";
 import AuthSuccess from "./views/AuthSuccess";
-import NotFound from "./views/NotFound.JSX";
 
 const root = createRoot(document.getElementById("root"));
 root.render(
@@ -23,7 +23,7 @@ root.render(
       <Route path="/signup" element={<SignUp />} />
       <Route path="/login" element={<Login />} />
       <Route path="/auth-success" element={<AuthSuccess />} />
-      <Route path="*" element={<NotFound />} />
+      <Route path="*" element={<NotFoundPage />} />
     </Routes>
     <Toaster />
   </BrowserRouter>

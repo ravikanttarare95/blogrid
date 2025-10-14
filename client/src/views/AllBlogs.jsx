@@ -26,7 +26,7 @@ function AllBlogs() {
       );
       if (response?.data?.data?.length > 0) {
         setBlogs(response.data.data);
-        toast.success(response?.data?.message, { id: "fetchBlogs" });
+        // toast.success(response?.data?.message, { id: "fetchBlogs" });
       } else {
         toast.error("Data not found.", { id: "fetchBlogs" });
       }
