@@ -1,4 +1,5 @@
 import User from "./../models/User.js";
+import Blog from "./../models/Blog.js";
 import md5 from "md5";
 import jwt from "jsonwebtoken"; // Used in Login
 
@@ -136,4 +137,13 @@ const postFavouritesById = async (req, res) => {
     user,
   });
 };
-export { postSignup, postLogin, postFavouritesById };
+
+const getFavourites = async (req, res) => {
+  const { user } = req;
+  const author = await User.findById(user.id).populate("favourites");
+
+  if (author) {
+    res.json({ success: true, favouriteBlogs: author.favourites });
+  }
+};
+export { postSignup, postLogin, postFavouritesById, getFavourites };

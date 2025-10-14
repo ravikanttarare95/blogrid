@@ -11,6 +11,7 @@ import {
   postSignup,
   postLogin,
   postFavouritesById,
+  getFavourites,
 } from "./controllers/user.js";
 
 import {
@@ -73,7 +74,7 @@ const increaseViewCount = async (req, res, next) => {
 app.post("/signup", postSignup);
 app.post("/login", postLogin);
 app.post("/blogs", jwtCheck, postBlogs);
-app.get("/blogs", fetchBlogs);
+app.get("/blogs", fetchBlogs);app.get("/blogs/favourites", jwtCheck, getFavourites);
 app.get("/blogs/:slug", increaseViewCount, fetchBlogsBySlug);
 app.put("/blogs/:slug", jwtCheck, putEditBlogBySlug);
 app.patch("/blogs/:slug/publish", jwtCheck, patchPublishBlogBySlug);
@@ -84,6 +85,7 @@ app.get("/blogs/:slug/comments", getCommentBySlug);
 app.post("/blogs/:slug/likes", jwtCheck, postlikeBySlug);
 
 app.post("/blogs/:blogId/favourites", jwtCheck, postFavouritesById);
+
 
 app.use("/auth", authRouter);
 

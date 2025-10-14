@@ -23,6 +23,7 @@ function BlogCard({
 }) {
   const navigate = useNavigate();
   const [comments, setComments] = useState([]);
+  let loggedInUser;
   const [favourite, setFavourite] = useState(false);
 
   const loadComments = async () => {
@@ -54,6 +55,8 @@ function BlogCard({
   };
 
   useEffect(() => {
+    loggedInUser = localStorage.getItem("loggedInUser");
+
     loadComments();
   }, []);
 
