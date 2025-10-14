@@ -9,6 +9,7 @@ const userSchema = new Schema(
     avatar: { type: String },
     isVerified: { type: Boolean, default: false },
     provider: { type: String, default: "local" },
+    favourites: [{ type: Schema.Types.ObjectId, ref: "Blog" }],
   },
   { timestamps: true }
 );

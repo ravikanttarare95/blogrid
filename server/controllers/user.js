@@ -117,4 +117,23 @@ const postLogin = async (req, res) => {
   }
 };
 
-export { postSignup, postLogin };
+const postFavouritesById = async (req, res) => {
+  const { user } = req;
+  const { blogId } = req.params;
+
+  const author = await User.findById(user.id);
+  const alreadyFavourite = author.favourites.includes(blogId);
+  if (alreadyFavourite) {
+    author.favourites = author.favourites.filter(
+      (blog_id) => blog_id.toString() !== blogId
+    );
+  } else {
+    author.favourites.push(blogId);
+  }
+  await author.save();
+  res.json({
+    blogId,
+    user,
+  });
+};
+export { postSignup, postLogin, postFavouritesById };

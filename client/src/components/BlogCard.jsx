@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import Button from "./Button";
 import { useNavigate } from "react-router";
-import { SquarePen, Eye, ThumbsUp, MessageCircle } from "lucide-react";
+import { SquarePen, Eye, ThumbsUp, MessageCircle, Heart } from "lucide-react";
 import UserInfo from "./UserInfo";
 import axios from "axios";
 import toast from "react-hot-toast";
 import CategoryBadges from "./../badges/CategoryBadges";
 
 function BlogCard({
-  _id,
+  blogId,
   title,
   content,
   status,
@@ -23,6 +23,7 @@ function BlogCard({
 }) {
   const navigate = useNavigate();
   const [comments, setComments] = useState([]);
+  const [favourite, setFavourite] = useState(false);
 
   const loadComments = async () => {
     try {
@@ -37,6 +38,19 @@ function BlogCard({
       toast.error("Error loading comments");
       console.log(error);
     }
+  };
+
+  const toggleFavourite = async () => {
+    const response = await axios.post(
+      `${import.meta.env.VITE_API_URL}/blogs/${blogId}/favourites`,
+      {},
+      {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      }
+    );
+    if (response) {
+    }
+    setFavourite(!favourite);
   };
 
   useEffect(() => {
@@ -55,11 +69,23 @@ function BlogCard({
           className="w-full h-48 md:h-full object-cover transition-transform duration-500 hover:scale-105"
         />
 
-        {status !== "published" && (
-          <span className="absolute top-3 left-3 z-20 inline-block italic bg-yellow-50 px-3 py-1 rounded-full border border-yellow-200 text-sm text-yellow-600 font-medium shadow-sm transition-colors duration-200 hover:bg-yellow-100">
-            Draft
-          </span>
-        )}
+        <div className=" z-20 absolute top-3 w-full px-3 flex justify-between">
+          {status !== "published" && (
+            <span className=" inline-block italic bg-yellow-50 px-3 py-1 rounded-full border border-yellow-200 text-sm text-yellow-600 font-medium shadow-sm transition-colors duration-200 hover:bg-yellow-100">
+              Draft
+            </span>
+          )}
+          <Heart
+            className={`${
+              favourite
+                ? "text-red-500 fill-red-500"
+                : "text-gray-800 fill-gray-50"
+            }  cursor-pointer`}
+            onClick={() => {
+              toggleFavourite();
+            }}
+          />
+        </div>
 
         <div className="absolute bottom-3 right-3 sm:hidden z-20">
           <CategoryBadges category={category} />

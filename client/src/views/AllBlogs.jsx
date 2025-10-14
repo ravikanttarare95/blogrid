@@ -82,7 +82,7 @@ function AllBlogs() {
             return (
               <BlogCard
                 key={_id}
-                id={_id}
+                blogId={_id}
                 title={title}
                 content={content}
                 status={status}
