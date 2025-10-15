@@ -33,6 +33,7 @@ function AllBlogs() {
 
   const loadFavBlogs = async () => {
     try {
+      if (!user) return;
       const response = await axios.get(
         `${import.meta.env.VITE_API_URL}/blogs/favourites`,
         {
@@ -45,7 +46,7 @@ function AllBlogs() {
         setFavBlogs(favList);
       }
     } catch (error) {
-      toast.error("Failed to load favourite blogs");
+      console.log("Failed to load favourite blogs");
     }
   };
 
