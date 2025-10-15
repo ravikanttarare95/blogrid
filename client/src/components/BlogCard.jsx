@@ -6,6 +6,7 @@ import UserInfo from "./UserInfo";
 import axios from "axios";
 import toast from "react-hot-toast";
 import CategoryBadges from "./../badges/CategoryBadges";
+import { getCurrentUser } from "./../utils";
 
 function BlogCard({
   blogId,
@@ -20,13 +21,13 @@ function BlogCard({
   viewCount,
   likes,
   imgURL,
+  isFavourite,
   onFavouriteToggle,
 }) {
   const navigate = useNavigate();
   const [comments, setComments] = useState([]);
-  let loggedInUser;
-  const [favourite, setFavourite] = useState(false);
-  const [favBlogs, setFavBlogs] = useState([]);
+  const [favourite, setFavourite] = useState(isFavourite);
+  const user = getCurrentUser();
 
   const loadComments = async () => {
     try {
@@ -38,13 +39,15 @@ function BlogCard({
         setComments(response.data.comments);
       }
     } catch (error) {
-      toast.error("Error loading comments");
-      console.log(error);
+      console.log("Error loading comments");
     }
   };
 
   const toggleFavourite = async () => {
     try {
+      if (!user) {
+        return toast.error("Login Required");
+      }
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}/blogs/${blogId}/favourites`,
         {},
@@ -64,33 +67,12 @@ function BlogCard({
     }
   };
 
-  const loadFavBlogs = async () => {
-    try {
-      const response = await axios.get(
-        `${import.meta.env.VITE_API_URL}/blogs/favourites`,
-        {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-        }
-      );
-
-      if (response) {
-        const favList = response.data.favouriteBlogs;
-        setFavBlogs(favList);
-      }
-    } catch (error) {
-      toast.error("Failed to load favourite blogs");
-    }
-  };
+  useEffect(() => {
+    setFavourite(isFavourite);
+  }, [isFavourite]);
 
   useEffect(() => {
-    setFavourite(favBlogs?.some((blog) => blog._id === blogId));
-  }, [favBlogs, blogId]);
-
-  useEffect(() => {
-    loggedInUser = localStorage.getItem("loggedInUser");
-
     loadComments();
-    loadFavBlogs();
   }, []);
 
   return (

@@ -85,8 +85,8 @@ function Navbar({ isSelected }) {
                 key={to}
                 to={to}
                 className={`${
-                  isSelected === to && "text-teal-500"
-                } text-md font-medium hover:text-teal-500 transition-colors duration-200`}
+                  isSelected === to && "text-gray-900"
+                } text-md text-gray-600 font-medium hover:text-teal-500 transition-colors duration-200`}
               >
                 {navItemTitle}
               </Link>
@@ -97,8 +97,8 @@ function Navbar({ isSelected }) {
             <>
               <div
                 className={`${
-                  isSelected === "/favourites" && "text-teal-500"
-                } flex gap-2 text-md hover:text-teal-500 font-medium cursor-pointer`}
+                  isSelected === "/favourites" && "text-gray-900"
+                } flex gap-2 text-md text-gray-600 hover:text-teal-500 font-medium cursor-pointer`}
                 onClick={() => {
                   navigate("/favourites");
                 }}
@@ -113,7 +113,7 @@ function Navbar({ isSelected }) {
                   alt="User Avatar"
                   className="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover border-2 border-teal-500"
                 />
-                <span className="font-medium text-gray-800">{user?.name}</span>
+                <span className="font-medium text-gray-600">{user?.name}</span>
               </div>
               <Button
                 type="button"

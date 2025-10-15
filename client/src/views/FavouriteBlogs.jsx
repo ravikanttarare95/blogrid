@@ -2,9 +2,10 @@ import Navbar from "./../components/Navbar";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import BlogCard from "./../components/BlogCard";
-import { DockIcon, Heart } from "lucide-react";
+import { Heart } from "lucide-react";
 import Button from "./../components/Button";
 import { useNavigate } from "react-router";
+import { getCurrentUser } from "./../utils";
 
 function FavouriteBlogs() {
   const navigate = useNavigate();
@@ -29,6 +30,9 @@ function FavouriteBlogs() {
   };
 
   useEffect(() => {
+    const user = getCurrentUser();
+    if (!user) return navigate("/login");
+
     loadFavBlogs();
   }, []);
 
@@ -52,6 +56,7 @@ function FavouriteBlogs() {
               viewCount={blog.viewCount}
               likes={blog.likes}
               imgURL={blog.imgURL}
+              isFavourite={favBlogs.some((fav) => fav._id === blog._id)}
               onFavouriteToggle={onFavouriteToggle}
             />
           ))

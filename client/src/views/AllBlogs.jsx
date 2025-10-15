@@ -10,14 +10,7 @@ import BlogCardSkeleton from "./../components/BlogCardSkeleton.jsx";
 function AllBlogs() {
   const [user, setUser] = useState(null);
   const [blogs, setBlogs] = useState([]);
-
-  useEffect(() => {
-    setUser(getCurrentUser());
-  }, []);
-
-  useEffect(() => {
-    fetchAllBlogs();
-  }, [user]); ///////// why [user]
+  const [favBlogs, setFavBlogs] = useState([]);
 
   const fetchAllBlogs = async () => {
     try {
@@ -38,6 +31,34 @@ function AllBlogs() {
     }
   };
 
+  const loadFavBlogs = async () => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/blogs/favourites`,
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        }
+      );
+
+      if (response) {
+        const favList = response.data.favouriteBlogs;
+        setFavBlogs(favList);
+      }
+    } catch (error) {
+      toast.error("Failed to load favourite blogs");
+    }
+  };
+
+  useEffect(() => {
+    fetchAllBlogs();
+    loadFavBlogs();
+  }, [user]); ///////// why [user]
+
+  useEffect(() => {
+    const u = getCurrentUser();
+
+    setUser(u);
+  }, []);
   return (
     <>
       <Navbar isSelected={"/"} />
@@ -95,6 +116,7 @@ function AllBlogs() {
                 viewCount={viewCount}
                 likes={likes}
                 imgURL={imgURL}
+                isFavourite={favBlogs.some((fav) => fav._id === _id)}
               />
             );
           })

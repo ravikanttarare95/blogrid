@@ -25,7 +25,7 @@ const postSignup = async (req, res) => {
   const existingUser = await User.findOne({ email });
 
   if (existingUser) {
-    res.status(409).json({
+    return res.status(409).json({
       // HTTP status code 409: Conflict
       success: false,
       message: `User with email ${email} already exists`,
@@ -139,15 +139,23 @@ const postFavouritesById = async (req, res) => {
 };
 
 const getFavourites = async (req, res) => {
-  const { user } = req;
-  // Deep populate
-  const Curentuser = await User.findById(user.id).populate({
-    path: "favourites",
-    populate: { path: "author", select: "name email avatar" },
-  });
+  try {
+    const { user } = req;
+    // Deep populate
+    const Curentuser = await User.findById(user.id).populate({
+      path: "favourites",
+      populate: { path: "author", select: "name email avatar" },
+    });
 
-  if (Curentuser) {
-    res.json({ success: true, favouriteBlogs: Curentuser.favourites });
+    if (Curentuser) {
+      res.json({ success: true, favouriteBlogs: Curentuser.favourites });
+    }
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch favourites.",
+      error: error.message,
+    });
   }
 };
 export { postSignup, postLogin, postFavouritesById, getFavourites };
