@@ -59,7 +59,7 @@ function NewBlog() {
 
   return (
     <div className="min-h-screen">
-      <Navbar />
+      <Navbar isSelected={"/new"} />
 
       <div className="max-w-5xl mx-auto p-6 mt-8 bg-white rounded-xl shadow-md">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">

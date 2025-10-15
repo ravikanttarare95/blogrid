@@ -9,7 +9,7 @@ import { getCurrentUser } from "./../utils.js";
 import toast from "react-hot-toast";
 import { SquarePen, Heart } from "lucide-react";
 
-function Navbar() {
+function Navbar({ isSelected }) {
   const [user, setUser] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
@@ -39,7 +39,7 @@ function Navbar() {
         setIsNavbarVisible(true);
       }
 
-      return currentScrollY; // adding curreent scroll to last scroll
+      return currentScrollY; // adding current scroll to last scroll
     });
   };
 
@@ -79,12 +79,14 @@ function Navbar() {
             isOpen ? "flex" : "hidden"
           }`}
         >
-          <div className="flex flex-col md:flex-row gap-6 md:gap-8 ">
+          <div className="flex flex-col md:flex-row gap-6 md:gap-8">
             {NAV_ITEMS.map(({ to, navItemTitle }) => (
               <Link
                 key={to}
                 to={to}
-                className="text-md font-medium hover:text-teal-500 transition-colors duration-200"
+                className={`${
+                  isSelected === to && "text-teal-500"
+                } text-md font-medium hover:text-teal-500 transition-colors duration-200`}
               >
                 {navItemTitle}
               </Link>
@@ -93,12 +95,18 @@ function Navbar() {
 
           {user ? (
             <>
-              <Heart
-                className="cursor-pointer"
+              <div
+                className={`${
+                  isSelected === "/favourites" && "text-teal-500"
+                } flex gap-2 text-md hover:text-teal-500 font-medium cursor-pointer`}
                 onClick={() => {
                   navigate("/favourites");
                 }}
-              />
+              >
+                <Heart />
+                favourite
+              </div>
+
               <div className="flex items-center gap-3">
                 <img
                   src={user?.avatar}

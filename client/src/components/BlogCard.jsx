@@ -20,6 +20,7 @@ function BlogCard({
   viewCount,
   likes,
   imgURL,
+  onFavouriteToggle,
 }) {
   const navigate = useNavigate();
   const [comments, setComments] = useState([]);
@@ -43,40 +44,53 @@ function BlogCard({
   };
 
   const toggleFavourite = async () => {
-    const response = await axios.post(
-      `${import.meta.env.VITE_API_URL}/blogs/${blogId}/favourites`,
-      {},
-      {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/blogs/${blogId}/favourites`,
+        {},
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        }
+      );
+      if (response) {
+        const newFevStat = !favourite;
+        setFavourite(newFevStat);
+        if (onFavouriteToggle) {
+          onFavouriteToggle(blogId, newFevStat);
+        }
       }
-    );
-    if (response) {
-      setFavourite(!favourite);
+    } catch (error) {
+      toast.error("Failed to update favourite");
     }
   };
 
   const loadFavBlogs = async () => {
-    const response = await axios.get(
-      `${import.meta.env.VITE_API_URL}/blogs/favourites`,
-      {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-      }
-    );
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/blogs/favourites`,
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        }
+      );
 
-    if (response) {
-      setFavBlogs(response.data.favouriteBlogs);
+      if (response) {
+        const favList = response.data.favouriteBlogs;
+        setFavBlogs(favList);
+      }
+    } catch (error) {
+      toast.error("Failed to load favourite blogs");
     }
   };
 
   useEffect(() => {
-    loadFavBlogs();
     setFavourite(favBlogs?.some((blog) => blog._id === blogId));
-  }, [favBlogs]);
+  }, [favBlogs, blogId]);
 
   useEffect(() => {
     loggedInUser = localStorage.getItem("loggedInUser");
 
     loadComments();
+    loadFavBlogs();
   }, []);
 
   return (

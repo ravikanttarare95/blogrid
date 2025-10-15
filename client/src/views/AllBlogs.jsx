@@ -40,7 +40,7 @@ function AllBlogs() {
 
   return (
     <>
-      <Navbar />
+      <Navbar isSelected={"/"} />
       <div className="py-5 px-6 sm:px-15 max-w-6xl mx-auto mt-8">
         <div className="mb-4 text-left">
           {user ? (

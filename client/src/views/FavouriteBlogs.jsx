@@ -2,7 +2,7 @@ import Navbar from "./../components/Navbar";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import BlogCard from "./../components/BlogCard";
-import { Heart } from "lucide-react";
+import { DockIcon, Heart } from "lucide-react";
 import Button from "./../components/Button";
 import { useNavigate } from "react-router";
 
@@ -22,6 +22,11 @@ function FavouriteBlogs() {
       setFavBlogs(response.data.favouriteBlogs);
     }
   };
+  const onFavouriteToggle = (blogId, isFav) => {
+    if (!isFav) {
+      setFavBlogs((prev) => prev.filter((blog) => blog._id !== blogId));
+    }
+  };
 
   useEffect(() => {
     loadFavBlogs();
@@ -29,8 +34,8 @@ function FavouriteBlogs() {
 
   return (
     <>
-      <Navbar />
-      <div className="p-5 pb-0 sm:pb-0 sm:p-8 flex flex-col gap-10">
+      <Navbar isSelected={"/favourites"} />
+      <div className="p-5 pb-0 sm:pb-0 sm:p-8 flex flex-col gap-10 mt-5">
         {favBlogs.length > 0 ? (
           favBlogs.map((blog) => (
             <BlogCard
@@ -47,7 +52,7 @@ function FavouriteBlogs() {
               viewCount={blog.viewCount}
               likes={blog.likes}
               imgURL={blog.imgURL}
-              isFavourite={true}
+              onFavouriteToggle={onFavouriteToggle}
             />
           ))
         ) : (
