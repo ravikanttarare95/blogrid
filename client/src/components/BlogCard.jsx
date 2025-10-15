@@ -20,12 +20,12 @@ function BlogCard({
   viewCount,
   likes,
   imgURL,
-  isFavourite,
 }) {
   const navigate = useNavigate();
   const [comments, setComments] = useState([]);
   let loggedInUser;
-  const [favourite, setFavourite] = useState(isFavourite);
+  const [favourite, setFavourite] = useState(false);
+  const [favBlogs, setFavBlogs] = useState([]);
 
   const loadComments = async () => {
     try {
@@ -51,9 +51,27 @@ function BlogCard({
       }
     );
     if (response) {
+      setFavourite(!favourite);
     }
-    setFavourite(!favourite);
   };
+
+  const loadFavBlogs = async () => {
+    const response = await axios.get(
+      `${import.meta.env.VITE_API_URL}/blogs/favourites`,
+      {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      }
+    );
+
+    if (response) {
+      setFavBlogs(response.data.favouriteBlogs);
+    }
+  };
+
+  useEffect(() => {
+    loadFavBlogs();
+    setFavourite(favBlogs?.some((blog) => blog._id === blogId));
+  }, [favBlogs]);
 
   useEffect(() => {
     loggedInUser = localStorage.getItem("loggedInUser");
