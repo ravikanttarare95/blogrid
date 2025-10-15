@@ -51,12 +51,11 @@ function AllBlogs() {
 
   useEffect(() => {
     fetchAllBlogs();
-    loadFavBlogs();
+    if (user) loadFavBlogs();
   }, [user]); ///////// why [user]
 
   useEffect(() => {
     const u = getCurrentUser();
-
     setUser(u);
   }, []);
   return (

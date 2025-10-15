@@ -98,7 +98,7 @@ function BlogCard({
               favourite
                 ? "text-red-500 fill-red-500"
                 : "text-gray-800 fill-gray-50"
-            }  cursor-pointer`}
+            }  cursor-pointer transition-transform duration-200 hover:scale-110 size-6.5 sm:size-7.5  active:scale-90`}
             onClick={() => {
               toggleFavourite();
             }}
