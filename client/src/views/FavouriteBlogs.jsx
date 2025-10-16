@@ -1,4 +1,5 @@
 import Navbar from "./../components/Navbar";
+import Footer from "./../components/Footer";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import BlogCard from "./../components/BlogCard";
@@ -6,21 +7,29 @@ import { Heart } from "lucide-react";
 import Button from "./../components/Button";
 import { useNavigate } from "react-router";
 import { getCurrentUser } from "./../utils";
+import BlogCardSkeleton from "./../components/BlogCardSkeleton";
 
 function FavouriteBlogs() {
   const navigate = useNavigate();
   const [favBlogs, setFavBlogs] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const loadFavBlogs = async () => {
-    const response = await axios.get(
-      `${import.meta.env.VITE_API_URL}/blogs/favourites`,
-      {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-      }
-    );
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/blogs/favourites`,
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        }
+      );
 
-    if (response) {
-      setFavBlogs(response.data.favouriteBlogs);
+      if (response) {
+        setFavBlogs(response.data.favouriteBlogs);
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
     }
   };
   const onFavouriteToggle = (blogId, isFav) => {
@@ -36,10 +45,24 @@ function FavouriteBlogs() {
     loadFavBlogs();
   }, []);
 
+  if (loading) {
+    return (
+      <>
+        <Navbar isSelected={"/favourites"} />
+        <div className="p-5 pb-0 sm:pb-0 sm:p-8 flex flex-col gap-10 my-5">
+          {Array.from({ length: 5 }).map((_, index) => (
+            <BlogCardSkeleton key={index} />
+          ))}
+        </div>
+        <Footer />
+      </>
+    );
+  }
+
   return (
     <>
       <Navbar isSelected={"/favourites"} />
-      <div className="p-5 pb-0 sm:pb-0 sm:p-8 flex flex-col gap-10 mt-5">
+      <div className="p-5 pb-0 sm:pb-0 sm:p-8 flex flex-col gap-10 my-5">
         {favBlogs.length > 0 ? (
           favBlogs.map((blog) => (
             <BlogCard
@@ -84,7 +107,8 @@ function FavouriteBlogs() {
             />
           </div>
         )}
-      </div>
+      </div>  
+      <Footer />
     </>
   );
 }
