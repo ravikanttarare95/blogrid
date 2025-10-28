@@ -126,18 +126,19 @@ const putEditBlogBySlug = async (req, res) => {
         success: false,
         message: "All fields are required",
       });
-    }
-
-    const EditedMovie = await Blog.findOneAndUpdate(
+    } 
+    
+    const EditedBlog = await Blog.findOneAndUpdate(
       { slug: slug },
       {
         title,
         category,
         content,
         imgURL,
-      }
+      },
+      { new: true }
     );
-    //  ({ slug: slug });
+    //  ({ slug: slug })  ;
 
     // await clearCache(`blogs_author_${user.id}`);
     // await clearCache("blogs_public");
@@ -145,7 +146,7 @@ const putEditBlogBySlug = async (req, res) => {
     res.json({
       success: true,
       message: "Blog updated successfully.",
-      blog: EditedMovie,
+      blog: EditedBlog,
     });
   } catch (error) {
     console.log("Error updating blog", error);

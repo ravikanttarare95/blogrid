@@ -45,7 +45,7 @@ function EditBlog() {
         }
       );
       if (response?.data?.success) {
-        toast.success("Blog updated successfully");
+        toast.success("Blog updated successfully");console.log(response?.data?.blog)
         setTimeout(() => navigate("/"), 2000);
       }
     } catch (error) {
