@@ -87,7 +87,7 @@ const fetchMyDraftBlogs = async (req, res) => {
       $and: [{ status: "draft" }, { author: authorId }],
     })
       .populate("author", "_id name email avatar")
-      .sort({ status: 1, updatedAt: -1 });
+      .sort({ updatedAt: -1 });
 
     res.json({
       success: true,

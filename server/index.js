@@ -76,7 +76,7 @@ app.post("/signup", postSignup);
 app.post("/login", postLogin);
 app.post("/blogs", jwtCheck, postBlogs);
 app.get("/blogs", fetchBlogs);
-app.get("/blogs/me", jwtCheck, fetchMyDraftBlogs);
+app.get("/blogs/me/draft", jwtCheck, fetchMyDraftBlogs);
 app.get("/blogs/favourites", jwtCheck, getFavourites);
 app.get("/blogs/:slug", increaseViewCount, fetchBlogsBySlug);
 app.put("/blogs/:slug", jwtCheck, putEditBlogBySlug);
