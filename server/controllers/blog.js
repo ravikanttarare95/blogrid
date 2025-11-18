@@ -1,6 +1,6 @@
 import Blog from "./../models/Blog.js";
 import { json } from "express";
-// import { setCache, getCache, clearCache } from "./../utils/cache.js";
+import { setCache, getCache, clearCache } from "./../utils/cache.js";
 
 const postBlogs = async (req, res) => {
   const { title, content, category, imgURL } = req.body;
@@ -30,8 +30,7 @@ const postBlogs = async (req, res) => {
 
   await savedBlog.save();
 
-  // await clearCache(`blogs_author_${user.id}`);
-  // await clearCache("blogs_public");
+  await clearCache();
 
   res.json({
     success: true,
@@ -49,30 +48,28 @@ const fetchBlogs = async (req, res) => {
       condition.push({ author: authorId });
     }
 
-    // const cacheKey = authorId ? `blogs_author_${authorId}` : "blogs_public"; /////
+    const cached = await getCache("blogs");
+    if (cached) {
+      res.json({
+        success: true,
+        data: cached,
+        message: "Blogs fetched successfully (from cache).",
+      });
+    } else {
+      const blogs = await Blog.find({
+        $or: condition,
+      })
+        .populate("author", "_id name email avatar")
+        .sort({ status: 1, updatedAt: -1 }); // important- status (1) is string it will sort with respect to A-Z  and updatedAt (-1) is number, it will sort with large-small number
 
-    // const cached = await getCache(cacheKey);
-    // if (cached) {
-    //   res.json({
-    //     success: true,
-    //     data: cached,
-    //     message: "Blogs fetched successfully (from cache).",
-    //   });
-    // } else {
-    const blogs = await Blog.find({
-      $or: condition,
-    })
-      .populate("author", "_id name email avatar")
-      .sort({ status: 1, updatedAt: -1 }); // important- status (1) is string it will sort with respect to A-Z  and updatedAt (-1) is number, it will sort with large-small number
+      await setCache("blogs", blogs); //
 
-    // await setCache(cacheKey, blogs);
-
-    res.json({
-      success: true,
-      data: blogs,
-      message: "Blogs fetched successfully.",
-    });
-    // }
+      res.json({
+        success: true,
+        data: blogs,
+        message: "Blogs fetched successfully.",
+      });
+    }
   } catch (error) {
     console.log("Error fetching blogs:", error);
     res.status(500).json({
@@ -126,8 +123,8 @@ const putEditBlogBySlug = async (req, res) => {
         success: false,
         message: "All fields are required",
       });
-    } 
-    
+    }
+
     const EditedBlog = await Blog.findOneAndUpdate(
       { slug: slug },
       {
@@ -138,10 +135,8 @@ const putEditBlogBySlug = async (req, res) => {
       },
       { new: true }
     );
-    //  ({ slug: slug })  ;
 
-    // await clearCache(`blogs_author_${user.id}`);
-    // await clearCache("blogs_public");
+    await clearCache(); //
 
     res.json({
       success: true,
@@ -182,8 +177,7 @@ const patchPublishBlogBySlug = async (req, res) => {
     }
   );
 
-  // await clearCache(`blogs_author_${user.id}`);
-  // await clearCache("blogs_public");
+  await clearCache(); //
 
   if (published) {
     res.json({
@@ -204,6 +198,8 @@ const postlikeBySlug = async (req, res) => {
       message: "like increased",
     });
   }
+
+  await clearCache(); //
 };
 
 export {

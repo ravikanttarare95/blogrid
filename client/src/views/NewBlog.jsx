@@ -33,7 +33,7 @@ function NewBlog() {
         },
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-        } // for jwt check // why is JSON.parse not used
+        }
       );
 
       if (response?.data?.success) {

@@ -2,6 +2,7 @@ import User from "./../models/User.js";
 import Blog from "./../models/Blog.js";
 import md5 from "md5";
 import jwt from "jsonwebtoken"; // Used in Login
+import { clearCache } from "./../utils/cache.js";
 
 const postSignup = async (req, res) => {
   const { name, email, password } = req.body;
@@ -132,6 +133,8 @@ const postFavouritesById = async (req, res) => {
     author.favourites.push(blogId);
   }
   await author.save();
+
+  await clearCache()
   res.json({
     blogId,
     user,
