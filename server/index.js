@@ -18,6 +18,7 @@ import {
   postBlogs,
   fetchBlogs,
   fetchMyDraftBlogs,
+  fetchMyPublishedBlogs,
   fetchBlogsBySlug,
   putEditBlogBySlug,
   patchPublishBlogBySlug,
@@ -77,6 +78,7 @@ app.post("/login", postLogin);
 app.post("/blogs", jwtCheck, postBlogs);
 app.get("/blogs", fetchBlogs);
 app.get("/blogs/me/draft", jwtCheck, fetchMyDraftBlogs);
+app.get("/blogs/me/published", jwtCheck, fetchMyPublishedBlogs);
 app.get("/blogs/favourites", jwtCheck, getFavourites);
 app.get("/blogs/:slug", increaseViewCount, fetchBlogsBySlug);
 app.put("/blogs/:slug", jwtCheck, putEditBlogBySlug);

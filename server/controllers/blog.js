@@ -95,10 +95,34 @@ const fetchMyDraftBlogs = async (req, res) => {
       message: "Blogs fetched successfully.",
     });
   } catch (error) {
-    console.log("Error fetching my blogs:", error);
+    console.log("Error fetching my draft blogs:", error);
     res.status(500).json({
       success: false,
-      message: "Error fetching my blogs",
+      message: "Error fetching my draft blogs",
+    });
+  }
+};
+
+const fetchMyPublishedBlogs = async (req, res) => {
+  try {
+    const { authorId } = req.query;
+
+    const blogs = await Blog.find({
+      $and: [{ status: "published" }, { author: authorId }],
+    })
+      .populate("author", "_id name email avatar")
+      .sort({ updatedAt: -1 });
+
+    res.json({
+      success: true,
+      data: blogs,
+      message: "Blogs fetched successfully.",
+    });
+  } catch (error) {
+    console.log("Error fetching my published blogs:", error);
+    res.status(500).json({
+      success: false,
+      message: "Error fetching my published blogs",
     });
   }
 };
@@ -230,6 +254,7 @@ export {
   postBlogs,
   fetchBlogs,
   fetchMyDraftBlogs,
+  fetchMyPublishedBlogs,
   fetchBlogsBySlug,
   putEditBlogBySlug,
   patchPublishBlogBySlug,
