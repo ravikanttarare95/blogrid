@@ -12,9 +12,10 @@ import BlogCard from "./../components/BlogCard";
 function MyBlogs() {
   const [user, setUser] = useState(getCurrentUser());
   const [draftBlogs, setDraftBlogs] = useState(null);
+  const [publishedBlogs, setPublishedBlogs] = useState(null);
   const navigate = useNavigate();
 
-  const loadMyBlogs = async () => {
+  const loadMyDraftBlogs = async () => {
     try {
       const response = await axios.get(
         `${import.meta.env.VITE_API_URL}/blogs/me/draft?authorId=${user?._id}`,
@@ -31,9 +32,29 @@ function MyBlogs() {
     }
   };
 
+  const loadMyPublishedBlogs = async () => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/blogs/me/published?authorId=${
+          user?._id
+        }`,
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        }
+      );
+
+      if (response?.data?.success) {
+        setPublishedBlogs(response?.data?.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     if (!user) return navigate("/login");
-    loadMyBlogs();
+    loadMyDraftBlogs();
+    loadMyPublishedBlogs();
   }, [user]);
 
   return (
