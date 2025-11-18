@@ -12,6 +12,7 @@ import NotFoundPage from "./views/NotFoundPage.jsx";
 import { BrowserRouter, Routes, Route } from "react-router";
 import AuthSuccess from "./views/AuthSuccess";
 import FavouriteBlogs from "./views/FavouriteBlogs.jsx";
+import MyBlogs from "./views/MyBlogs.jsx";
 
 const root = createRoot(document.getElementById("root"));
 root.render(
@@ -24,6 +25,7 @@ root.render(
       <Route path="/signup" element={<SignUp />} />
       <Route path="/login" element={<Login />} />
       <Route path="/auth-success" element={<AuthSuccess />} />
+      <Route path="/my-blogs" element={<MyBlogs />} />
       <Route path="/favourites" element={<FavouriteBlogs />} />
       <Route path="*" element={<NotFoundPage />} />
     </Routes>

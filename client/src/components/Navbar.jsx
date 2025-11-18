@@ -7,7 +7,7 @@ import { IoMdLogOut } from "react-icons/io";
 import Button from "./Button";
 import { getCurrentUser } from "./../utils.js";
 import toast from "react-hot-toast";
-import { SquarePen, Heart } from "lucide-react";
+import { SquarePen, Heart, House } from "lucide-react";
 
 function Navbar({ isSelected }) {
   const [user, setUser] = useState(null);
@@ -22,6 +22,19 @@ function Navbar({ isSelected }) {
         <span className="flex gap-2 items-center">
           <SquarePen size={20} />
           Create
+        </span>
+      ),
+    },
+  ];
+
+  const NAV_ITEMS_PRIVATE = [
+    { to: "/my-blogs", privateNavItemTitle: "My Blogs" },
+    {
+      to: "/favourites",
+      privateNavItemTitle: (
+        <span className="flex gap-2 items-center">
+          <Heart size={20} />
+          Favourites
         </span>
       ),
     },
@@ -56,7 +69,7 @@ function Navbar({ isSelected }) {
         isNavbarVisible ? "translate-y-0" : "-translate-y-full"
       } sticky top-0 z-50 lg:pt-0 transition-all duration-300`}
     >
-      <div className="lg:w-[95%] mx-auto lg:rounded-full bg-white text-gray-800 shadow-md px-6 py-1 flex flex-col md:flex-row md:items-center md:justify-between gap-4 transition-all duration-300">
+      <div className="lg:w-[95%] mx-auto lg:rounded-full bg-white text-gray-800 shadow-md px-6 py-1 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 transition-all duration-300">
         <div className="flex items-center justify-between w-full md:w-auto">
           <Link to={"/"} className="flex items-center gap-3">
             <img src={Logo} alt="Logo" className="w-16 rounded-lg" />
@@ -68,18 +81,18 @@ function Navbar({ isSelected }) {
           {/* Mobile menu button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden text-gray-800 focus:outline-none"
+            className="lg:hidden text-gray-800 focus:outline-none"
           >
             {isOpen ? <X size={28} /> : <Menu size={28} />}
           </button>
         </div>
 
         <div
-          className={`border md:border-none border-slate-300 p-4 max-md:mb-5 rounded-lg flex-col md:flex-row md:flex md:items-center md:justify-end w-full gap-6 md:gap-8 transition-all duration-300 overflow-hidden ${
+          className={`border lg:border-none border-slate-300 p-4 max-lg:mb-5 rounded-lg flex-col lg:flex-row lg:flex lg:items-center lg:justify-end w-full gap-6 lg:gap-8 transition-all duration-300 overflow-hidden ${
             isOpen ? "flex" : "hidden"
           }`}
         >
-          <div className="flex flex-col md:flex-row gap-6 md:gap-8">
+          <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
             {NAV_ITEMS.map(({ to, navItemTitle }) => (
               <Link
                 key={to}
@@ -95,17 +108,19 @@ function Navbar({ isSelected }) {
 
           {user ? (
             <>
-              <div
-                className={`${
-                  isSelected === "/favourites" && "text-gray-900"
-                } flex gap-2 text-md text-gray-600 hover:text-teal-500 font-medium cursor-pointer`}
-                onClick={() => {
-                  navigate("/favourites");
-                }}
-              >
-                <Heart />
-                favourite
-              </div>
+              {NAV_ITEMS_PRIVATE?.map(({ to, privateNavItemTitle }) => {
+                return (
+                  <Link
+                    key={to}
+                    to={to}
+                    className={`${
+                      isSelected === to && "text-gray-900"
+                    } flex gap-2 text-md text-gray-600 hover:text-teal-500 font-medium cursor-pointer`}
+                  >
+                    {privateNavItemTitle}
+                  </Link>
+                );
+              })}
 
               <div className="flex items-center gap-3">
                 <img
@@ -135,7 +150,7 @@ function Navbar({ isSelected }) {
               />
             </>
           ) : (
-            <div className="flex flex-col md:flex-row gap-4 items-center">
+            <div className="flex flex-col lg:flex-row gap-4 items-center">
               <Button
                 type="button"
                 customStyle="text-gray-800 border-gray-400"
