@@ -17,6 +17,7 @@ import {
 import {
   postBlogs,
   fetchBlogs,
+  fetchMyBlogs,
   fetchBlogsBySlug,
   putEditBlogBySlug,
   patchPublishBlogBySlug,
@@ -75,6 +76,7 @@ app.post("/signup", postSignup);
 app.post("/login", postLogin);
 app.post("/blogs", jwtCheck, postBlogs);
 app.get("/blogs", fetchBlogs);
+app.get("/blogs", fetchMyBlogs);
 app.get("/blogs/favourites", jwtCheck, getFavourites);
 app.get("/blogs/:slug", increaseViewCount, fetchBlogsBySlug);
 app.put("/blogs/:slug", jwtCheck, putEditBlogBySlug);

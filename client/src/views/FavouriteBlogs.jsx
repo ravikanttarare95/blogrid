@@ -45,26 +45,19 @@ function FavouriteBlogs() {
     loadFavBlogs();
   }, []);
 
-  if (loading) {
-    return (
-      <>
-        <Navbar isSelected={"/favourites"} />
+  return (
+    <>
+      <Navbar isSelected={"/favourites"} />
+
+      {loading ? (
         <div className="p-5 pb-0 sm:pb-0 sm:p-8 flex flex-col gap-10 my-5">
           {Array.from({ length: 5 }).map((_, index) => (
             <BlogCardSkeleton key={index} />
           ))}
         </div>
-        <Footer />
-      </>
-    );
-  }
-
-  return (
-    <>
-      <Navbar isSelected={"/favourites"} />
-      <div className="p-5 pb-0 sm:pb-0 sm:p-8 flex flex-col gap-10 my-5">
-        {favBlogs.length > 0 ? (
-          favBlogs.map((blog) => (
+      ) : favBlogs.length > 0 ? (
+        <div className="min-h-[68vh] p-5 pb-0 sm:pb-0 sm:p-8 flex flex-col gap-10 my-5">
+          {favBlogs.map((blog) => (
             <BlogCard
               key={blog._id}
               blogId={blog._id}
@@ -82,35 +75,38 @@ function FavouriteBlogs() {
               isFavourite={favBlogs.some((fav) => fav._id === blog._id)}
               onFavouriteToggle={onFavouriteToggle}
             />
-          ))
-        ) : (
-          <div className="flex flex-col items-center justify-center flex-1 text-center py-20">
-            <div className="bg-red-100 w-20 h-20 flex items-center justify-center rounded-full shadow-md mb-6">
-              <Heart className="w-10 h-10 text-red-500 animate-bounce" />
-            </div>
-
-            <h2 className="text-2xl sm:text-3xl font-semibold text-gray-800 mb-3">
-              No favourites yet
-            </h2>
-            <p className="text-gray-600 max-w-md mb-6">
-              You haven’t added any blogs to your favourites. Explore and save
-              the ones you love to easily find them later!
-            </p>
-
-            <Button
-              btnTitle={"Explore Blogs"}
-              btnSize={"md"}
-              btnVariant={"primary"}
-              onBtnClick={() => {
-                navigate("/");
-              }}
-            />
+          ))}
+        </div>
+      ) : (
+        <div className="min-h-[70vh] flex flex-col items-center justify-center text-center px-4">
+          <div className=" bg-red-50 border border-red-200 rounded-full shadow-md mb-6 p-6">
+            <Heart className="w-14 h-14 text-red-600 animate-bounce" />
           </div>
-        )}
-      </div>  
+
+          <h2 className="text-2xl sm:text-3xl font-semibold text-gray-800 mb-3">
+            No favourites yet
+          </h2>
+          <p className="text-gray-600 max-w-md mb-6">
+            You haven’t added any blogs to your favourites. Explore and save the
+            ones you love to easily find them later!
+          </p>
+
+          <Button
+            btnTitle={"Explore Blogs"}
+            btnSize={"md"}
+            btnVariant={"primary"}
+            onBtnClick={() => {
+              navigate("/");
+            }}
+          />
+        </div>
+      )}
+
       <Footer />
     </>
   );
 }
 
 export default FavouriteBlogs;
+
+// If your component only depends on a single API call, initializing favBlogs as null is clearer, no need extra loading state variable, we can directly do  {favBlogs === null ? (<Skeleton/>): favBlogs.length > 0 ?<FavBlogs/>:<NoBlogs/>}

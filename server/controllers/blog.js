@@ -79,6 +79,10 @@ const fetchBlogs = async (req, res) => {
   }
 };
 
+const fetchMyBlogs = async (req, res) => {
+  sdd;
+};
+
 const fetchBlogsBySlug = async (req, res) => {
   try {
     const { slug } = req.params;
@@ -205,6 +209,7 @@ const postlikeBySlug = async (req, res) => {
 export {
   postBlogs,
   fetchBlogs,
+  fetchMyBlogs,
   fetchBlogsBySlug,
   putEditBlogBySlug,
   patchPublishBlogBySlug,
