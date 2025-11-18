@@ -134,7 +134,7 @@ const postFavouritesById = async (req, res) => {
   }
   await author.save();
 
-  await clearCache()
+  // await clearCache()
   res.json({
     blogId,
     user,

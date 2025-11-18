@@ -47,29 +47,29 @@ const fetchBlogs = async (req, res) => {
     if (authorId) {
       condition.push({ author: authorId });
     }
+    console.log(condition);
+    // const cached = await getCache("blogs");
+    // if (cached) {
+    //   res.json({
+    //     success: true,
+    //     data: cached,
+    //     message: "Blogs fetched successfully (from cache).",
+    //   });
+    // } else {
+    const blogs = await Blog.find({
+      $or: condition,
+    })
+      .populate("author", "_id name email avatar")
+      .sort({ status: 1, updatedAt: -1 }); // important- status (1) is string it will sort with respect to A-Z  and updatedAt (-1) is number, it will sort with large-small number
 
-    const cached = await getCache("blogs");
-    if (cached) {
-      res.json({
-        success: true,
-        data: cached,
-        message: "Blogs fetched successfully (from cache).",
-      });
-    } else {
-      const blogs = await Blog.find({
-        $or: condition,
-      })
-        .populate("author", "_id name email avatar")
-        .sort({ status: 1, updatedAt: -1 }); // important- status (1) is string it will sort with respect to A-Z  and updatedAt (-1) is number, it will sort with large-small number
+    // await setCache("blogs", blogs); //
 
-      await setCache("blogs", blogs); //
-
-      res.json({
-        success: true,
-        data: blogs,
-        message: "Blogs fetched successfully.",
-      });
-    }
+    res.json({
+      success: true,
+      data: blogs,
+      message: "Blogs fetched successfully.",
+    });
+    // }
   } catch (error) {
     console.log("Error fetching blogs:", error);
     res.status(500).json({
@@ -79,8 +79,28 @@ const fetchBlogs = async (req, res) => {
   }
 };
 
-const fetchMyBlogs = async (req, res) => {
-  sdd;
+const fetchMyDraftBlogs = async (req, res) => {
+  try {
+    const { authorId } = req.query;
+
+    const blogs = await Blog.find({
+      $and: [{ status: "draft" }, { author: authorId }],
+    })
+      .populate("author", "_id name email avatar")
+      .sort({ status: 1, updatedAt: -1 });
+
+    res.json({
+      success: true,
+      data: blogs,
+      message: "Blogs fetched successfully.",
+    });
+  } catch (error) {
+    console.log("Error fetching my blogs:", error);
+    res.status(500).json({
+      success: false,
+      message: "Error fetching my blogs",
+    });
+  }
 };
 
 const fetchBlogsBySlug = async (req, res) => {
@@ -140,7 +160,7 @@ const putEditBlogBySlug = async (req, res) => {
       { new: true }
     );
 
-    await clearCache(); //
+    // await clearCache(); //
 
     res.json({
       success: true,
@@ -181,7 +201,7 @@ const patchPublishBlogBySlug = async (req, res) => {
     }
   );
 
-  await clearCache(); //
+  // await clearCache(); //
 
   if (published) {
     res.json({
@@ -203,13 +223,13 @@ const postlikeBySlug = async (req, res) => {
     });
   }
 
-  await clearCache(); //
+  // await clearCache(); //
 };
 
 export {
   postBlogs,
   fetchBlogs,
-  fetchMyBlogs,
+  fetchMyDraftBlogs,
   fetchBlogsBySlug,
   putEditBlogBySlug,
   patchPublishBlogBySlug,
