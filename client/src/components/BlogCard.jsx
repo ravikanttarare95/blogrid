@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from "react";
 import Button from "./Button";
 import { useNavigate } from "react-router";
-import { SquarePen, Eye, ThumbsUp, MessageCircle, Heart } from "lucide-react";
+import {
+  SquarePen,
+  Eye,
+  ThumbsUp,
+  MessageCircle,
+  Heart,
+  X,
+} from "lucide-react";
 import UserInfo from "./UserInfo";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -23,6 +30,7 @@ function BlogCard({
   imgURL,
   isFavourite,
   onFavouriteToggle,
+  deleteBlog,
 }) {
   const navigate = useNavigate();
   const [comments, setComments] = useState([]);
@@ -76,7 +84,16 @@ function BlogCard({
   }, []);
 
   return (
-    <div className="bg-white w-full border md:h-80 border-gray-200 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 flex flex-col md:flex-row overflow-hidden max-w-5xl mx-auto">
+    <div className="relative bg-white w-full border md:h-80 border-gray-200 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 flex flex-col md:flex-row overflow-hidden max-w-5xl mx-auto">
+      {deleteBlog && (
+        <button
+          onClick={() => deleteBlog(blogId)}
+          className="absolute top-3 right-3 md:top-1 md:right-1 z-40 bg-white rounded-full cursor-pointer hover:scale-110 p-1 text-red-500 transition"
+        >
+          <X size={20} />
+        </button>
+      )}
+
       <div className="relative w-full  md:w-[40%] lg:w-[35%] flex-shrink-0 overflow-hidden">
         <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-black/10 to-transparent z-10"></div>
         <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-black/20 to-transparent z-10"></div>

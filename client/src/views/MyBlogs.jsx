@@ -52,6 +52,10 @@ function MyBlogs() {
     }
   };
 
+  const deleteMyBlogById = async (id) => {
+    alert("DELETEd");
+  };
+
   useEffect(() => {
     if (!user) return navigate("/login");
     loadMyDraftBlogs();
@@ -100,6 +104,7 @@ function MyBlogs() {
               imgURL={blog.imgURL}
               //   isFavourite={draftBlogs.some((fav) => fav._id === draftBlog._id)}
               // onFavouriteToggle={onFavouriteToggle}
+              deleteBlog={deleteMyBlogById}
             />
           ))
         ) : (
