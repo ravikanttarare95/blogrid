@@ -8,7 +8,7 @@ import Button from "./../components/Button";
 import { NotebookPen } from "lucide-react";
 import BlogCardSkeleton from "./../components/BlogCardSkeleton";
 import BlogCard from "./../components/BlogCard";
-import toast from "react-hot-toast";
+import Swal from "sweetalert2";
 
 function MyBlogs() {
   const [user] = useState(getCurrentUser());
@@ -72,14 +72,42 @@ function MyBlogs() {
   };
 
   const deleteMyBlogById = async (blogId) => {
-    const response = await axios.delete(
-      `${import.meta.env.VITE_API_URL}/blogs/${blogId}`,
-      { headers: { Authorization: ` Bearer ${localStorage.getItem("token")}` } }
-    );
-    if (response?.data?.success) {
-      toast.success(response?.data?.message);
-      loadMyDraftBlogs();
-      loadMyPublishedBlogs();
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#10B981",
+      cancelButtonColor: "#F43F5E",
+      confirmButtonText: "Yes, delete it!",
+    });
+
+    if (!result.isConfirmed) return;
+    try {
+      const response = await axios.delete(
+        `${import.meta.env.VITE_API_URL}/blogs/${blogId}`,
+        {
+          headers: {
+            Authorization: ` Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      if (response?.data?.success) {
+        Swal.fire({
+          title: "Deleted!",
+          text: "Transaction deleted successfully",
+          icon: "success",
+        });
+        loadMyDraftBlogs();
+        loadMyPublishedBlogs();
+      }
+    } catch (error) {
+      console.log(error?.response);
+      Swal.fire({
+        title: "Deleted!",
+        text: "Failed to delete transaction",
+        icon: "error",
+      });
     }
   };
 
