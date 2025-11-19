@@ -1,4 +1,5 @@
 import Blog from "./../models/Blog.js";
+import User from "./../models/User.js";
 import { json } from "express";
 import { setCache, getCache, clearCache } from "./../utils/cache.js";
 
@@ -30,7 +31,7 @@ const postBlogs = async (req, res) => {
 
   await savedBlog.save();
 
-  await clearCache();
+  // await clearCache();
 
   res.json({
     success: true,
@@ -235,6 +236,45 @@ const patchPublishBlogBySlug = async (req, res) => {
   }
 };
 
+const deleteMyBlogById = async (req, res) => {
+  const { user } = req;
+  const { id } = req.params;
+
+  try {
+    const blog = await Blog.findById(id);
+
+    if (!blog) {
+      return res.status(404).json({
+        success: false,
+        message: "Blog not found",
+      });
+    }
+
+    if (blog.author.toString() !== user.id) {
+      return res.status(403).json({
+        success: false,
+        message: "You are not authorized to delete this blog",
+      });
+    }
+
+    const deletedBlog = await Blog.findByIdAndDelete(id);
+
+    if (deletedBlog) {
+      return res.json({
+        success: true,
+        data: deletedBlog,
+        message: "Blog deleted successfully",
+      });
+    }
+  } catch (error) {
+    console.error("Delete Blog Error:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Internal Server Error while deleting blog",
+    });
+  }
+};
+
 const postlikeBySlug = async (req, res) => {
   const { slug } = req.params;
   const blog = await Blog.findOne({ slug });
@@ -258,5 +298,6 @@ export {
   fetchBlogsBySlug,
   putEditBlogBySlug,
   patchPublishBlogBySlug,
+  deleteMyBlogById,
   postlikeBySlug,
 };

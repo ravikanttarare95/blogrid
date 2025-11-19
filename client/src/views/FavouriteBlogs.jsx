@@ -108,5 +108,3 @@ function FavouriteBlogs() {
 }
 
 export default FavouriteBlogs;
-
-// If your component only depends on a single API call, initializing favBlogs as null is clearer, no need extra loading state variable, we can directly do  {favBlogs === null ? (<Skeleton/>): favBlogs.length > 0 ?<FavBlogs/>:<NoBlogs/>}

@@ -22,6 +22,7 @@ import {
   fetchBlogsBySlug,
   putEditBlogBySlug,
   patchPublishBlogBySlug,
+  deleteMyBlogById,
   postlikeBySlug,
 } from "./controllers/blog.js";
 
@@ -88,6 +89,8 @@ app.post("/blogs/:slug/comments", jwtCheck, postCommentBySlug);
 app.get("/blogs/:slug/comments", getCommentBySlug);
 
 app.post("/blogs/:slug/likes", jwtCheck, postlikeBySlug);
+
+app.delete("/blogs/:id", jwtCheck, deleteMyBlogById);
 
 app.post("/blogs/:blogId/favourites", jwtCheck, postFavouritesById);
 
