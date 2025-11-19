@@ -8,6 +8,7 @@ import Button from "./../components/Button";
 import { NotebookPen } from "lucide-react";
 import BlogCardSkeleton from "./../components/BlogCardSkeleton";
 import BlogCard from "./../components/BlogCard";
+import toast from "react-hot-toast";
 
 function MyBlogs() {
   const [user] = useState(getCurrentUser());
@@ -15,6 +16,24 @@ function MyBlogs() {
   const [publishedBlogs, setPublishedBlogs] = useState(null);
   const [showDraft, setShowDraft] = useState(true);
   const navigate = useNavigate();
+  const [favBlogs, setFavBlogs] = useState([]);
+
+  const loadFavBlogs = async () => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/blogs/favourites`,
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        }
+      );
+
+      if (response) {
+        setFavBlogs(response.data.favouriteBlogs);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const loadMyDraftBlogs = async () => {
     try {
@@ -52,14 +71,23 @@ function MyBlogs() {
     }
   };
 
-  const deleteMyBlogById = async (id) => {
-    alert("DELETEd");
+  const deleteMyBlogById = async (blogId) => {
+    const response = await axios.delete(
+      `${import.meta.env.VITE_API_URL}/blogs/${blogId}`,
+      { headers: { Authorization: ` Bearer ${localStorage.getItem("token")}` } }
+    );
+    if (response?.data?.success) {
+      toast.success(response?.data?.message);
+      loadMyDraftBlogs();
+      loadMyPublishedBlogs();
+    }
   };
 
   useEffect(() => {
     if (!user) return navigate("/login");
     loadMyDraftBlogs();
     loadMyPublishedBlogs();
+    loadFavBlogs();
   }, []);
 
   const blogsToShow = showDraft ? draftBlogs : publishedBlogs;
@@ -102,8 +130,7 @@ function MyBlogs() {
               viewCount={blog.viewCount}
               likes={blog.likes}
               imgURL={blog.imgURL}
-              //   isFavourite={draftBlogs.some((fav) => fav._id === draftBlog._id)}
-              // onFavouriteToggle={onFavouriteToggle}
+              isFavourite={favBlogs?.some((fav) => fav._id === blog._id)}
               deleteBlog={deleteMyBlogById}
             />
           ))

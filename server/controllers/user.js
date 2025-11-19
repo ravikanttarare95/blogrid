@@ -145,13 +145,13 @@ const getFavourites = async (req, res) => {
   try {
     const { user } = req;
     // Deep populate
-    const Curentuser = await User.findById(user.id).populate({
+    const currentUser = await User.findById(user.id).populate({
       path: "favourites",
       populate: { path: "author", select: "name email avatar" },
     });
 
-    if (Curentuser) {
-      res.json({ success: true, favouriteBlogs: Curentuser.favourites });
+    if (currentUser) {
+      res.json({ success: true, favouriteBlogs: currentUser.favourites });
     }
   } catch (error) {
     res.status(500).json({

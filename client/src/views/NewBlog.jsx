@@ -39,8 +39,8 @@ function NewBlog() {
       if (response?.data?.success) {
         toast.success("Blog saved successfully");
         setTimeout(() => {
-          navigate("/");
-        }, 2000);
+          navigate("/my-blogs");
+        }, 1000);
       }
     } catch (error) {
       console.log(error);
